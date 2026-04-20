@@ -1,0 +1,410 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:flip_card/flip_card.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+class FlippingCardScreen extends StatefulWidget {
+  const FlippingCardScreen({super.key});
+
+  @override
+  State<FlippingCardScreen> createState() => _FlippingCardScreenState();
+}
+
+class _FlippingCardScreenState extends State<FlippingCardScreen> {
+  int seconds = 0;
+  Timer? timer;
+  int score = 0;
+  bool isChecking = false;
+
+  List<GlobalKey<FlipCardState>> cardKeys = [];
+  List<Color> cardColors = [];
+  List<bool> isMatched = [];
+  List<int> flippedIndices = [];
+
+  final AudioPlayer flipPlayer = AudioPlayer();
+  final AudioPlayer matchPlayer = AudioPlayer();
+  final AudioPlayer wrongPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeGame();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    flipPlayer.dispose();
+    matchPlayer.dispose();
+    wrongPlayer.dispose();
+    super.dispose();
+  }
+
+  void _initializeGame() {
+    timer?.cancel();
+    seconds = 0;
+    score = 0;
+    isChecking = false;
+    flippedIndices.clear();
+
+    final List<Color> baseColors = [
+      const Color(0xFF9B59B6),
+      const Color(0xFF2980B9),
+      const Color(0xFF27AE60),
+      const Color(0xFFE67E22),
+      const Color(0xFFE74C3C),
+      const Color(0xFF1ABC9C),
+      const Color(0xFFF39C12),
+      const Color(0xFF8E44AD),
+      const Color(0xFF16A085),
+      const Color(0xFFD35400),
+    ];
+
+    cardColors = [...baseColors, ...baseColors];
+    cardColors.shuffle();
+
+    cardKeys = List.generate(
+      cardColors.length,
+      (_) => GlobalKey<FlipCardState>(),
+    );
+    isMatched = List.generate(cardColors.length, (_) => false);
+
+    setState(() {});
+    _startTimer();
+  }
+
+  void _startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() => seconds++);
+    });
+  }
+
+  String _formatTime(int totalSeconds) {
+    final m = totalSeconds ~/ 60;
+    final s = totalSeconds % 60;
+    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
+  }
+
+  Future<void> _playFlipSound() async {
+    try {
+      if (flipPlayer.state == PlayerState.playing) await flipPlayer.stop();
+      await flipPlayer.play(AssetSource('flipcard.mp3'));
+    } catch (_) {}
+  }
+
+  Future<void> _playMatchSound() async {
+    try {
+      await matchPlayer.stop();
+      await matchPlayer.play(AssetSource('win_game.mp3'));
+    } catch (_) {}
+  }
+
+  Future<void> _playWrongSound() async {
+    try {
+      await wrongPlayer.stop();
+      await wrongPlayer.play(AssetSource('wronganswer.mp3'));
+    } catch (_) {}
+  }
+
+  void _onCardTap(int index) {
+    if (isChecking || isMatched[index] || flippedIndices.contains(index)) return;
+
+    cardKeys[index].currentState?.toggleCard();
+    _playFlipSound();
+    setState(() => flippedIndices.add(index));
+
+    if (flippedIndices.length == 2) _checkForMatch();
+  }
+
+  Future<void> _checkForMatch() async {
+    isChecking = true;
+    final i1 = flippedIndices[0];
+    final i2 = flippedIndices[1];
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (cardColors[i1] == cardColors[i2]) {
+      setState(() {
+        score += 10;
+        isMatched[i1] = true;
+        isMatched[i2] = true;
+      });
+      _playMatchSound();
+      if (isMatched.every((e) => e)) _showWinDialog();
+    } else {
+      cardKeys[i1].currentState?.toggleCard();
+      cardKeys[i2].currentState?.toggleCard();
+      _playWrongSound();
+    }
+
+    flippedIndices.clear();
+    isChecking = false;
+  }
+
+  void _showWinDialog() {
+    timer?.cancel();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => Dialog(
+        backgroundColor: const Color(0xFF16142A),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: Padding(
+          padding: const EdgeInsets.all(28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                '✦',
+                style: TextStyle(color: Color(0xFFCFC5F0), fontSize: 32),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Session Complete',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Time: ${_formatTime(seconds)}',
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Score: $score',
+                style: const TextStyle(
+                  color: Color(0xFFB8A8E8),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 24),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _initializeGame();
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFCFC5F0),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'PLAY AGAIN',
+                      style: TextStyle(
+                        color: Color(0xFF1A1040),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final double cardWidth = (size.width - 48) / 4;
+    final double cardHeight = cardWidth * 1.25;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF0D0B1E),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Row(
+                children: [
+                  // Back button
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF1C1A34),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_back_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  // Stats pill
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF16142A),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: const Color(0xFFB8A8E8).withValues(alpha: 0.15),
+                        width: 1,
+                      ),
+                    ),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 12),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'TIME',
+                                  style: TextStyle(
+                                    color:
+                                        Colors.white.withValues(alpha: 0.35),
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 1.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  _formatTime(seconds),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'monospace',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          VerticalDivider(
+                            color: Colors.white.withValues(alpha: 0.1),
+                            thickness: 1,
+                            width: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 12),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'SCORE',
+                                  style: TextStyle(
+                                    color:
+                                        Colors.white.withValues(alpha: 0.35),
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 1.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  '$score',
+                                  style: const TextStyle(
+                                    color: Color(0xFFB8A8E8),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Grid
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: cardWidth / cardHeight,
+                  ),
+                  itemCount: cardColors.length,
+                  itemBuilder: (context, index) {
+                    return FlipCard(
+                      key: cardKeys[index],
+                      flipOnTouch: false,
+                      direction: FlipDirection.HORIZONTAL,
+                      front: GestureDetector(
+                        onTap: () => _onCardTap(index),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF16142A),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color(0xFFB8A8E8)
+                                  .withValues(alpha: 0.22),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.question_mark_rounded,
+                              color:
+                                  const Color(0xFFB8A8E8).withValues(alpha: 0.45),
+                              size: 26,
+                            ),
+                          ),
+                        ),
+                      ),
+                      back: Container(
+                        decoration: BoxDecoration(
+                          color: cardColors[index],
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.3),
+                            width: 1.5,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: cardColors[index].withValues(alpha: 0.4),
+                              blurRadius: 8,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.star_rounded,
+                            color: Colors.white.withValues(alpha: 0.9),
+                            size: 26,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

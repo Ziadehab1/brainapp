@@ -1,0 +1,268 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:brainapp/features/excersise_screen/breathing_excersice.dart';
+import 'package:brainapp/features/excersise_screen/emotions_diary.dart';
+import 'package:brainapp/features/excersise_screen/mood_diary.dart';
+import 'package:brainapp/features/excersise_screen/exercise_detail_screen.dart';
+
+class ExerciseScreen extends StatelessWidget {
+  const ExerciseScreen({super.key});
+
+  static final List<_ExerciseItem> _exercises = [
+    _ExerciseItem(
+      title: 'Breathing',
+      duration: '1 MIN',
+      description:
+          'Guided box breathing to stabilize the nervous system and clear mental fog.',
+      highlights: [
+        'Vagus nerve stimulation',
+        'Stress reduction',
+        'CO2 tolerance',
+      ],
+      icon: Icons.air_rounded,
+      thumbHeight: 155,
+      gradientStart: const Color(0xFF1A3A3A),
+      gradientEnd: const Color(0xFF2A6A6A),
+      destination: const BreathingExerciseScreen(),
+    ),
+    _ExerciseItem(
+      title: 'Emotions Diary',
+      duration: '5 - 20 MIN',
+      description:
+          'Track and reflect on your emotions to build self-awareness over time.',
+      highlights: [
+        'Emotional awareness',
+        'Pattern recognition',
+        'Mood tracking',
+      ],
+      icon: Icons.favorite_border_rounded,
+      thumbHeight: 185,
+      gradientStart: const Color(0xFF3A1A2A),
+      gradientEnd: const Color(0xFF7A2A5A),
+      destination: const EmotionsDiaryScreen(),
+    ),
+    _ExerciseItem(
+      title: 'Mood Diary',
+      duration: '5 - 20 MIN',
+      description:
+          'Log and explore your daily mood through interactive mood cards.',
+      highlights: [
+        'Daily mood logging',
+        'Emotional variety',
+        'Swipe to delete',
+      ],
+      icon: Icons.mood_rounded,
+      thumbHeight: 130,
+      gradientStart: const Color(0xFF2A1F5A),
+      gradientEnd: const Color(0xFF5A4A9E),
+      destination: const MoodDiaryScreen(),
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Exercise',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Move your body, sharpen your mind',
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.4),
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          Expanded(
+            child: MasonryGridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              itemCount: _exercises.length,
+              itemBuilder: (context, i) => _ExerciseCard(item: _exercises[i]),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExerciseItem {
+  final String title;
+  final String duration;
+  final String description;
+  final List<String> highlights;
+  final IconData icon;
+  final double thumbHeight;
+  final Color gradientStart;
+  final Color gradientEnd;
+  final Widget? destination;
+
+  const _ExerciseItem({
+    required this.title,
+    required this.duration,
+    required this.description,
+    required this.highlights,
+    required this.icon,
+    required this.thumbHeight,
+    required this.gradientStart,
+    required this.gradientEnd,
+    this.destination,
+  });
+}
+
+class _ExerciseCard extends StatelessWidget {
+  final _ExerciseItem item;
+  const _ExerciseCard({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: item.destination != null
+          ? () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ExerciseDetailScreen(
+                    data: ExerciseDetailData(
+                      title: item.title,
+                      tag: 'EXERCISE',
+                      duration: item.duration,
+                      description: item.description,
+                      highlights: item.highlights,
+                      gradientStart: item.gradientStart,
+                      gradientEnd: item.gradientEnd,
+                      destination: item.destination!,
+                    ),
+                  ),
+                ),
+              )
+          : null,
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF16142A),
+          borderRadius: BorderRadius.circular(18),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: item.thumbHeight,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [item.gradientStart, item.gradientEnd],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: item.thumbHeight,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withValues(alpha: 0.05),
+                        Colors.black.withValues(alpha: 0.45),
+                      ],
+                    ),
+                  ),
+                ),
+                // Duration badge
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      item.duration,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+                // Center icon
+                Positioned.fill(
+                  child: Center(
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.15),
+                        border: Border.all(
+                          color: Colors.white.withValues(alpha: 0.4),
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Icon(item.icon, color: Colors.white, size: 22),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      height: 1.3,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    item.description,
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      fontSize: 11,
+                      height: 1.45,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
