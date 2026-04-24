@@ -27,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
       duration: const Duration(milliseconds: 4000),
     )..addStatusListener((status) {
+        if (!mounted) return;
         if (status == AnimationStatus.completed) {
           setState(() => _isInhale = false);
           _breathController.reverse();
@@ -57,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
     _breathController.forward();
 
     Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
