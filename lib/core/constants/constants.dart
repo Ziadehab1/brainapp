@@ -26,6 +26,12 @@ class AppColors {
   // --- Semantic ---
   static const Color error = Color(0xFFE87878);
 
+  // --- UI utility ---
+  static final Color barrierDark = Colors.black.withValues(alpha: 0.6);
+  static final Color divider = Colors.white.withValues(alpha: 0.06);
+  static final Color sheetHandle = Colors.white.withValues(alpha: 0.15);
+  static const Color cancelText = Colors.white54;
+
   // --- Tutorial category gradients ---
   static const Color tutorialPurpleStart = Color(0xFF3B2F6E);
   static const Color tutorialPurpleEnd = Color(0xFF6B5B9E);

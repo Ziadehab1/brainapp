@@ -8,7 +8,13 @@ class MoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.fromLTRB(
+          24,
+          0,
+          24,
+          MediaQuery.of(context).padding.bottom + 100,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,7 +84,6 @@ class MoreScreen extends StatelessWidget {
               label: 'Sign Out',
               isDestructive: true,
             ),
-            const SizedBox(height: 24),
           ],
         ),
       ),

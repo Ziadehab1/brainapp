@@ -3,6 +3,7 @@ import 'package:brainapp/features/excersise_screen/exercise_screen.dart';
 import 'package:brainapp/features/games_screen/games_screen.dart';
 import 'package:brainapp/features/tutorials_screen/tutorials.dart';
 import 'package:brainapp/features/more_screen/more_screen.dart';
+import 'package:brainapp/features/todo_list.dart';
 import 'package:brainapp/core/constants/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ExerciseScreen(),
     const GamesScreen(),
     const TutorialsScreen(),
+    const TodoListScreen(),
     const MoreScreen(),
   ];
 
@@ -95,10 +97,16 @@ class _BottomNav extends StatelessWidget {
                 onTap: () => onTap(2),
               ),
               _NavItem(
-                icon: Icons.more_horiz_rounded,
-                label: 'MORE',
+                icon: Icons.checklist_rounded,
+                label: 'FLOW',
                 isSelected: selectedIndex == 3,
                 onTap: () => onTap(3),
+              ),
+              _NavItem(
+                icon: Icons.more_horiz_rounded,
+                label: 'MORE',
+                isSelected: selectedIndex == 4,
+                onTap: () => onTap(4),
               ),
             ],
           ),
