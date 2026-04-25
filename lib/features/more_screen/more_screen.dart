@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:brainapp/core/constants/constants.dart';
-import 'package:brainapp/features/forms/form_home_page.dart';
+import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/features/forms/form_home_page.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});

@@ -1,6 +1,6 @@
 ﻿import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class BreathingExerciseScreen extends StatefulWidget {
   const BreathingExerciseScreen({super.key});

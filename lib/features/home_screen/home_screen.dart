@@ -1,10 +1,10 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:brainapp/features/excersise_screen/exercise_screen.dart';
-import 'package:brainapp/features/games_screen/games_screen.dart';
-import 'package:brainapp/features/tutorials_screen/tutorials.dart';
-import 'package:brainapp/features/more_screen/more_screen.dart';
-import 'package:brainapp/features/todo_list.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/features/excersise_screen/exercise_screen.dart';
+import 'package:brainflow/features/games_screen/games_screen.dart';
+import 'package:brainflow/features/tutorials_screen/tutorials.dart';
+import 'package:brainflow/features/more_screen/more_screen.dart';
+import 'package:brainflow/features/todo_list.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,7 +1,7 @@
 ﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoUrl;

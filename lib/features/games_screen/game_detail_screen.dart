@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class GameData {
   final String title;

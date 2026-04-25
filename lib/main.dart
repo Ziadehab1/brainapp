@@ -1,4 +1,4 @@
-import 'package:brainapp/features/onboarding_screen/splash_screen.dart';
+import 'package:brainflow/features/onboarding_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

@@ -1,7 +1,10 @@
+import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/features/forms/Mental_distraction%20_assessment.dart';
+import 'package:brainflow/features/forms/assessment_focus.dart';
+import 'package:brainflow/features/forms/help_on_focus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:brainapp/core/constants/constants.dart';
-import 'package:brainapp/features/forms/assessment_focus.dart';
+
 
 class _FormData {
   final String title;
@@ -26,36 +29,37 @@ class _FormData {
 }
 
 final List<_FormData> _allForms = [
-  // _FormData(
-  //   title: 'Focus Scan',
-  //   tag: 'CLINICAL',
-  //   description: 'Assess attention sustainability and cognitive stamina.',
-  //   thumbHeight: 170,
-  //   gradientStart: const Color(0xFF1A1A3A),
-  //   gradientEnd: const Color(0xFF2E2E6A),
-  //   icon: Icons.track_changes_rounded,
-  //   destination: const AssessmentFocusScreen(),
-  // ),
-  // _FormData(
-  //   title: 'Rest Quality',
-  //   tag: 'SLEEP',
-  //   description: 'Analyze sleep hygiene and recovery patterns.',
-  //   thumbHeight: 140,
-  //   gradientStart: const Color(0xFF1A2535),
-  //   gradientEnd: const Color(0xFF1E3A50),
-  //   icon: Icons.bedtime_outlined,
-  //   destination:,
-  // ),
-  // _FormData(
-  //   title: 'Executive Function',
-  //   tag: 'NEURAL',
-  //   description: 'Measure planning ability and mental flexibility.',
-  //   thumbHeight: 155,
-  //   gradientStart: const Color(0xFF2A1A3A),
-  //   gradientEnd: const Color(0xFF4A2A6A),
-  //   icon: Icons.psychology_outlined,
-  //  // destination:
-  // ),
+  _FormData(
+    title: 'Focus Assessment',
+    tag: 'CLINICAL',
+    description: 'Assess attention sustainability and cognitive stamina.',
+    thumbHeight: 170,
+    gradientStart: const Color(0xFF1A1A3A),
+    gradientEnd: const Color(0xFF2E2E6A),
+    icon: Icons.track_changes_rounded,
+    destination: const AssessmentFocusScreen(),
+  ),
+  _FormData(
+    title: 'Mental Distraction Assessment',
+    tag: 'Mental Distraction',
+    description:
+        'Evaluate your susceptibility to common mental distractions and their impact on focus.',
+    thumbHeight: 140,
+    gradientStart: const Color(0xFF1A2535),
+    gradientEnd: const Color(0xFF1E3A50),
+    icon: Icons.bedtime_outlined,
+    destination: const MentalDistractionAssessmentScreen(),
+  ),
+  _FormData(
+    title: 'Help On Focus',
+    tag: 'FOCUS',
+    description: 'Get guidance on improving your focus and concentration.',
+    thumbHeight: 155,
+    gradientStart: const Color(0xFF2A1A3A),
+    gradientEnd: const Color(0xFF4A2A6A),
+    icon: Icons.psychology_outlined,
+    destination: const HelpOnFocusScreen(),
+  ),
   // _FormData(
   //   title: 'Emotional Pulse',
   //   tag: 'MENTAL',
@@ -65,16 +69,6 @@ final List<_FormData> _allForms = [
   //   gradientEnd: const Color(0xFF3A2A55),
   //   icon: Icons.self_improvement_outlined,
   //   //destination: const EmotionalPulseScreen(),
-  // ),
-  // _FormData(
-  //   title: 'Peak Energy',
-  //   tag: 'BIOMETRIC',
-  //   description: 'Identify your circadian rhythm peaks and energy flow.',
-  //   thumbHeight: 145,
-  //   gradientStart: const Color(0xFF1A2A1A),
-  //   gradientEnd: const Color(0xFF2A3E2A),
-  //   icon: Icons.bolt_rounded,
-  //   //destination: const PeakEnergyScreen(),
   // ),
 ];
 

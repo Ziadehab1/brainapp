@@ -1,10 +1,10 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:brainapp/features/excersise_screen/breathing_excersice.dart';
-import 'package:brainapp/features/excersise_screen/emotions_diary.dart';
-import 'package:brainapp/features/excersise_screen/mood_diary.dart';
-import 'package:brainapp/features/excersise_screen/exercise_detail_screen.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/features/excersise_screen/breathing_excersice.dart';
+import 'package:brainflow/features/excersise_screen/emotions_diary.dart';
+import 'package:brainflow/features/excersise_screen/mood_diary.dart';
+import 'package:brainflow/features/excersise_screen/exercise_detail_screen.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class ExerciseScreen extends StatelessWidget {
   const ExerciseScreen({super.key});

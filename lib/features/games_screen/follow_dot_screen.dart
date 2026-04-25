@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class FollowDotScreen extends StatefulWidget {
   const FollowDotScreen({super.key});

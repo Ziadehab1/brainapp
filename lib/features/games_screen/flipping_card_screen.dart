@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class FlippingCardScreen extends StatefulWidget {
   const FlippingCardScreen({super.key});

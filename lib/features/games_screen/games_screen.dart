@@ -1,9 +1,9 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:brainapp/features/games_screen/game_detail_screen.dart';
-import 'package:brainapp/features/games_screen/follow_dot_screen.dart';
-import 'package:brainapp/features/games_screen/flipping_card_screen.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/features/games_screen/game_detail_screen.dart';
+import 'package:brainflow/features/games_screen/follow_dot_screen.dart';
+import 'package:brainflow/features/games_screen/flipping_card_screen.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 final List<GameData> allGames = [
   GameData(

@@ -1,8 +1,8 @@
 ﻿import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:brainapp/features/onboarding_screen/on_boarding_screen.dart';
-import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainflow/features/onboarding_screen/on_boarding_screen.dart';
+import 'package:brainflow/core/constants/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
