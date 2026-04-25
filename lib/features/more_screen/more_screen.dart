@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:brainapp/core/constants/constants.dart';
+import 'package:brainapp/features/forms/form_home_page.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -61,6 +62,57 @@ class MoreScreen extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(height: 24),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FormHomePage()),
+              ),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.18),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary.withValues(alpha: 0.2),
+                      ),
+                      child: const Icon(
+                        Icons.list_alt_rounded,
+                        color: AppColors.primary,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    const Text(
+                      'Fill Evaluation Forms',
+                      style: TextStyle(
+                        color: AppColors.primaryLight,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: AppColors.primary.withValues(alpha: 0.6),
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 32),
             _SectionLabel('ACCOUNT'),
