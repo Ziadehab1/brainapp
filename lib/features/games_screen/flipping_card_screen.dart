@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class FlippingCardScreen extends StatefulWidget {
   const FlippingCardScreen({super.key});
@@ -47,18 +48,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     isChecking = false;
     flippedIndices.clear();
 
-    final List<Color> baseColors = [
-      const Color(0xFF9B59B6),
-      const Color(0xFF2980B9),
-      const Color(0xFF27AE60),
-      const Color(0xFFE67E22),
-      const Color(0xFFE74C3C),
-      const Color(0xFF1ABC9C),
-      const Color(0xFFF39C12),
-      const Color(0xFF8E44AD),
-      const Color(0xFF16A085),
-      const Color(0xFFD35400),
-    ];
+    final List<Color> baseColors = List.from(AppColors.cardGameColors);
 
     cardColors = [...baseColors, ...baseColors];
     cardColors.shuffle();
@@ -147,7 +137,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => Dialog(
-        backgroundColor: const Color(0xFF16142A),
+        backgroundColor: AppColors.surfaceDark,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: Padding(
           padding: const EdgeInsets.all(28),
@@ -156,7 +146,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
             children: [
               const Text(
                 '✦',
-                style: TextStyle(color: Color(0xFFCFC5F0), fontSize: 32),
+                style: TextStyle(color: AppColors.primaryLight, fontSize: 32),
               ),
               const SizedBox(height: 12),
               const Text(
@@ -179,7 +169,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               Text(
                 'Score: $score',
                 style: const TextStyle(
-                  color: Color(0xFFB8A8E8),
+                  color: AppColors.primary,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                 ),
@@ -194,14 +184,14 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFCFC5F0),
+                    color: AppColors.primaryLight,
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: const Center(
                     child: Text(
                       'PLAY AGAIN',
                       style: TextStyle(
-                        color: Color(0xFF1A1040),
+                        color: AppColors.surfaceDeep,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
@@ -224,7 +214,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     final double cardHeight = cardWidth * 1.25;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -241,7 +231,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                       height: 42,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF1C1A34),
+                        color: AppColors.surface,
                       ),
                       child: const Icon(
                         Icons.arrow_back_rounded,
@@ -254,10 +244,10 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                   // Stats pill
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF16142A),
+                      color: AppColors.surfaceDark,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFFB8A8E8).withValues(alpha: 0.15),
+                        color: AppColors.primary.withValues(alpha: 0.15),
                         width: 1,
                       ),
                     ),
@@ -316,7 +306,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                 Text(
                                   '$score',
                                   style: const TextStyle(
-                                    color: Color(0xFFB8A8E8),
+                                    color: AppColors.primary,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -355,10 +345,10 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                         onTap: () => _onCardTap(index),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFF16142A),
+                            color: AppColors.surfaceDark,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: const Color(0xFFB8A8E8)
+                              color: AppColors.primary
                                   .withValues(alpha: 0.22),
                               width: 1.5,
                             ),
@@ -367,7 +357,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                             child: Icon(
                               Icons.question_mark_rounded,
                               color:
-                                  const Color(0xFFB8A8E8).withValues(alpha: 0.45),
+                                  AppColors.primary.withValues(alpha: 0.45),
                               size: 26,
                             ),
                           ),

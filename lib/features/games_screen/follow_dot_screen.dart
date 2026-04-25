@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:brainapp/core/constants/constants.dart';
 
 class FollowDotScreen extends StatefulWidget {
   const FollowDotScreen({super.key});
@@ -138,7 +139,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: size == null
           ? const SizedBox()
           : SafeArea(
@@ -155,7 +156,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                         height: 42,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFF1C1A34),
+                          color: AppColors.surface,
                         ),
                         child: const Icon(
                           Icons.arrow_back_rounded,
@@ -174,13 +175,13 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                       padding: const EdgeInsets.symmetric(
                           horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF16142A),
+                        color: AppColors.surfaceDark,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         _formattedTime,
                         style: const TextStyle(
-                          color: Color(0xFFB8A8E8),
+                          color: AppColors.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.5,
@@ -201,11 +202,11 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFCFC5F0),
+                              color: AppColors.primaryLight,
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFFB8A8E8)
+                                  color: AppColors.primary
                                       .withValues(alpha: 0.5),
                                   blurRadius: 20,
                                   spreadRadius: 4,
@@ -239,11 +240,11 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 48, vertical: 18),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFCFC5F0),
+                                color: AppColors.primaryLight,
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFFB8A8E8)
+                                    color: AppColors.primary
                                         .withValues(alpha: 0.3),
                                     blurRadius: 24,
                                     spreadRadius: 4,
@@ -255,14 +256,14 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                                 children: [
                                   Icon(
                                     Icons.play_circle_outline_rounded,
-                                    color: Color(0xFF1A1040),
+                                    color: AppColors.surfaceDeep,
                                     size: 22,
                                   ),
                                   SizedBox(width: 10),
                                   Text(
                                     'START SESSION',
                                     style: TextStyle(
-                                      color: Color(0xFF1A1040),
+                                      color: AppColors.surfaceDeep,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1.2,
@@ -296,13 +297,13 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                       child: Text(
                         'GO',
                         style: TextStyle(
-                          color: const Color(0xFFCFC5F0),
+                          color: AppColors.primaryLight,
                           fontSize: 56,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 8.0,
                           shadows: [
                             Shadow(
-                              color: const Color(0xFFB8A8E8)
+                              color: AppColors.primary
                                   .withValues(alpha: 0.6),
                               blurRadius: 30,
                             ),

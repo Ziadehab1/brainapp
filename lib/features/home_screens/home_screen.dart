@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:brainapp/features/excersise_screen/exercise_screen.dart';
 import 'package:brainapp/features/games_screen/games_screen.dart';
 import 'package:brainapp/features/tutorials_screen/tutorials.dart';
 import 'package:brainapp/features/more_screen/more_screen.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           // Full-screen page content
@@ -62,7 +63,7 @@ class _BottomNav extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           decoration: BoxDecoration(
-            color: const Color(0xFF1C1A34),
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(32),
             boxShadow: [
               BoxShadow(
@@ -134,12 +135,12 @@ class _NavItem extends StatelessWidget {
               icon,
               size: 22,
               color: isSelected
-                  ? const Color(0xFFB8A8E8)
+                  ? AppColors.primary
                   : Colors.white.withValues(alpha: 0.35),
               shadows: isSelected
                   ? const [
-                      Shadow(color: Color(0xFFB8A8E8), blurRadius: 10),
-                      Shadow(color: Color(0xFFB8A8E8), blurRadius: 22),
+                      Shadow(color: AppColors.primary, blurRadius: 10),
+                      Shadow(color: AppColors.primary, blurRadius: 22),
                     ]
                   : null,
             ),
@@ -148,7 +149,7 @@ class _NavItem extends StatelessWidget {
               label,
               style: TextStyle(
                 color: isSelected
-                    ? const Color(0xFFB8A8E8)
+                    ? AppColors.primary
                     : Colors.white.withValues(alpha: 0.35),
                 fontSize: 8,
                 fontWeight: FontWeight.w700,

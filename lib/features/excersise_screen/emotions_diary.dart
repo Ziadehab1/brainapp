@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class EmotionsDiaryScreen extends StatefulWidget {
   const EmotionsDiaryScreen({super.key});
@@ -31,16 +32,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
     '🤩', '😱', '😳', '😇', '🙃',
   ];
 
-  static const List<Color> _palette = [
-    Color(0xFF2A1F5A),
-    Color(0xFF3B2F6E),
-    Color(0xFF4A3B8C),
-    Color(0xFF5A4A9E),
-    Color(0xFF6B5BAE),
-    Color(0xFF1A2A3A),
-    Color(0xFF1A3A2A),
-    Color(0xFF3A1A2A),
-  ];
+  static const List<Color> _palette = AppColors.emotionPalette;
 
   String selectedEmoji = '';
   final List<_DiaryEntry> _entries = [];
@@ -88,7 +80,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(msg, style: const TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF2A2050),
+        backgroundColor: AppColors.surfaceMedium,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -104,7 +96,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +113,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                       height: 42,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF1C1A34),
+                        color: AppColors.surface,
                       ),
                       child: const Icon(
                         Icons.arrow_back_rounded,
@@ -178,14 +170,14 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                               padding: EdgeInsets.all(isSelected ? 10 : 8),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xFF2A2050)
-                                    : const Color(0xFF16142A),
+                                    ? AppColors.surfaceMedium
+                                    : AppColors.surfaceDark,
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFFB8A8E8)
+                                      ? AppColors.primary
                                           .withValues(alpha: 0.7)
-                                      : const Color(0xFFB8A8E8)
+                                      : AppColors.primary
                                           .withValues(alpha: 0.1),
                                   width: 1.5,
                                 ),
@@ -220,11 +212,11 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                     // Text field
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF16142A),
+                        color: AppColors.surfaceDark,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color:
-                              const Color(0xFFB8A8E8).withValues(alpha: 0.15),
+                              AppColors.primary.withValues(alpha: 0.15),
                           width: 1,
                         ),
                       ),
@@ -259,19 +251,19 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 28, vertical: 14),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFCFC5F0),
+                            color: AppColors.primaryLight,
                             borderRadius: BorderRadius.circular(14),
                           ),
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(Icons.check_rounded,
-                                  color: Color(0xFF1A1040), size: 18),
+                                  color: AppColors.surfaceDeep, size: 18),
                               SizedBox(width: 8),
                               Text(
                                 'Save Entry',
                                 style: TextStyle(
-                                  color: Color(0xFF1A1040),
+                                  color: AppColors.surfaceDeep,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -326,7 +318,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                           return Container(
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF16142A),
+                              color: AppColors.surfaceDark,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
                                 color: noteColor.withValues(alpha: 0.35),
@@ -379,7 +371,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                                   onTap: () => deleteNote(index),
                                   child: const Icon(
                                     Icons.delete_outline_rounded,
-                                    color: Color(0xFFE87878),
+                                    color: AppColors.error,
                                     size: 20,
                                   ),
                                 ),

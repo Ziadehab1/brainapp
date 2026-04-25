@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class ExerciseDetailData {
   final String title;
@@ -30,7 +31,7 @@ class ExerciseDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -51,7 +52,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                         height: 42,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFF1C1A34),
+                          color: AppColors.surface,
                         ),
                         child: const Icon(
                           Icons.arrow_back_rounded,
@@ -68,7 +69,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                           height: 52,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFFD0C8F0),
+                            color: AppColors.primaryLighter,
                           ),
                           child: const Center(child: _BrainIcon()),
                         ),
@@ -212,7 +213,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF16142A),
+                    color: AppColors.surfaceDark,
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
@@ -238,7 +239,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                                 height: 7,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color(0xFFB8A8E8),
+                                  color: AppColors.primary,
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -270,19 +271,19 @@ class ExerciseDetailScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 58,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFCFC5F0),
+                      color: AppColors.primaryLight,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.play_circle_outline_rounded,
-                            color: Color(0xFF1A1040), size: 22),
+                            color: AppColors.surfaceDeep, size: 22),
                         SizedBox(width: 10),
                         Text(
                           'START SESSION',
                           style: TextStyle(
-                            color: Color(0xFF1A1040),
+                            color: AppColors.surfaceDeep,
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1.2,
@@ -316,7 +317,7 @@ class _BrainPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF4A3B8C)
+      ..color = AppColors.primaryDeep
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.8
       ..strokeCap = StrokeCap.round

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:brainapp/features/home_screens/home_screen.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -58,7 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D2B),
+      backgroundColor: AppColors.backgroundOnboarding,
       body: SafeArea(
         child: Column(
           children: [
@@ -127,7 +128,7 @@ class _OnboardingPage extends StatelessWidget {
                   height: 90,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFD0C8F0),
+                    color: AppColors.primaryLighter,
                   ),
                   child: const Center(child: _SmallBrainIcon()),
                 ),
@@ -153,9 +154,9 @@ class _OnboardingPage extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: const Color(0xFF1C1C3A),
+                color: AppColors.surfaceOnboarding,
               ),
-              child: Icon(data.icon, color: const Color(0xFFB8A8E8), size: 34),
+              child: Icon(data.icon, color: AppColors.primary, size: 34),
             ),
 
             const SizedBox(height: 40),
@@ -219,7 +220,7 @@ class _PageIndicator extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             color: isActive
-                ? const Color(0xFFB8A8E8)
+                ? AppColors.primary
                 : Colors.white.withValues(alpha: 0.25),
           ),
         );
@@ -243,7 +244,7 @@ class _ContinueButton extends StatelessWidget {
         height: 58,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: const Color(0xFFCFC5F0),
+          color: AppColors.primaryLight,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +252,7 @@ class _ContinueButton extends StatelessWidget {
             Text(
               label,
               style: const TextStyle(
-                color: Color(0xFF1A1040),
+                color: AppColors.surfaceDeep,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.2,
@@ -260,7 +261,7 @@ class _ContinueButton extends StatelessWidget {
             const SizedBox(width: 8),
             const Icon(
               Icons.arrow_forward,
-              color: Color(0xFF1A1040),
+              color: AppColors.surfaceDeep,
               size: 18,
             ),
           ],
@@ -286,7 +287,7 @@ class _BrainPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF4A3B8C)
+      ..color = AppColors.primaryDeep
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.round

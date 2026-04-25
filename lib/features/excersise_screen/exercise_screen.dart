@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainapp/features/excersise_screen/breathing_excersice.dart';
 import 'package:brainapp/features/excersise_screen/emotions_diary.dart';
 import 'package:brainapp/features/excersise_screen/mood_diary.dart';
 import 'package:brainapp/features/excersise_screen/exercise_detail_screen.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class ExerciseScreen extends StatelessWidget {
   const ExerciseScreen({super.key});
@@ -21,8 +22,8 @@ class ExerciseScreen extends StatelessWidget {
       ],
       icon: Icons.air_rounded,
       thumbHeight: 155,
-      gradientStart: const Color(0xFF1A3A3A),
-      gradientEnd: const Color(0xFF2A6A6A),
+      gradientStart: AppColors.exerciseTealStart,
+      gradientEnd: AppColors.exerciseTealEnd,
       destination: const BreathingExerciseScreen(),
     ),
     _ExerciseItem(
@@ -37,8 +38,8 @@ class ExerciseScreen extends StatelessWidget {
       ],
       icon: Icons.favorite_border_rounded,
       thumbHeight: 185,
-      gradientStart: const Color(0xFF3A1A2A),
-      gradientEnd: const Color(0xFF7A2A5A),
+      gradientStart: AppColors.exercisePinkStart,
+      gradientEnd: AppColors.exercisePinkEnd,
       destination: const EmotionsDiaryScreen(),
     ),
     _ExerciseItem(
@@ -53,8 +54,8 @@ class ExerciseScreen extends StatelessWidget {
       ],
       icon: Icons.mood_rounded,
       thumbHeight: 130,
-      gradientStart: const Color(0xFF2A1F5A),
-      gradientEnd: const Color(0xFF5A4A9E),
+      gradientStart: AppColors.exercisePurpleStart,
+      gradientEnd: AppColors.exercisePurpleEnd,
       destination: const MoodDiaryScreen(),
     ),
   ];
@@ -158,7 +159,7 @@ class _ExerciseCard extends StatelessWidget {
           : null,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF16142A),
+          color: AppColors.surfaceDark,
           borderRadius: BorderRadius.circular(18),
         ),
         clipBehavior: Clip.hardEdge,

@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainapp/features/tutorials_screen/video_player.dart';
 import 'package:brainapp/features/tutorials_screen/audio_player.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 enum _Filter { all, video, audio }
 
@@ -22,8 +23,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.video,
       duration: '8:45',
       thumbHeight: 190,
-      gradientStart: Color(0xFF3B2F6E),
-      gradientEnd: Color(0xFF6B5B9E),
+      gradientStart: AppColors.tutorialPurpleStart,
+      gradientEnd: AppColors.tutorialPurpleEnd,
       videoUrl:
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     ),
@@ -33,8 +34,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.audio,
       duration: '12:20',
       thumbHeight: 130,
-      gradientStart: Color(0xFF1A3A2A),
-      gradientEnd: Color(0xFF2E6B4A),
+      gradientStart: AppColors.tutorialGreenStart,
+      gradientEnd: AppColors.tutorialGreenEnd,
       audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     ),
     _Tutorial(
@@ -43,8 +44,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.video,
       duration: '6:30',
       thumbHeight: 140,
-      gradientStart: Color(0xFF3A2020),
-      gradientEnd: Color(0xFF7A3A3A),
+      gradientStart: AppColors.tutorialRedStart,
+      gradientEnd: AppColors.tutorialRedEnd,
       videoUrl:
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     ),
@@ -54,8 +55,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.audio,
       duration: '9:10',
       thumbHeight: 200,
-      gradientStart: Color(0xFF1A2A3A),
-      gradientEnd: Color(0xFF2A4A6A),
+      gradientStart: AppColors.tutorialBlueStart,
+      gradientEnd: AppColors.tutorialBlueEnd,
       audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     ),
     _Tutorial(
@@ -64,8 +65,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.video,
       duration: '14:05',
       thumbHeight: 155,
-      gradientStart: Color(0xFF2A1A3A),
-      gradientEnd: Color(0xFF5A3A7A),
+      gradientStart: AppColors.tutorialVioletStart,
+      gradientEnd: AppColors.tutorialVioletEnd,
       videoUrl:
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     ),
@@ -75,8 +76,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.audio,
       duration: '10:00',
       thumbHeight: 170,
-      gradientStart: Color(0xFF1A1A3A),
-      gradientEnd: Color(0xFF3A3A6A),
+      gradientStart: AppColors.tutorialNavyStart,
+      gradientEnd: AppColors.tutorialNavyEnd,
       audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     ),
     _Tutorial(
@@ -85,8 +86,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.video,
       duration: '5:15',
       thumbHeight: 125,
-      gradientStart: Color(0xFF2A3A1A),
-      gradientEnd: Color(0xFF4A7A2A),
+      gradientStart: AppColors.tutorialLimeStart,
+      gradientEnd: AppColors.tutorialLimeEnd,
       videoUrl:
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     ),
@@ -96,8 +97,8 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
       type: _Filter.audio,
       duration: '20:00',
       thumbHeight: 180,
-      gradientStart: Color(0xFF1E1A3E),
-      gradientEnd: Color(0xFF4A3A8E),
+      gradientStart: AppColors.tutorialIndigoStart,
+      gradientEnd: AppColors.tutorialIndigoEnd,
       audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     ),
   ];
@@ -210,11 +211,11 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: isActive ? const Color(0xFF2A2050) : Colors.transparent,
+          color: isActive ? AppColors.surfaceMedium : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isActive
-                ? const Color(0xFFB8A8E8).withValues(alpha: 0.4)
+                ? AppColors.primary.withValues(alpha: 0.4)
                 : Colors.transparent,
             width: 1,
           ),
@@ -223,7 +224,7 @@ class _FilterChip extends StatelessWidget {
           label,
           style: TextStyle(
             color: isActive
-                ? const Color(0xFFB8A8E8)
+                ? AppColors.primary
                 : Colors.white.withValues(alpha: 0.4),
             fontSize: 10,
             fontWeight: FontWeight.w700,
@@ -274,7 +275,7 @@ class _TutorialCard extends StatelessWidget {
       },
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF16142A),
+          color: AppColors.surfaceDark,
           borderRadius: BorderRadius.all(Radius.circular(18)),
         ),
         clipBehavior: Clip.hardEdge,

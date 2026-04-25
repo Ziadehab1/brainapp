@@ -1,6 +1,7 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoUrl;
@@ -74,7 +75,7 @@ class _VideoScreenState extends State<VideoScreen> {
                       child: VideoPlayer(_controller),
                     )
                   : const CircularProgressIndicator(
-                      color: Color(0xFFB8A8E8),
+                      color: AppColors.primary,
                     ),
             ),
 
@@ -97,7 +98,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           height: 42,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xFF1C1A34),
+                            color: AppColors.surface,
                           ),
                           child: const Icon(
                             Icons.arrow_back_rounded,
@@ -156,7 +157,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                 _controller,
                                 allowScrubbing: true,
                                 colors: VideoProgressColors(
-                                  playedColor: const Color(0xFFB8A8E8),
+                                  playedColor: AppColors.primary,
                                   bufferedColor:
                                       Colors.white.withValues(alpha: 0.3),
                                   backgroundColor:

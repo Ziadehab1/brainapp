@@ -1,6 +1,7 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class AudioScreen extends StatefulWidget {
   final String audioUrl;
@@ -116,7 +117,7 @@ class _AudioScreenState extends State<AudioScreen>
     final curSec = _position.inSeconds.clamp(0, _duration.inSeconds).toDouble();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -133,7 +134,7 @@ class _AudioScreenState extends State<AudioScreen>
                   height: 42,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF1C1A34),
+                    color: AppColors.surface,
                   ),
                   child: const Icon(
                     Icons.arrow_back_rounded,
@@ -293,12 +294,12 @@ class _AudioScreenState extends State<AudioScreen>
                       const RoundSliderThumbShape(enabledThumbRadius: 6),
                   overlayShape:
                       const RoundSliderOverlayShape(overlayRadius: 14),
-                  activeTrackColor: const Color(0xFFB8A8E8),
+                  activeTrackColor: AppColors.primary,
                   inactiveTrackColor:
                       Colors.white.withValues(alpha: 0.15),
-                  thumbColor: const Color(0xFFCFC5F0),
+                  thumbColor: AppColors.primaryLight,
                   overlayColor:
-                      const Color(0xFFB8A8E8).withValues(alpha: 0.2),
+                      AppColors.primary.withValues(alpha: 0.2),
                 ),
                 child: Slider(
                   value: curSec,
@@ -369,13 +370,13 @@ class _AudioScreenState extends State<AudioScreen>
                       height: 68,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFFCFC5F0),
+                        color: AppColors.primaryLight,
                       ),
                       child: _isLoading
                           ? const Padding(
                               padding: EdgeInsets.all(20),
                               child: CircularProgressIndicator(
-                                color: Color(0xFF1A1040),
+                                color: AppColors.surfaceDeep,
                                 strokeWidth: 2.5,
                               ),
                             )
@@ -383,7 +384,7 @@ class _AudioScreenState extends State<AudioScreen>
                               _isPlaying
                                   ? Icons.pause_rounded
                                   : Icons.play_arrow_rounded,
-                              color: const Color(0xFF1A1040),
+                              color: AppColors.surfaceDeep,
                               size: 34,
                             ),
                     ),

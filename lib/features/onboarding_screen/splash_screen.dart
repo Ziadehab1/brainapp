@@ -1,7 +1,8 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:brainapp/features/onboarding_screen/on_boarding_screen.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -78,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0B1E),
+      backgroundColor: AppColors.backgroundSplash,
       body: SafeArea(
         child: Stack(
           children: [
@@ -102,13 +103,13 @@ class _SplashScreenState extends State<SplashScreen>
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              Color(0xFFD0C8F0),
-                              Color(0xFFB8A8E8),
+                              AppColors.primaryLighter,
+                              AppColors.primary,
                             ],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF8B7FD4).withValues(alpha: 0.4),
+                              color: AppColors.primaryMuted.withValues(alpha: 0.4),
                               blurRadius: 40,
                               spreadRadius: 8,
                             ),
@@ -271,7 +272,7 @@ class _BrainPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFF2D2060)
+      ..color = AppColors.surfaceOverlay
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round
@@ -347,7 +348,7 @@ class _BrainPainter extends CustomPainter {
 
     // Bottom stem
     final stemPaint = Paint()
-      ..color = const Color(0xFF2D2060)
+      ..color = AppColors.surfaceOverlay
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round;

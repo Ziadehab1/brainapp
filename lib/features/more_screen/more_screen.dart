@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -20,15 +21,15 @@ class MoreScreen extends StatelessWidget {
                   height: 64,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF2A2050),
+                    color: AppColors.surfaceMedium,
                     border: Border.all(
-                      color: const Color(0xFFB8A8E8).withValues(alpha: 0.4),
+                      color: AppColors.primary.withValues(alpha: 0.4),
                       width: 2,
                     ),
                   ),
                   child: const Icon(
                     Icons.person_outline_rounded,
-                    color: Color(0xFFB8A8E8),
+                    color: AppColors.primary,
                     size: 32,
                   ),
                 ),
@@ -117,18 +118,18 @@ class _MoreTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isDestructive
-        ? const Color(0xFFE87878)
+        ? AppColors.error
         : Colors.white;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF16142A),
+        color: AppColors.surfaceDark,
         borderRadius: BorderRadius.circular(14),
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-        leading: Icon(icon, color: isDestructive ? color : const Color(0xFFB8A8E8), size: 22),
+        leading: Icon(icon, color: isDestructive ? color : AppColors.primary, size: 22),
         title: Text(
           label,
           style: TextStyle(

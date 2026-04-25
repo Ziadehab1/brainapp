@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class _Mood {
   final String id;
@@ -46,35 +47,35 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
       title: 'Happy',
       mainEmoji: '😄',
       alternatives: ['🙂', '😊', '🤗', '😍'],
-      gradient: [Color(0xFF2A1F5A), Color(0xFF6B5BAE)],
+      gradient: [AppColors.exercisePurpleStart, AppColors.moodHappyEnd],
     ),
     _Mood(
       id: 'stressed',
       title: 'Stressed',
       mainEmoji: '😵‍💫',
       alternatives: ['😫', '😖', '😣', '😰'],
-      gradient: [Color(0xFF3A1A1A), Color(0xFF7A3A2A)],
+      gradient: [AppColors.moodAngryStart, AppColors.moodAngryEnd],
     ),
     _Mood(
       id: 'calm',
       title: 'Calm',
       mainEmoji: '😌',
       alternatives: ['😇', '😴', '🌿', '🕊️'],
-      gradient: [Color(0xFF1A3A3A), Color(0xFF2A6A5A)],
+      gradient: [AppColors.exerciseTealStart, AppColors.moodCalmEnd],
     ),
     _Mood(
       id: 'overthinking',
       title: 'Overthinking',
       mainEmoji: '🤯',
       alternatives: ['😕', '😟', '😩', '🧠'],
-      gradient: [Color(0xFF1A1A3A), Color(0xFF3A2A6A)],
+      gradient: [AppColors.tutorialNavyStart, AppColors.moodSadEnd],
     ),
     _Mood(
       id: 'sad',
       title: 'Sad',
       mainEmoji: '😢',
       alternatives: ['😔', '😞', '😣', '💔'],
-      gradient: [Color(0xFF1A2A3A), Color(0xFF2A4A6A)],
+      gradient: [AppColors.tutorialBlueStart, AppColors.tutorialBlueEnd],
     ),
   ];
 
@@ -125,7 +126,7 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(msg, style: const TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF2A2050),
+        backgroundColor: AppColors.surfaceMedium,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -135,7 +136,7 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +153,7 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
                       height: 42,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF1C1A34),
+                        color: AppColors.surface,
                       ),
                       child: const Icon(
                         Icons.arrow_back_rounded,
@@ -247,7 +248,7 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
                                   alignment: Alignment.centerRight,
                                   padding: const EdgeInsets.only(right: 20),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFE87878),
+                                    color: AppColors.error,
                                     borderRadius: BorderRadius.circular(14),
                                   ),
                                   child: const Icon(Icons.delete_outline_rounded,
@@ -256,7 +257,7 @@ class _MoodDiaryScreenState extends State<MoodDiaryScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF16142A),
+                                    color: AppColors.surfaceDark,
                                     borderRadius: BorderRadius.circular(14),
                                     border: Border.all(
                                       color: saved.gradient.last

@@ -1,5 +1,6 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:brainapp/core/constants/constants.dart';
 
 class BreathingExerciseScreen extends StatefulWidget {
   const BreathingExerciseScreen({super.key});
@@ -118,7 +119,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0B1E),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Stack(
           children: [
@@ -133,7 +134,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                   height: 42,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFF1C1A34),
+                    color: AppColors.surface,
                   ),
                   child: const Icon(
                     Icons.arrow_back_rounded,
@@ -171,7 +172,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                     '$countdown',
                     style: const TextStyle(
                       fontSize: 42,
-                      color: Color(0xFFB8A8E8),
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -189,7 +190,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: const Color(0xFFB8A8E8).withValues(alpha: 0.12),
+                            color: AppColors.primary.withValues(alpha: 0.12),
                             width: 1.5,
                           ),
                         ),
@@ -201,10 +202,10 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                         height: 240,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: const Color(0xFF1C1A34),
+                          color: AppColors.surface,
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFFB8A8E8).withValues(alpha: 0.15),
+                              color: AppColors.primary.withValues(alpha: 0.15),
                               blurRadius: 30,
                               spreadRadius: 4,
                             ),
@@ -222,13 +223,13 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
                               colors: [
-                                const Color(0xFFD0C8F0).withValues(alpha: 0.9),
-                                const Color(0xFFB8A8E8).withValues(alpha: 0.4),
+                                AppColors.primaryLighter.withValues(alpha: 0.9),
+                                AppColors.primary.withValues(alpha: 0.4),
                               ],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFFB8A8E8)
+                                color: AppColors.primary
                                     .withValues(alpha: 0.35),
                                 blurRadius: 24,
                                 spreadRadius: 6,
@@ -243,7 +244,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                         showReady ? '' : '$innerCount',
                         style: const TextStyle(
                           fontSize: 52,
-                          color: Color(0xFF1A1040),
+                          color: AppColors.surfaceDeep,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -286,11 +287,11 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 52, vertical: 18),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFCFC5F0),
+                              color: AppColors.primaryLight,
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFFB8A8E8)
+                                  color: AppColors.primary
                                       .withValues(alpha: 0.3),
                                   blurRadius: 20,
                                   spreadRadius: 2,
@@ -300,7 +301,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                             child: const Text(
                               'REPEAT',
                               style: TextStyle(
-                                color: Color(0xFF1A1040),
+                                color: AppColors.surfaceDeep,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 1.5,
