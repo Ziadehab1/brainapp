@@ -1,8 +1,7 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainflow/features/excersise_screen/breathing_excersice.dart';
 import 'package:brainflow/features/excersise_screen/emotions_diary.dart';
-import 'package:brainflow/features/excersise_screen/mood_diary.dart';
 import 'package:brainflow/features/excersise_screen/exercise_detail_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
 
@@ -42,22 +41,6 @@ class ExerciseScreen extends StatelessWidget {
       gradientEnd: AppColors.exercisePinkEnd,
       destination: const EmotionsDiaryScreen(),
     ),
-    _ExerciseItem(
-      title: 'Mood Diary',
-      duration: '5 - 20 MIN',
-      description:
-          'Log and explore your daily mood through interactive mood cards.',
-      highlights: [
-        'Daily mood logging',
-        'Emotional variety',
-        'Swipe to delete',
-      ],
-      icon: Icons.mood_rounded,
-      thumbHeight: 130,
-      gradientStart: AppColors.exercisePurpleStart,
-      gradientEnd: AppColors.exercisePurpleEnd,
-      destination: const MoodDiaryScreen(),
-    ),
   ];
 
   @override
@@ -74,7 +57,7 @@ class ExerciseScreen extends StatelessWidget {
                 const Text(
                   'Exercise',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
                   ),
@@ -82,10 +65,7 @@ class ExerciseScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Move your body, sharpen your mind',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.4),
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: AppColors.textDim, fontSize: 13),
                 ),
               ],
             ),
@@ -184,14 +164,10 @@ class _ExerciseCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withValues(alpha: 0.05),
-                        Colors.black.withValues(alpha: 0.45),
-                      ],
+                      colors: [AppColors.shadowVeryLight, AppColors.shadowStrong],
                     ),
                   ),
                 ),
-                // Duration badge
                 Positioned(
                   top: 10,
                   right: 10,
@@ -201,13 +177,13 @@ class _ExerciseCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
+                      color: AppColors.overlayMedium,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       item.duration,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.0,
@@ -215,7 +191,6 @@ class _ExerciseCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Center icon
                 Positioned.fill(
                   child: Center(
                     child: Container(
@@ -223,13 +198,17 @@ class _ExerciseCard extends StatelessWidget {
                       height: 44,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: AppColors.textGhost,
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.4),
+                          color: AppColors.textDim,
                           width: 1.5,
                         ),
                       ),
-                      child: Icon(item.icon, color: Colors.white, size: 22),
+                      child: const Icon(
+                        Icons.air_rounded,
+                        color: AppColors.textPrimary,
+                        size: 22,
+                      ),
                     ),
                   ),
                 ),
@@ -243,7 +222,7 @@ class _ExerciseCard extends StatelessWidget {
                   Text(
                     item.title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       height: 1.3,
@@ -253,7 +232,7 @@ class _ExerciseCard extends StatelessWidget {
                   Text(
                     item.description,
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.4),
+                      color: AppColors.textDim,
                       fontSize: 11,
                       height: 1.45,
                     ),

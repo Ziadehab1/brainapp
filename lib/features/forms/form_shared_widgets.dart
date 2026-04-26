@@ -29,7 +29,7 @@ class FormMcqTile extends StatelessWidget {
           border: Border.all(
             color: selected
                 ? AppColors.primary.withValues(alpha: 0.6)
-                : Colors.white.withValues(alpha: 0.06),
+                : AppColors.divider,
             width: 1.5,
           ),
         ),
@@ -46,11 +46,11 @@ class FormMcqTile extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: selected
                       ? AppColors.primary
-                      : Colors.white.withValues(alpha: 0.15),
+                      : AppColors.textGhost,
                   border: Border.all(
                     color: selected
                         ? AppColors.primary
-                        : Colors.white.withValues(alpha: 0.2),
+                        : AppColors.textDisabled,
                     width: 1,
                   ),
                 ),
@@ -65,7 +65,7 @@ class FormMcqTile extends StatelessWidget {
                   style: TextStyle(
                     color: selected
                         ? Colors.white
-                        : Colors.white.withValues(alpha: 0.7),
+                        : AppColors.textSecondary,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.6,
@@ -110,7 +110,7 @@ class FormMcqGrid extends StatelessWidget {
         Text(
           'CHOOSE AS MANY AS APPLY',
           style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.4),
+            color: AppColors.textDim,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.3,
@@ -196,11 +196,11 @@ class _FormOtherTextFieldState extends State<FormOtherTextField> {
             controller: widget.controller,
             maxLines: 3,
             minLines: 3,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: InputDecoration(
               hintText: 'Describe...',
               hintStyle: TextStyle(
-                color: Colors.white.withValues(alpha: 0.25),
+                color: AppColors.textDisabled,
                 fontSize: 14,
               ),
               border: InputBorder.none,
@@ -212,7 +212,7 @@ class _FormOtherTextFieldState extends State<FormOtherTextField> {
           Text(
             '${widget.controller.text.length} CHARS',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.3),
+              color: AppColors.textHint,
               fontSize: 10,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.0,

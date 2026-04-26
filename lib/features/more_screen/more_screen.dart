@@ -47,7 +47,7 @@ class MoreScreen extends StatelessWidget {
                     const Text(
                       'Emanuel',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -55,7 +55,7 @@ class MoreScreen extends StatelessWidget {
                     Text(
                       'Brain Flow Member',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 13,
                       ),
                     ),
@@ -152,7 +152,7 @@ class _SectionLabel extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: Colors.white.withValues(alpha: 0.35),
+        color: AppColors.textFaint,
         fontSize: 11,
         letterSpacing: 1.8,
         fontWeight: FontWeight.w600,
@@ -174,9 +174,7 @@ class _MoreTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive
-        ? AppColors.error
-        : Colors.white;
+    final color = isDestructive ? AppColors.error : AppColors.textPrimary;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -198,7 +196,7 @@ class _MoreTile extends StatelessWidget {
         trailing: isDestructive
             ? null
             : Icon(Icons.chevron_right_rounded,
-                color: Colors.white.withValues(alpha: 0.25), size: 20),
+                color: AppColors.textDisabled, size: 20),
         onTap: () {},
       ),
     );

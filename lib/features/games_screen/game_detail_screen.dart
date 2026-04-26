@@ -58,7 +58,7 @@ class GameDetailScreen extends StatelessWidget {
                         ),
                         child: const Icon(
                           Icons.arrow_back_rounded,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           size: 20,
                         ),
                       ),
@@ -81,7 +81,7 @@ class GameDetailScreen extends StatelessWidget {
                           child: Text(
                             '✦',
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.8),
+                              color: AppColors.textStrong,
                               fontSize: 13,
                             ),
                           ),
@@ -113,8 +113,8 @@ class GameDetailScreen extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withValues(alpha: 0.05),
-                              Colors.black.withValues(alpha: 0.4),
+                              AppColors.shadowVeryLight,
+                              AppColors.shadowMedium,
                             ],
                           ),
                         ),
@@ -127,13 +127,13 @@ class GameDetailScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 5),
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.45),
+                            color: AppColors.shadowStrong,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             data.tag,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.5,
@@ -151,7 +151,7 @@ class GameDetailScreen extends StatelessWidget {
                 Text(
                   data.title,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 28,
                     fontWeight: FontWeight.w800,
                   ),
@@ -165,13 +165,13 @@ class GameDetailScreen extends StatelessWidget {
                     Icon(
                       Icons.access_time_rounded,
                       size: 14,
-                      color: Colors.white.withValues(alpha: 0.4),
+                      color: AppColors.textDim,
                     ),
                     const SizedBox(width: 5),
                     Text(
                       data.duration,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -183,14 +183,14 @@ class GameDetailScreen extends StatelessWidget {
                         height: 4,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.3),
+                          color: AppColors.textHint,
                         ),
                       ),
                     ),
                     Text(
                       'GAME SESSION',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.0,
@@ -205,7 +205,7 @@ class GameDetailScreen extends StatelessWidget {
                 Text(
                   data.description,
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.55),
+                    color: AppColors.textMuted,
                     fontSize: 15,
                     height: 1.65,
                     fontWeight: FontWeight.w400,
@@ -228,7 +228,7 @@ class GameDetailScreen extends StatelessWidget {
                       Text(
                         'SESSION HIGHLIGHTS',
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.35),
+                          color: AppColors.textFaint,
                           fontSize: 11,
                           letterSpacing: 1.8,
                           fontWeight: FontWeight.w600,
@@ -252,7 +252,7 @@ class GameDetailScreen extends StatelessWidget {
                               Text(
                                 h,
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.textPrimary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),

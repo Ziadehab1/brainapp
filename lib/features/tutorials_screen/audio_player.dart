@@ -138,7 +138,7 @@ class _AudioScreenState extends State<AudioScreen>
                   ),
                   child: const Icon(
                     Icons.arrow_back_rounded,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     size: 20,
                   ),
                 ),
@@ -232,7 +232,7 @@ class _AudioScreenState extends State<AudioScreen>
                               ),
                               child: const Icon(
                                 Icons.graphic_eq_rounded,
-                                color: Colors.white,
+                                color: AppColors.textPrimary,
                                 size: 48,
                               ),
                             ),
@@ -268,7 +268,7 @@ class _AudioScreenState extends State<AudioScreen>
               Text(
                 widget.title,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
                 ),
@@ -277,7 +277,7 @@ class _AudioScreenState extends State<AudioScreen>
               Text(
                 'AUDIO COURSE',
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.35),
+                  color: AppColors.textFaint,
                   fontSize: 11,
                   letterSpacing: 1.8,
                   fontWeight: FontWeight.w600,
@@ -296,7 +296,7 @@ class _AudioScreenState extends State<AudioScreen>
                       const RoundSliderOverlayShape(overlayRadius: 14),
                   activeTrackColor: AppColors.primary,
                   inactiveTrackColor:
-                      Colors.white.withValues(alpha: 0.15),
+                      AppColors.textGhost,
                   thumbColor: AppColors.primaryLight,
                   overlayColor:
                       AppColors.primary.withValues(alpha: 0.2),
@@ -318,7 +318,7 @@ class _AudioScreenState extends State<AudioScreen>
                     Text(
                       _format(_position),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -326,7 +326,7 @@ class _AudioScreenState extends State<AudioScreen>
                     Text(
                       _format(_duration),
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -350,11 +350,11 @@ class _AudioScreenState extends State<AudioScreen>
                       height: 48,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.07),
+                        color: AppColors.divider,
                       ),
                       child: const Icon(
                         Icons.replay_10_rounded,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 24,
                       ),
                     ),
@@ -401,11 +401,11 @@ class _AudioScreenState extends State<AudioScreen>
                       height: 48,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.07),
+                        color: AppColors.divider,
                       ),
                       child: const Icon(
                         Icons.forward_10_rounded,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 24,
                       ),
                     ),

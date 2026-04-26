@@ -121,7 +121,7 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                 const Text(
                   'Latest Tutorials',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
                   ),
@@ -225,7 +225,7 @@ class _FilterChip extends StatelessWidget {
           style: TextStyle(
             color: isActive
                 ? AppColors.primary
-                : Colors.white.withValues(alpha: 0.4),
+                : AppColors.textDim,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.0,
@@ -302,8 +302,8 @@ class _TutorialCard extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.black.withValues(alpha: 0.08),
-                        Colors.black.withValues(alpha: 0.5),
+                        AppColors.shadowSubtle,
+                        AppColors.overlayMedium,
                       ],
                     ),
                   ),
@@ -318,13 +318,13 @@ class _TutorialCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.55),
+                      color: AppColors.overlayHeavy,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       tutorial.tag,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
@@ -340,9 +340,9 @@ class _TutorialCard extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: AppColors.textGhost,
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.45),
+                          color: AppColors.textMuted,
                           width: 1.5,
                         ),
                       ),
@@ -350,7 +350,7 @@ class _TutorialCard extends StatelessWidget {
                         _isVideo
                             ? Icons.play_arrow_rounded
                             : Icons.graphic_eq_rounded,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 22,
                       ),
                     ),
@@ -365,13 +365,13 @@ class _TutorialCard extends StatelessWidget {
                       Icon(
                         Icons.access_time_rounded,
                         size: 11,
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: AppColors.textStrong,
                       ),
                       const SizedBox(width: 3),
                       Text(
                         tutorial.duration,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.8),
+                          color: AppColors.textStrong,
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
                         ),
@@ -391,7 +391,7 @@ class _TutorialCard extends StatelessWidget {
                   Text(
                     tutorial.title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       height: 1.3,
@@ -401,7 +401,7 @@ class _TutorialCard extends StatelessWidget {
                   Text(
                     _isVideo ? 'VIDEO COURSE' : 'AUDIO COURSE',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.35),
+                      color: AppColors.textFaint,
                       fontSize: 10,
                       letterSpacing: 1.4,
                       fontWeight: FontWeight.w600,

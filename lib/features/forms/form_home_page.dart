@@ -34,8 +34,8 @@ final List<_FormData> _allForms = [
     tag: 'CLINICAL',
     description: 'Assess attention sustainability and cognitive stamina.',
     thumbHeight: 170,
-    gradientStart: const Color(0xFF1A1A3A),
-    gradientEnd: const Color(0xFF2E2E6A),
+    gradientStart: AppColors.formNavyStart,
+    gradientEnd: AppColors.formNavyEnd,
     icon: Icons.track_changes_rounded,
     destination: const AssessmentFocusScreen(),
   ),
@@ -45,8 +45,8 @@ final List<_FormData> _allForms = [
     description:
         'Evaluate your susceptibility to common mental distractions and their impact on focus.',
     thumbHeight: 140,
-    gradientStart: const Color(0xFF1A2535),
-    gradientEnd: const Color(0xFF1E3A50),
+    gradientStart: AppColors.formBlueStart,
+    gradientEnd: AppColors.formBlueEnd,
     icon: Icons.bedtime_outlined,
     destination: const MentalDistractionAssessmentScreen(),
   ),
@@ -55,21 +55,11 @@ final List<_FormData> _allForms = [
     tag: 'FOCUS',
     description: 'Get guidance on improving your focus and concentration.',
     thumbHeight: 155,
-    gradientStart: const Color(0xFF2A1A3A),
-    gradientEnd: const Color(0xFF4A2A6A),
+    gradientStart: AppColors.formVioletStart,
+    gradientEnd: AppColors.formVioletEnd,
     icon: Icons.psychology_outlined,
     destination: const HelpOnFocusScreen(),
   ),
-  // _FormData(
-  //   title: 'Emotional Pulse',
-  //   tag: 'MENTAL',
-  //   description: 'Quick check-in on your current emotional state.',
-  //   thumbHeight: 165,
-  //   gradientStart: const Color(0xFF1A1A2E),
-  //   gradientEnd: const Color(0xFF3A2A55),
-  //   icon: Icons.self_improvement_outlined,
-  //   //destination: const EmotionalPulseScreen(),
-  // ),
 ];
 
 class FormHomePage extends StatelessWidget {
@@ -90,7 +80,7 @@ class FormHomePage extends StatelessWidget {
                   IconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios_new_rounded,
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       size: 20,
                     ),
                     onPressed: () => Navigator.pop(context),
@@ -98,7 +88,7 @@ class FormHomePage extends StatelessWidget {
                   const Text(
                     'Evaluations',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
@@ -107,23 +97,23 @@ class FormHomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Assessment Library',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 26,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     'Understand your mind through guided forms',
-                    style: TextStyle(color: Colors.white54, fontSize: 13),
+                    style: TextStyle(color: AppColors.cancelText, fontSize: 13),
                   ),
                 ],
               ),
@@ -184,10 +174,7 @@ class _FormCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withValues(alpha: 0.05),
-                        Colors.black.withValues(alpha: 0.35),
-                      ],
+                      colors: [AppColors.shadowVeryLight, AppColors.shadowLight],
                     ),
                   ),
                 ),
@@ -200,13 +187,13 @@ class _FormCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
+                      color: AppColors.overlayMedium,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       data.tag,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
@@ -245,7 +232,7 @@ class _FormCard extends StatelessWidget {
                   Text(
                     data.title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
@@ -253,10 +240,7 @@ class _FormCard extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     data.description,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.4),
-                      fontSize: 11,
-                    ),
+                    style: TextStyle(color: AppColors.textDim, fontSize: 11),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

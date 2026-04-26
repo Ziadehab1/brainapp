@@ -220,7 +220,7 @@ class _IntroPage extends StatelessWidget {
                   Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF1A1535), Color(0xFF0D0B1E)],
+                        colors: [AppColors.formBgStart, AppColors.background],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -234,7 +234,7 @@ class _IntroPage extends StatelessWidget {
                           gradient: RadialGradient(
                             center: Alignment(0, -0.3),
                             radius: 1.2,
-                            colors: [Color(0xFF3A3060), AppColors.background],
+                            colors: [AppColors.formAccent, AppColors.background],
                           ),
                         ),
                       ),
@@ -273,7 +273,7 @@ class _IntroPage extends StatelessWidget {
                       'FOCUS ASSESSMENT',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         height: 1.3,
@@ -284,7 +284,7 @@ class _IntroPage extends StatelessWidget {
                       'A comprehensive check-in on your attention\nquality throughout today\'s activities.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.5),
+                        color: AppColors.textMuted,
                         fontSize: 13,
                         height: 1.5,
                       ),
@@ -344,7 +344,7 @@ class _QuestionShell extends StatelessWidget {
                       Text(
                         sessionLabel,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.45),
+                          color: AppColors.textMuted,
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.4,
@@ -354,7 +354,7 @@ class _QuestionShell extends StatelessWidget {
                       Text(
                         '$step • $total',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
                         ),
@@ -373,7 +373,7 @@ class _QuestionShell extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: step / total,
                   minHeight: 3,
-                  backgroundColor: Colors.white.withValues(alpha: 0.08),
+                  backgroundColor: AppColors.borderGhost,
                   valueColor: const AlwaysStoppedAnimation(AppColors.primary),
                 ),
               ),
@@ -420,7 +420,7 @@ class _NumberedListPage extends StatelessWidget {
           Text(
             '⭐ $number. $question',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -448,7 +448,7 @@ class _NumberedListPage extends StatelessWidget {
                       border: Border.all(
                         color: isSel
                             ? AppColors.primary.withValues(alpha: 0.5)
-                            : Colors.white.withValues(alpha: 0.06),
+                            : AppColors.divider,
                         width: 1.5,
                       ),
                     ),
@@ -461,7 +461,7 @@ class _NumberedListPage extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: isSel
                                 ? AppColors.primary.withValues(alpha: 0.25)
-                                : const Color(0xFF2A3A6A),
+                                : AppColors.formTipStart,
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Center(
@@ -470,7 +470,7 @@ class _NumberedListPage extends StatelessWidget {
                               style: TextStyle(
                                 color: isSel
                                     ? AppColors.primaryLight
-                                    : const Color(0xFF7A9AE8),
+                                    : AppColors.formTipAccent,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w800,
                               ),
@@ -482,8 +482,8 @@ class _NumberedListPage extends StatelessWidget {
                           opt.substring(3), // strip leading "N  "
                           style: TextStyle(
                             color: isSel
-                                ? Colors.white
-                                : Colors.white.withValues(alpha: 0.75),
+                                ? AppColors.textPrimary
+                                : AppColors.textSecondary,
                             fontSize: 15,
                             fontWeight: isSel
                                 ? FontWeight.w700
@@ -552,7 +552,7 @@ class _SingleSelectPage extends StatelessWidget {
           Text(
             '⭐ $number. $question',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -580,7 +580,7 @@ class _SingleSelectPage extends StatelessWidget {
                     border: Border.all(
                       color: isSel
                           ? AppColors.primary.withValues(alpha: 0.5)
-                          : Colors.white.withValues(alpha: 0.06),
+                          : AppColors.divider,
                       width: 1.5,
                     ),
                   ),
@@ -588,10 +588,10 @@ class _SingleSelectPage extends StatelessWidget {
                     opt,
                     style: TextStyle(
                       color: isSel
-                          ? Colors.white
+                          ? AppColors.textPrimary
                           : isLastAndHighlight
                               ? AppColors.error.withValues(alpha: 0.8)
-                              : Colors.white.withValues(alpha: 0.75),
+                              : AppColors.textSecondary,
                       fontSize: 15,
                       fontWeight:
                           isSel ? FontWeight.w700 : FontWeight.w500,
@@ -663,7 +663,7 @@ class _McqGridPage extends StatelessWidget {
           Text(
             '⭐ $number. $question',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -673,7 +673,7 @@ class _McqGridPage extends StatelessWidget {
           Text(
             'CHOOSE AS MANY AS APPLY',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.4),
+              color: AppColors.textDim,
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.3,
@@ -783,7 +783,7 @@ class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
           Text(
             '⭐ ${widget.number}. ${widget.question}',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -807,11 +807,11 @@ class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
                       expands: true,
                       textAlignVertical: TextAlignVertical.top,
                       style: const TextStyle(
-                          color: Colors.white, fontSize: 15),
+                          color: AppColors.textPrimary, fontSize: 15),
                       decoration: InputDecoration(
                         hintText: widget.placeholder,
                         hintStyle: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.25),
+                          color: AppColors.textDisabled,
                           fontSize: 15,
                         ),
                         border: InputBorder.none,
@@ -823,7 +823,7 @@ class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
                   Text(
                     '${widget.controller.text.length} CHARS',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: AppColors.textHint,
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.0,
@@ -879,7 +879,7 @@ class _CompletionPage extends StatelessWidget {
               const Text(
                 'Focus Logged!',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
                 ),
@@ -889,7 +889,7 @@ class _CompletionPage extends StatelessWidget {
                 'Awesome! Your self-reflection is the first\nstep to mastering your focus.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: AppColors.textMuted,
                   fontSize: 14,
                   height: 1.5,
                 ),
@@ -923,11 +923,11 @@ class _HOFBackButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: AppColors.textGhost,
           shape: BoxShape.circle,
         ),
         child: const Icon(Icons.arrow_back_ios_new,
-            color: Colors.white, size: 16),
+            color: AppColors.textPrimary, size: 16),
       ),
     );
   }
@@ -942,13 +942,13 @@ class _HOFBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: AppColors.textGhost,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.textPrimary,
           fontSize: 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 1.2,
@@ -986,7 +986,7 @@ class _HOFPrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: usePrimary
               ? AppColors.primaryLight.withValues(alpha: 0.9)
-              : Colors.white.withValues(alpha: 0.08),
+              : AppColors.borderGhost,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Row(
@@ -995,7 +995,7 @@ class _HOFPrimaryButton extends StatelessWidget {
             if (icon != null) ...[
               Icon(
                 icon,
-                color: usePrimary ? AppColors.surfaceDeep : Colors.white38,
+                color: usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
                 size: 18,
               ),
               const SizedBox(width: 8),
@@ -1004,7 +1004,7 @@ class _HOFPrimaryButton extends StatelessWidget {
               label,
               style: TextStyle(
                 color:
-                    usePrimary ? AppColors.surfaceDeep : Colors.white38,
+                    usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
                 fontSize: 14,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,

@@ -84,7 +84,7 @@ class _VideoScreenState extends State<VideoScreen> {
               opacity: _showControls ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 250),
               child: Container(
-                color: Colors.black.withValues(alpha: 0.4),
+                color: AppColors.shadowMedium,
                 child: Stack(
                   children: [
                     // Back button
@@ -102,7 +102,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           ),
                           child: const Icon(
                             Icons.arrow_back_rounded,
-                            color: Colors.white,
+                            color: AppColors.textPrimary,
                             size: 20,
                           ),
                         ),
@@ -119,9 +119,9 @@ class _VideoScreenState extends State<VideoScreen> {
                             height: 60,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white.withValues(alpha: 0.18),
+                              color: AppColors.textGhost,
                               border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.5),
+                                color: AppColors.textMuted,
                                 width: 1.5,
                               ),
                             ),
@@ -129,7 +129,7 @@ class _VideoScreenState extends State<VideoScreen> {
                               _controller.value.isPlaying
                                   ? Icons.pause_rounded
                                   : Icons.play_arrow_rounded,
-                              color: Colors.white,
+                              color: AppColors.textPrimary,
                               size: 32,
                             ),
                           ),
@@ -159,9 +159,9 @@ class _VideoScreenState extends State<VideoScreen> {
                                 colors: VideoProgressColors(
                                   playedColor: AppColors.primary,
                                   bufferedColor:
-                                      Colors.white.withValues(alpha: 0.3),
+                                      AppColors.textHint,
                                   backgroundColor:
-                                      Colors.white.withValues(alpha: 0.15),
+                                      AppColors.textGhost,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -173,7 +173,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                   Text(
                                     _format(_controller.value.position),
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: AppColors.textPrimary,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -182,7 +182,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                     _format(_controller.value.duration),
                                     style: TextStyle(
                                       color:
-                                          Colors.white.withValues(alpha: 0.55),
+                                          AppColors.textMuted,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                     ),

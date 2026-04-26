@@ -79,7 +79,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
   void _showSnack(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(msg, style: const TextStyle(color: Colors.white)),
+        content: Text(msg, style: const TextStyle(color: AppColors.textPrimary)),
         backgroundColor: AppColors.surfaceMedium,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -117,7 +117,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                       ),
                       child: const Icon(
                         Icons.arrow_back_rounded,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 20,
                       ),
                     ),
@@ -126,7 +126,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                   const Text(
                     'Emotions Diary',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
                     ),
@@ -147,7 +147,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                     Text(
                       'Choose your feeling',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.6),
+                        color: AppColors.textSecondary,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.5,
@@ -224,14 +224,14 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                         controller: diaryController,
                         maxLines: 5,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 14,
                           height: 1.5,
                         ),
                         decoration: InputDecoration(
                           hintText: 'What are you feeling today?',
                           hintStyle: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.3),
+                            color: AppColors.textHint,
                             fontSize: 14,
                           ),
                           contentPadding: const EdgeInsets.all(16),
@@ -280,7 +280,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                     Text(
                       'SAVED ENTRIES',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.35),
+                        color: AppColors.textFaint,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.8,
@@ -298,7 +298,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                             'No entries yet — write your first one above.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: AppColors.textHint,
                               fontSize: 13,
                             ),
                           ),
@@ -350,7 +350,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                                       Text(
                                         entry.text,
                                         style: const TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.textPrimary,
                                           fontSize: 14,
                                           height: 1.45,
                                         ),
@@ -359,7 +359,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                                       Text(
                                         entry.date,
                                         style: TextStyle(
-                                          color: Colors.white
+                                          color: AppColors.textPrimary
                                               .withValues(alpha: 0.35),
                                           fontSize: 11,
                                         ),

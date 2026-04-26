@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainflow/features/games_screen/game_detail_screen.dart';
 import 'package:brainflow/features/games_screen/follow_dot_screen.dart';
@@ -53,7 +53,7 @@ class GamesScreen extends StatelessWidget {
                 const Text(
                   'Cognitive Games',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
                   ),
@@ -61,10 +61,7 @@ class GamesScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Train your brain while having fun',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.4),
-                    fontSize: 13,
-                  ),
+                  style: TextStyle(color: AppColors.textDim, fontSize: 13),
                 ),
               ],
             ),
@@ -106,7 +103,6 @@ class _GameCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image-style banner
             Stack(
               children: [
                 Container(
@@ -119,21 +115,16 @@ class _GameCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Subtle vignette overlay
                 Container(
                   height: data.thumbHeight,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withValues(alpha: 0.05),
-                        Colors.black.withValues(alpha: 0.35),
-                      ],
+                      colors: [AppColors.shadowVeryLight, AppColors.shadowLight],
                     ),
                   ),
                 ),
-                // Tag badge
                 Positioned(
                   top: 10,
                   left: 10,
@@ -143,13 +134,13 @@ class _GameCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
+                      color: AppColors.overlayMedium,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       data.tag,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
@@ -157,7 +148,6 @@ class _GameCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Center gamepad icon
                 Positioned.fill(
                   child: Center(
                     child: Container(
@@ -165,15 +155,15 @@ class _GameCard extends StatelessWidget {
                       height: 44,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.white.withValues(alpha: 0.15),
+                        color: AppColors.textGhost,
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.4),
+                          color: AppColors.textDim,
                           width: 1.5,
                         ),
                       ),
                       child: const Icon(
                         Icons.videogame_asset_outlined,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 22,
                       ),
                     ),
@@ -181,7 +171,6 @@ class _GameCard extends StatelessWidget {
                 ),
               ],
             ),
-            // Info
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
               child: Column(
@@ -190,7 +179,7 @@ class _GameCard extends StatelessWidget {
                   Text(
                     data.title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
@@ -201,13 +190,13 @@ class _GameCard extends StatelessWidget {
                       Icon(
                         Icons.bolt_rounded,
                         size: 12,
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                       ),
                       const SizedBox(width: 3),
                       Text(
                         data.duration,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.4),
+                          color: AppColors.textDim,
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                         ),

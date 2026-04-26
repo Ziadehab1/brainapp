@@ -69,7 +69,7 @@ class _BottomNav extends StatelessWidget {
             borderRadius: BorderRadius.circular(32),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.4),
+                color: AppColors.shadowMedium,
                 blurRadius: 24,
                 offset: const Offset(0, 8),
               ),
@@ -144,7 +144,7 @@ class _NavItem extends StatelessWidget {
               size: 22,
               color: isSelected
                   ? AppColors.primary
-                  : Colors.white.withValues(alpha: 0.35),
+                  : AppColors.textFaint,
               shadows: isSelected
                   ? const [
                       Shadow(color: AppColors.primary, blurRadius: 10),
@@ -158,7 +158,7 @@ class _NavItem extends StatelessWidget {
               style: TextStyle(
                 color: isSelected
                     ? AppColors.primary
-                    : Colors.white.withValues(alpha: 0.35),
+                    : AppColors.textFaint,
                 fontSize: 8,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.8,

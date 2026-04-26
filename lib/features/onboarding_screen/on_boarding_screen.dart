@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:brainflow/features/home_screen/home_screen.dart';
+import 'package:brainflow/features/onboarding_screen/onboarding_Signup_screen/onboarding_Signup_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -45,7 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => const OnboardingSignupScreen()),
       );
     }
   }
@@ -138,7 +138,7 @@ class _OnboardingPage extends StatelessWidget {
                   child: Text(
                     '✦',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: AppColors.textSecondary,
                       fontSize: 14,
                     ),
                   ),
@@ -168,7 +168,7 @@ class _OnboardingPage extends StatelessWidget {
                 data.title,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.2,
@@ -185,7 +185,7 @@ class _OnboardingPage extends StatelessWidget {
                 data.subtitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: AppColors.textMuted,
                   fontSize: 15,
                   height: 1.6,
                   fontWeight: FontWeight.w400,
@@ -221,7 +221,7 @@ class _PageIndicator extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             color: isActive
                 ? AppColors.primary
-                : Colors.white.withValues(alpha: 0.25),
+                : AppColors.textDisabled,
           ),
         );
       }),

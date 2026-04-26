@@ -131,7 +131,7 @@ class _SplashScreenState extends State<SplashScreen>
                             child: const Text(
                               '✦',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.textPrimary,
                                 fontSize: 20,
                               ),
                             ),
@@ -147,7 +147,7 @@ class _SplashScreenState extends State<SplashScreen>
                   const Text(
                     'Brain Flow',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 36,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0.5,
@@ -160,7 +160,7 @@ class _SplashScreenState extends State<SplashScreen>
                   Text(
                     'FOCUS.  REST.  THRIVE.',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.45),
+                      color: AppColors.textMuted,
                       fontSize: 12,
                       letterSpacing: 4.0,
                       fontWeight: FontWeight.w500,
@@ -192,7 +192,7 @@ class _SplashScreenState extends State<SplashScreen>
                   Text(
                     _isInhale ? 'INHALE.  EXHALE.' : 'EXHALE.  INHALE.',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.35),
+                      color: AppColors.textFaint,
                       fontSize: 11,
                       letterSpacing: 4.0,
                       fontWeight: FontWeight.w400,
@@ -229,7 +229,7 @@ class _BreathPainter extends CustomPainter {
 
     // Main circle outline
     final circlePaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.25)
+      ..color = AppColors.textDisabled
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     canvas.drawCircle(center, currentRadius, circlePaint);
@@ -246,7 +246,7 @@ class _BreathPainter extends CustomPainter {
 
     // Dot glow
     final dotGlowPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.3)
+      ..color = AppColors.textHint
       ..style = PaintingStyle.fill;
     canvas.drawCircle(Offset(dotX, dotY), 8.0, dotGlowPaint);
   }

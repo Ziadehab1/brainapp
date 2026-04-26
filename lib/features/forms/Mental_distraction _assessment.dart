@@ -193,7 +193,7 @@ class _IntroPage extends StatelessWidget {
                   Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF1A1535), Color(0xFF0D0B1E)],
+                        colors: [AppColors.formBgStart, AppColors.background],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -207,7 +207,7 @@ class _IntroPage extends StatelessWidget {
                           gradient: RadialGradient(
                             center: Alignment(0, -0.3),
                             radius: 1.2,
-                            colors: [Color(0xFF3A3060), AppColors.background],
+                            colors: [AppColors.formAccent, AppColors.background],
                           ),
                         ),
                       ),
@@ -246,7 +246,7 @@ class _IntroPage extends StatelessWidget {
                       'MENTAL DISTRACTION\nASSESSMENT',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
                         height: 1.3,
@@ -257,7 +257,7 @@ class _IntroPage extends StatelessWidget {
                       'Track and analyze mental distractions to\nbuild stronger concentration walls.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.5),
+                        color: AppColors.textMuted,
                         fontSize: 13,
                         height: 1.5,
                       ),
@@ -317,7 +317,7 @@ class _QuestionShell extends StatelessWidget {
                       Text(
                         sessionLabel,
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.45),
+                          color: AppColors.textMuted,
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.4,
@@ -327,7 +327,7 @@ class _QuestionShell extends StatelessWidget {
                       Text(
                         '$step • $total',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
                         ),
@@ -346,7 +346,7 @@ class _QuestionShell extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: step / total,
                   minHeight: 3,
-                  backgroundColor: Colors.white.withValues(alpha: 0.08),
+                  backgroundColor: AppColors.borderGhost,
                   valueColor: const AlwaysStoppedAnimation(AppColors.primary),
                 ),
               ),
@@ -374,11 +374,11 @@ class _RatingQuestionPage extends StatelessWidget {
   });
 
   static const _levels = [
-    _RatingLevel('1', '😌', 'Very\nFocused',       Color(0xFF2E6B4A)),
-    _RatingLevel('2', '🙂', 'Minimal\nDistraction', Color(0xFF3B5B2E)),
-    _RatingLevel('3', '😐', 'Moderate',             Color(0xFF5A4A2E)),
-    _RatingLevel('4', '😤', 'Many\nDistractions',   Color(0xFF6B3A2E)),
-    _RatingLevel('5', '😵', 'Scattered',            Color(0xFF7A2A2A)),
+    _RatingLevel('1', '😌', 'Very\nFocused',       AppColors.ratingFocused),
+    _RatingLevel('2', '🙂', 'Minimal\nDistraction', AppColors.ratingMinimal),
+    _RatingLevel('3', '😐', 'Moderate',             AppColors.ratingModerate),
+    _RatingLevel('4', '😤', 'Many\nDistractions',   AppColors.ratingMany),
+    _RatingLevel('5', '😵', 'Scattered',            AppColors.ratingScattered),
   ];
 
   @override
@@ -396,7 +396,7 @@ class _RatingQuestionPage extends StatelessWidget {
           const Text(
             '⭐ Rate your distraction level today:',
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -406,7 +406,7 @@ class _RatingQuestionPage extends StatelessWidget {
           Text(
             'Tap a number from 1 (very focused) to 5 (totally scattered)',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.45),
+              color: AppColors.textMuted,
               fontSize: 13,
               height: 1.4,
             ),
@@ -433,7 +433,7 @@ class _RatingQuestionPage extends StatelessWidget {
                         border: Border.all(
                           color: isSel
                               ? lvl.color
-                              : Colors.white.withValues(alpha: 0.07),
+                              : AppColors.divider,
                           width: 1.5,
                         ),
                         boxShadow: isSel
@@ -454,7 +454,7 @@ class _RatingQuestionPage extends StatelessWidget {
                             style: TextStyle(
                               color: isSel
                                   ? Colors.white
-                                  : Colors.white.withValues(alpha: 0.5),
+                                  : AppColors.textMuted,
                               fontSize: 22,
                               fontWeight: FontWeight.w900,
                             ),
@@ -486,8 +486,8 @@ class _RatingQuestionPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: isSel
-                          ? Colors.white.withValues(alpha: 0.9)
-                          : Colors.white.withValues(alpha: 0.35),
+                          ? AppColors.textStrong
+                          : AppColors.textFaint,
                       fontSize: 9,
                       fontWeight:
                           isSel ? FontWeight.w700 : FontWeight.w500,
@@ -532,7 +532,7 @@ class _RatingQuestionPage extends StatelessWidget {
                             child: Text(
                               _levelDescription(sel),
                               style: TextStyle(
-                                color: Colors.white.withValues(alpha: 0.85),
+                                color: AppColors.textStrong,
                                 fontSize: 13,
                                 height: 1.4,
                               ),
@@ -642,7 +642,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
           Text(
             '⭐ ${widget.number}. ${widget.question}',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
@@ -666,11 +666,11 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
                       expands: true,
                       textAlignVertical: TextAlignVertical.top,
                       style: const TextStyle(
-                          color: Colors.white, fontSize: 15),
+                          color: AppColors.textPrimary, fontSize: 15),
                       decoration: InputDecoration(
                         hintText: widget.placeholder,
                         hintStyle: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.25),
+                          color: AppColors.textDisabled,
                           fontSize: 15,
                         ),
                         border: InputBorder.none,
@@ -682,7 +682,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
                   Text(
                     '${widget.controller.text.length} CHARS',
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: AppColors.textHint,
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.0,
@@ -739,7 +739,7 @@ class _CompletionPage extends StatelessWidget {
               const Text(
                 'Focus Logged!',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
                 ),
@@ -749,7 +749,7 @@ class _CompletionPage extends StatelessWidget {
                 'Awesome! Your self-reflection is the first\nstep to mastering your focus.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: AppColors.textMuted,
                   fontSize: 14,
                   height: 1.5,
                 ),
@@ -783,11 +783,11 @@ class _MDBackButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: AppColors.textGhost,
           shape: BoxShape.circle,
         ),
         child: const Icon(Icons.arrow_back_ios_new,
-            color: Colors.white, size: 16),
+            color: AppColors.textPrimary, size: 16),
       ),
     );
   }
@@ -802,13 +802,13 @@ class _MDBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: AppColors.textGhost,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.textPrimary,
           fontSize: 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 1.2,
@@ -845,7 +845,7 @@ class _MDPrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: usePrimary
               ? AppColors.primaryLight.withValues(alpha: 0.9)
-              : Colors.white.withValues(alpha: 0.08),
+              : AppColors.borderGhost,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Row(
@@ -854,7 +854,7 @@ class _MDPrimaryButton extends StatelessWidget {
             if (icon != null) ...[
               Icon(
                 icon,
-                color: usePrimary ? AppColors.surfaceDeep : Colors.white38,
+                color: usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
                 size: 18,
               ),
               const SizedBox(width: 8),
@@ -862,7 +862,7 @@ class _MDPrimaryButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: usePrimary ? AppColors.surfaceDeep : Colors.white38,
+                color: usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
                 fontSize: 14,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,

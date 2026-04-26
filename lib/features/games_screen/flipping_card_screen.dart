@@ -152,7 +152,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               const Text(
                 'Session Complete',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textPrimary,
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                 ),
@@ -161,7 +161,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               Text(
                 'Time: ${_formatTime(seconds)}',
                 style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: AppColors.textMuted,
                   fontSize: 14,
                 ),
               ),
@@ -235,7 +235,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                       ),
                       child: const Icon(
                         Icons.arrow_back_rounded,
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         size: 20,
                       ),
                     ),
@@ -263,7 +263,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                   'TIME',
                                   style: TextStyle(
                                     color:
-                                        Colors.white.withValues(alpha: 0.35),
+                                        AppColors.textFaint,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 1.5,
@@ -273,7 +273,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                 Text(
                                   _formatTime(seconds),
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.textPrimary,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'monospace',
@@ -283,7 +283,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                             ),
                           ),
                           VerticalDivider(
-                            color: Colors.white.withValues(alpha: 0.1),
+                            color: AppColors.textGhost,
                             thickness: 1,
                             width: 1,
                           ),
@@ -296,7 +296,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                   'SCORE',
                                   style: TextStyle(
                                     color:
-                                        Colors.white.withValues(alpha: 0.35),
+                                        AppColors.textFaint,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 1.5,
@@ -368,7 +368,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                           color: cardColors[index],
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.3),
+                            color: AppColors.textHint,
                             width: 1.5,
                           ),
                           boxShadow: [
@@ -382,7 +382,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                         child: Center(
                           child: Icon(
                             Icons.star_rounded,
-                            color: Colors.white.withValues(alpha: 0.9),
+                            color: AppColors.textStrong,
                             size: 26,
                           ),
                         ),

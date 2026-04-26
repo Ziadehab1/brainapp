@@ -6,7 +6,8 @@ class BreathingExerciseScreen extends StatefulWidget {
   const BreathingExerciseScreen({super.key});
 
   @override
-  State<BreathingExerciseScreen> createState() => _BreathingExerciseScreenState();
+  State<BreathingExerciseScreen> createState() =>
+      _BreathingExerciseScreenState();
 }
 
 class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
@@ -138,31 +139,30 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                   ),
                   child: const Icon(
                     Icons.arrow_back_rounded,
-                    color: Colors.white,
+                    color: AppColors.textPrimary,
                     size: 20,
                   ),
                 ),
               ),
             ),
 
-            // Screen label
-            Positioned(
-              top: 20,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  'BREATH RESET',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.35),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 2.5,
-                  ),
-                ),
-              ),
-            ),
-
+            // // Screen label
+            // Positioned(
+            //   top: 20,
+            //   left: 0,
+            //   right: 0,
+            //   child: Center(
+            //     child: Text(
+            //       'BREATH RESET',
+            //       style: TextStyle(
+            //         color: AppColors.textFaint,
+            //         fontSize: 11,
+            //         fontWeight: FontWeight.w700,
+            //         letterSpacing: 2.5,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -229,8 +229,9 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary
-                                    .withValues(alpha: 0.35),
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.35,
+                                ),
                                 blurRadius: 24,
                                 spreadRadius: 6,
                               ),
@@ -262,11 +263,13 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                         showReady
                             ? 'Ready'
                             : (countdown == 0
-                                ? ''
-                                : (isBreathingIn ? 'Breathe In' : 'Breathe Out')),
+                                  ? ''
+                                  : (isBreathingIn
+                                        ? 'Breathe In'
+                                        : 'Breathe Out')),
                         style: const TextStyle(
                           fontSize: 24,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -285,14 +288,17 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                           onTap: reset,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 52, vertical: 18),
+                              horizontal: 52,
+                              vertical: 18,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.primaryLight,
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary
-                                      .withValues(alpha: 0.3),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 20,
                                   spreadRadius: 2,
                                 ),

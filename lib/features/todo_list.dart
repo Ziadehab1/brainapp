@@ -84,7 +84,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   const Text(
                     'Delete Task?',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textPrimary,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -94,7 +94,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     '"$title" will be permanently removed.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.45),
+                      color: AppColors.textMuted,
                       fontSize: 13,
                       height: 1.5,
                     ),
@@ -116,7 +116,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               child: Text(
                                 'Cancel',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.textPrimary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -140,7 +140,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               child: Text(
                                 'Delete',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.textPrimary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -210,7 +210,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     const Text(
                       'Daily Flow',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textPrimary,
                         fontSize: 28,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.5,
@@ -220,7 +220,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     Text(
                       'Design your day, find your focus',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 13,
                       ),
                     ),
@@ -235,7 +235,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           'No tasks yet.\nTap + to add your first flow.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.2),
+                            color: AppColors.textDisabled,
                             fontSize: 14,
                             height: 1.7,
                           ),
@@ -307,7 +307,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 ],
               ),
               child: const Icon(Icons.add_rounded,
-                  color: Colors.white, size: 28),
+                  color: AppColors.textPrimary, size: 28),
             ),
           ),
         ),
@@ -411,15 +411,15 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                         task.title,
                         style: TextStyle(
                           color: task.isDone
-                              ? Colors.white.withValues(alpha: 0.35)
-                              : Colors.white,
+                              ? AppColors.textFaint
+                              : AppColors.textPrimary,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                           decoration: task.isDone
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                           decorationColor:
-                              Colors.white.withValues(alpha: 0.35),
+                              AppColors.textFaint,
                         ),
                       ),
                       if (task.targetTime.isNotEmpty) ...[
@@ -445,7 +445,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                 ),
                 IconButton(
                   icon: Icon(Icons.delete_outline_rounded,
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: AppColors.textHint,
                       size: 20),
                   onPressed: widget.onDelete,
                   splashRadius: 20,
@@ -458,7 +458,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                     task.isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: AppColors.textHint,
                     size: 22,
                   ),
                   onPressed: widget.onToggle,
@@ -513,12 +513,12 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                         controller: _stepController,
                         autofocus: true,
                         style: const TextStyle(
-                            color: Colors.white, fontSize: 14),
+                            color: AppColors.textPrimary, fontSize: 14),
                         cursorColor: AppColors.primary,
                         decoration: InputDecoration(
                           hintText: 'Step description...',
                           hintStyle: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.3),
+                              color: AppColors.textHint,
                               fontSize: 14),
                           border: InputBorder.none,
                           isDense: true,
@@ -550,7 +550,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                     Text(
                       'ADD DESCRIPTION/STEP',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: AppColors.textDim,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.2,
@@ -618,13 +618,13 @@ class _StepRow extends StatelessWidget {
                 label,
                 style: TextStyle(
                   color: isDone
-                      ? Colors.white.withValues(alpha: 0.35)
-                      : Colors.white,
+                      ? AppColors.textFaint
+                      : AppColors.textPrimary,
                   fontSize: 14,
                   decoration: isDone
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
-                  decorationColor: Colors.white.withValues(alpha: 0.35),
+                  decorationColor: AppColors.textFaint,
                 ),
               ),
             ),
@@ -706,7 +706,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
           const Text(
             'New Flow Task',
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.textPrimary,
               fontSize: 22,
               fontWeight: FontWeight.w800,
             ),
@@ -715,7 +715,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
           Text(
             'MAIN TASK TITLE',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.4),
+              color: AppColors.textDim,
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
@@ -729,12 +729,12 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
             ),
             child: TextField(
               controller: _titleController,
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
               cursorColor: AppColors.primary,
               decoration: InputDecoration(
                 hintText: 'e.g., Critical Project Focus',
                 hintStyle: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: AppColors.textDisabled,
                     fontSize: 15),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
@@ -746,7 +746,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
           Text(
             'TARGET TIME',
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.4),
+              color: AppColors.textDim,
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.4,
@@ -769,14 +769,14 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
                       _timeText.isEmpty ? '--:--  --' : _timeText,
                       style: TextStyle(
                         color: _timeText.isEmpty
-                            ? Colors.white.withValues(alpha: 0.25)
-                            : Colors.white,
+                            ? AppColors.textDisabled
+                            : AppColors.textPrimary,
                         fontSize: 15,
                       ),
                     ),
                   ),
                   Icon(Icons.access_time_rounded,
-                      color: Colors.white.withValues(alpha: 0.3),
+                      color: AppColors.textHint,
                       size: 20),
                 ],
               ),

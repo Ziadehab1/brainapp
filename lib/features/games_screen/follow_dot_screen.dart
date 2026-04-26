@@ -160,7 +160,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                         ),
                         child: const Icon(
                           Icons.arrow_back_rounded,
-                          color: Colors.white,
+                          color: AppColors.textPrimary,
                           size: 20,
                         ),
                       ),
@@ -227,7 +227,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                           Text(
                             'Follow the Dot',
                             style: TextStyle(
-                              color: Colors.white.withValues(alpha: 0.5),
+                              color: AppColors.textMuted,
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 2.0,
@@ -283,7 +283,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                       child: Text(
                         'READY',
                         style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.7),
+                          color: AppColors.textSecondary,
                           fontSize: 40,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 6.0,
