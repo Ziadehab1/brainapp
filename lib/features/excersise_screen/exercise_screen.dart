@@ -3,14 +3,15 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainflow/features/excersise_screen/breathing_excersice.dart';
 import 'package:brainflow/features/excersise_screen/emotions_diary.dart';
 import 'package:brainflow/features/excersise_screen/exercise_detail_screen.dart';
+import 'package:brainflow/features/excersise_screen/todo_list.dart';
 import 'package:brainflow/core/constants/constants.dart';
 
 class ExerciseScreen extends StatelessWidget {
   const ExerciseScreen({super.key});
 
-  static final List<_ExerciseItem> _exercises = [
+  static final List<_ExerciseItem> _items = [
     _ExerciseItem(
-      title: 'Breathing',
+      title: 'Breathing Exercise',
       duration: '1 MIN',
       description:
           'Guided box breathing to stabilize the nervous system and clear mental fog.',
@@ -40,6 +41,18 @@ class ExerciseScreen extends StatelessWidget {
       gradientStart: AppColors.exercisePinkStart,
       gradientEnd: AppColors.exercisePinkEnd,
       destination: const EmotionsDiaryScreen(),
+    ),
+    _ExerciseItem(
+      title: 'My TODOS',
+      duration: 'TASKS',
+      description:
+          'Organizes your day into focused tasks and track your progress step by step.',
+      highlights: ['Task breakdown', 'Step tracking', 'Daily planning'],
+      icon: Icons.checklist_rounded,
+      thumbHeight: 140,
+      gradientStart: AppColors.exercisePurpleStart,
+      gradientEnd: AppColors.exercisePurpleEnd,
+      destination: const TodoListScreen(),
     ),
   ];
 
@@ -77,8 +90,8 @@ class ExerciseScreen extends StatelessWidget {
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-              itemCount: _exercises.length,
-              itemBuilder: (context, i) => _ExerciseCard(item: _exercises[i]),
+              itemCount: _items.length,
+              itemBuilder: (context, i) => _ExerciseCard(item: _items[i]),
             ),
           ),
         ],
@@ -96,7 +109,7 @@ class _ExerciseItem {
   final double thumbHeight;
   final Color gradientStart;
   final Color gradientEnd;
-  final Widget? destination;
+  final Widget destination;
 
   const _ExerciseItem({
     required this.title,
@@ -107,7 +120,7 @@ class _ExerciseItem {
     required this.thumbHeight,
     required this.gradientStart,
     required this.gradientEnd,
-    this.destination,
+    required this.destination,
   });
 }
 
@@ -115,28 +128,30 @@ class _ExerciseCard extends StatelessWidget {
   final _ExerciseItem item;
   const _ExerciseCard({required this.item});
 
+  void _navigate(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ExerciseDetailScreen(
+          data: ExerciseDetailData(
+            title: item.title,
+            tag: 'EXERCISE',
+            duration: item.duration,
+            description: item.description,
+            highlights: item.highlights,
+            gradientStart: item.gradientStart,
+            gradientEnd: item.gradientEnd,
+            destination: item.destination,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: item.destination != null
-          ? () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ExerciseDetailScreen(
-                    data: ExerciseDetailData(
-                      title: item.title,
-                      tag: 'EXERCISE',
-                      duration: item.duration,
-                      description: item.description,
-                      highlights: item.highlights,
-                      gradientStart: item.gradientStart,
-                      gradientEnd: item.gradientEnd,
-                      destination: item.destination!,
-                    ),
-                  ),
-                ),
-              )
-          : null,
+      onTap: () => _navigate(context),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surfaceDark,
@@ -164,7 +179,10 @@ class _ExerciseCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [AppColors.shadowVeryLight, AppColors.shadowStrong],
+                      colors: [
+                        AppColors.shadowVeryLight,
+                        AppColors.shadowStrong,
+                      ],
                     ),
                   ),
                 ),
@@ -204,8 +222,8 @@ class _ExerciseCard extends StatelessWidget {
                           width: 1.5,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.air_rounded,
+                      child: Icon(
+                        item.icon,
                         color: AppColors.textPrimary,
                         size: 22,
                       ),

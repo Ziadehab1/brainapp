@@ -107,7 +107,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
                     child: Container(
                       width: 42,
                       height: 42,

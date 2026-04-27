@@ -1,9 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:brainflow/features/excersise_screen/exercise_screen.dart';
 import 'package:brainflow/features/games_screen/games_screen.dart';
 import 'package:brainflow/features/tutorials_screen/tutorials.dart';
 import 'package:brainflow/features/more_screen/more_screen.dart';
-import 'package:brainflow/features/todo_list.dart';
 import 'package:brainflow/core/constants/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
     const ExerciseScreen(),
     const GamesScreen(),
     const TutorialsScreen(),
-    const TodoListScreen(),
     const MoreScreen(),
   ];
 
@@ -30,11 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Full-screen page content
-          Positioned.fill(
-            child: _pages[_selectedIndex],
-          ),
-          // Nav bar floating on top
+          Positioned.fill(child: _pages[_selectedIndex]),
           Positioned(
             left: 0,
             right: 0,
@@ -97,16 +91,10 @@ class _BottomNav extends StatelessWidget {
                 onTap: () => onTap(2),
               ),
               _NavItem(
-                icon: Icons.checklist_rounded,
-                label: 'FLOW',
-                isSelected: selectedIndex == 3,
-                onTap: () => onTap(3),
-              ),
-              _NavItem(
                 icon: Icons.more_horiz_rounded,
                 label: 'MORE',
-                isSelected: selectedIndex == 4,
-                onTap: () => onTap(4),
+                isSelected: selectedIndex == 3,
+                onTap: () => onTap(3),
               ),
             ],
           ),
@@ -142,9 +130,7 @@ class _NavItem extends StatelessWidget {
             Icon(
               icon,
               size: 22,
-              color: isSelected
-                  ? AppColors.primary
-                  : AppColors.textFaint,
+              color: isSelected ? AppColors.primary : AppColors.textFaint,
               shadows: isSelected
                   ? const [
                       Shadow(color: AppColors.primary, blurRadius: 10),
@@ -156,9 +142,7 @@ class _NavItem extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isSelected
-                    ? AppColors.primary
-                    : AppColors.textFaint,
+                color: isSelected ? AppColors.primary : AppColors.textFaint,
                 fontSize: 8,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.8,

@@ -1,66 +1,98 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/constants.dart';
+import '../../../core/constants/constants.dart';
+import '../../custom_widgets/form_shared_widget.dart';
 
-class MentalDistractionAssessmentScreen extends StatefulWidget {
-  const MentalDistractionAssessmentScreen({super.key});
+class HelpOnFocusScreen extends StatefulWidget {
+  const HelpOnFocusScreen({super.key});
 
   @override
-  State<MentalDistractionAssessmentScreen> createState() =>
-      _MentalDistractionAssessmentScreenState();
+  State<HelpOnFocusScreen> createState() => _HelpOnFocusScreenState();
 }
 
-class _MentalDistractionAssessmentScreenState
-    extends State<MentalDistractionAssessmentScreen> {
-  int _step = 0; // 0 = intro, 1–11 = questions, 12 = done
+class _HelpOnFocusScreenState extends State<HelpOnFocusScreen> {
+  int _step = 0; // 0 = intro, 1–8 = questions, 9 = done
 
-  // Q0 single-select rating
-  String? _q0Rating;
+  // Single-select answers
+  String? _q1;
+  String? _q2;
+  String? _q3;
+  String? _q5;
+  String? _q6;
 
-  // Text controllers Q1–Q10
-  final _q1 = TextEditingController();
-  final _q2 = TextEditingController();
-  final _q3 = TextEditingController();
-  final _q4 = TextEditingController();
-  final _q5 = TextEditingController();
-  final _q6 = TextEditingController();
+  // Multi-select
+  final Set<String> _q4Selected = {};
+
+  // Text controllers
   final _q7 = TextEditingController();
   final _q8 = TextEditingController();
-  final _q9 = TextEditingController();
-  final _q10 = TextEditingController();
 
+  // "Other" text for Q4 and Q6
+  final _q4Other = TextEditingController();
+  final _q6Other = TextEditingController();
+
+  static const _q1Options = [
+    '1  Very poor',
+    '2  Poor',
+    '3  Average',
+    '4  Good',
+    '5  Excellent',
+  ];
+
+  static const _q2Options = [
+    'Concentrating well',
+    'Sometimes distracted',
+    'Often distracted',
+    'Unable to continue the task',
+  ];
+
+  static const _q3Options = [
+    'No distractions',
+    'Once',
+    '2–3 times',
+    'More than 3 times',
+  ];
+
+  static const _q4Options = [
+    'MY PHONE', 'NOISE', 'PEOPLE AROUND ME',
+    'INTERNAL THOUGHTS', 'BOREDOM', 'FATIGUE', 'SOMETHING ELSE',
+  ];
+
+  static const _q5Options = [
+    'Yes, easily',
+    'Yes, with difficulty',
+    "I tried but couldn't",
+    "I didn't try",
+  ];
+
+  static const _q6Options = [
+    'Deep breathing',
+    'Turning off distractions',
+    'Changing your sitting position',
+    'Taking a short break',
+    'Nothing helped',
+    'Other',
+  ];
 
   @override
   void dispose() {
-    _q1.dispose();
-    _q2.dispose();
-    _q3.dispose();
-    _q4.dispose();
-    _q5.dispose();
-    _q6.dispose();
     _q7.dispose();
     _q8.dispose();
-    _q9.dispose();
-    _q10.dispose();
+    _q4Other.dispose();
+    _q6Other.dispose();
     super.dispose();
   }
 
   void _next() => setState(() => _step++);
-  void _back() {
-    if (_step == 0) {
-      Navigator.pop(context);
-    } else {
-      setState(() => _step--);
-    }
-  }
+  void _back() => Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {
     if (_step == 0) return _IntroPage(onStart: _next);
-    if (_step == 12) return _CompletionPage(onFinish: () => Navigator.pop(context));
+    if (_step == 9) return _CompletionPage(onFinish: () => Navigator.pop(context));
     return _QuestionShell(
       step: _step,
-      total: 11,
-      sessionLabel: 'DISTRACTION PULSE',
+      total: 8,
+      sessionLabel: 'FOCUS CHECK',
       onBack: _back,
       child: _buildQuestion(),
     );
@@ -69,101 +101,90 @@ class _MentalDistractionAssessmentScreenState
   Widget _buildQuestion() {
     switch (_step) {
       case 1:
-        return _RatingQuestionPage(
-          selected: _q0Rating,
-          onSelect: (v) => setState(() => _q0Rating = v),
+        return _NumberedListPage(
+          badge: 'CHECK-IN',
+          number: 1,
+          question: 'How would you rate your overall attention level today?',
+          options: _q1Options,
+          selected: _q1,
+          onSelect: (v) => setState(() => _q1 = v),
           onContinue: _next,
         );
       case 2:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 1,
-          question: 'What things distract me?',
-          placeholder: 'List your main distractions...',
-          controller: _q1,
+        return _SingleSelectPage(
+          badge: 'CHECK-IN',
+          number: 2,
+          question: 'While performing the required task, I was:',
+          options: _q2Options,
+          selected: _q2,
+          onSelect: (v) => setState(() => _q2 = v),
           onContinue: _next,
         );
       case 3:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 2,
-          question: 'What times am I most distracted?',
-          placeholder: 'Morning? Evening? After lunch?',
-          controller: _q2,
+        return _SingleSelectPage(
+          badge: 'CHECK-IN',
+          number: 3,
+          question: 'Number of times distracted during the task:',
+          options: _q3Options,
+          selected: _q3,
+          onSelect: (v) => setState(() => _q3 = v),
           onContinue: _next,
         );
       case 4:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 3,
-          question: 'Who are the people who distract me?',
-          placeholder: 'Friends? Family? Colleagues?',
-          controller: _q3,
+        return _McqGridPage(
+          badge: 'MULTIPLE CHOICE',
+          number: 4,
+          question: 'What distracted me most today was:',
+          options: _q4Options,
+          selected: _q4Selected,
+          otherKey: 'SOMETHING ELSE',
+          otherController: _q4Other,
+          onToggle: (v) => setState(() {
+            _q4Selected.contains(v)
+                ? _q4Selected.remove(v)
+                : _q4Selected.add(v);
+          }),
           onContinue: _next,
         );
       case 5:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 4,
-          question: 'What thoughts most often recur in my mind when I am distracted?',
-          placeholder: 'Describe your recurring thoughts...',
-          controller: _q4,
+        return _SingleSelectPage(
+          badge: 'CHECK-IN',
+          number: 5,
+          question: 'Were you able to regain your focus after being distracted?',
+          options: _q5Options,
+          selected: _q5,
+          onSelect: (v) => setState(() => _q5 = v),
           onContinue: _next,
+          highlightLast: true,
         );
       case 6:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 5,
-          question: "What did I want to focus on but couldn't?",
-          placeholder: 'What was your goal?',
-          controller: _q5,
+        return _SingleSelectPage(
+          badge: 'CHECK-IN',
+          number: 6,
+          question: 'What helped you regain your attention?',
+          options: _q6Options,
+          selected: _q6,
+          onSelect: (v) => setState(() => _q6 = v),
           onContinue: _next,
+          otherKey: 'Other',
+          otherController: _q6Other,
         );
       case 7:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 6,
-          question: 'What feelings did I experience when I was distracted?',
-          placeholder:
-              'Example: anxiety, boredom, annoyance, tension, sudden excitement, fear, overthinking',
-          controller: _q6,
-          onContinue: _next,
-        );
-      case 8:
-        return _MDTextQuestionPage(
+        return _HOFTextQuestionPage(
           badge: 'QUICK NOTE',
           number: 7,
-          question: 'What behavior did I exhibit because of the distraction?',
-          placeholder:
-              'Example: I picked up my phone, stopped studying, daydreamed, suddenly changed my task',
+          question: 'Describe my attention today in one word:',
+          placeholder: 'One word focus...',
           controller: _q7,
           onContinue: _next,
         );
-      case 9:
-        return _MDTextQuestionPage(
+      case 8:
+        return _HOFTextQuestionPage(
           badge: 'QUICK NOTE',
           number: 8,
-          question: 'What helped me refocus?',
-          placeholder: 'How did you get back in the zone?',
+          question: 'What will I do tomorrow to improve my attention?',
+          placeholder: 'My improvement plan...',
           controller: _q8,
-          onContinue: _next,
-        );
-      case 10:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 9,
-          question: 'My plan to improve focus for the next day:',
-          placeholder: 'What will you change tomorrow?',
-          controller: _q9,
-          onContinue: _next,
-        );
-      case 11:
-        return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
-          number: 10,
-          question: 'A sentence I write to encourage myself to focus:',
-          placeholder: 'Write your power sentence...',
-          controller: _q10,
           onContinue: _next,
         );
       default:
@@ -216,7 +237,7 @@ class _IntroPage extends StatelessWidget {
                   Positioned(
                     top: 16,
                     left: 16,
-                    child: _MDBackButton(onTap: () => Navigator.pop(context)),
+                    child: _HOFBackButton(onTap: () => Navigator.pop(context)),
                   ),
                 ],
               ),
@@ -236,14 +257,14 @@ class _IntroPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: const Icon(
-                        Icons.track_changes,
+                        Icons.psychology_outlined,
                         color: AppColors.primary,
                         size: 30,
                       ),
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'MENTAL DISTRACTION\nASSESSMENT',
+                      'FOCUS ASSESSMENT',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textPrimary,
@@ -254,7 +275,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Track and analyze mental distractions to\nbuild stronger concentration walls.',
+                      'A comprehensive check-in on your attention\nquality throughout today\'s activities.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textMuted,
@@ -263,7 +284,7 @@ class _IntroPage extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    _MDPrimaryButton(
+                    _HOFPrimaryButton(
                       label: 'START SESSION',
                       icon: Icons.bolt,
                       onTap: onStart,
@@ -310,7 +331,7 @@ class _QuestionShell extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
               child: Row(
                 children: [
-                  _MDBackButton(onTap: onBack),
+                  _HOFBackButton(onTap: onBack),
                   const Spacer(),
                   Column(
                     children: [
@@ -360,231 +381,345 @@ class _QuestionShell extends StatelessWidget {
   }
 }
 
-// ─── Rating Question Page (Q0) ────────────────────────────────────────────────
+// ─── Numbered List Page (Q1 — shows number badges) ───────────────────────────
 
-class _RatingQuestionPage extends StatelessWidget {
+class _NumberedListPage extends StatelessWidget {
+  final String badge;
+  final int number;
+  final String question;
+  final List<String> options;
   final String? selected;
   final ValueChanged<String> onSelect;
   final VoidCallback onContinue;
 
-  const _RatingQuestionPage({
+  const _NumberedListPage({
+    required this.badge,
+    required this.number,
+    required this.question,
+    required this.options,
     required this.selected,
     required this.onSelect,
     required this.onContinue,
   });
 
-  static const _levels = [
-    _RatingLevel('1', '😌', 'Very\nFocused',       AppColors.ratingFocused),
-    _RatingLevel('2', '🙂', 'Minimal\nDistraction', AppColors.ratingMinimal),
-    _RatingLevel('3', '😐', 'Moderate',             AppColors.ratingModerate),
-    _RatingLevel('4', '😤', 'Many\nDistractions',   AppColors.ratingMany),
-    _RatingLevel('5', '😵', 'Scattered',            AppColors.ratingScattered),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final sel = selected != null ? int.tryParse(selected!) : null;
-    final hasSelection = selected != null;
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _MDBadge(label: 'CHECK-IN'),
+          _HOFBadge(label: badge),
           const SizedBox(height: 16),
-          const Text(
-            '⭐ Rate your distraction level today:',
-            style: TextStyle(
+          Text(
+            '⭐ $number. $question',
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
               height: 1.3,
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Tap a number from 1 (very focused) to 5 (totally scattered)',
-            style: TextStyle(
-              color: AppColors.textMuted,
-              fontSize: 13,
-              height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 28),
-          // 5 number tiles in a row
-          Row(
-            children: List.generate(_levels.length, (i) {
-              final lvl = _levels[i];
-              final isSel = sel == i + 1;
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: i < 4 ? 8 : 0),
-                  child: GestureDetector(
-                    onTap: () => onSelect(lvl.value),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      height: 90,
-                      decoration: BoxDecoration(
-                        color: isSel
-                            ? lvl.color.withValues(alpha: 0.75)
-                            : AppColors.surfaceDark,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: isSel
-                              ? lvl.color
-                              : AppColors.divider,
-                          width: 1.5,
-                        ),
-                        boxShadow: isSel
-                            ? [
-                                BoxShadow(
-                                  color: lvl.color.withValues(alpha: 0.35),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                )
-                              ]
-                            : [],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            lvl.value,
-                            style: TextStyle(
-                              color: isSel
-                                  ? Colors.white
-                                  : AppColors.textMuted,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            lvl.emoji,
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-          const SizedBox(height: 16),
-          // Labels row
-          Row(
-            children: List.generate(_levels.length, (i) {
-              final lvl = _levels[i];
-              final isSel = sel == i + 1;
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: i < 4 ? 8 : 0),
-                  child: Text(
-                    lvl.label,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView.separated(
+              itemCount: options.length,
+              separatorBuilder: (_, i) => const SizedBox(height: 10),
+              itemBuilder: (_, i) {
+                final opt = options[i];
+                final isSel = selected == opt;
+                return GestureDetector(
+                  onTap: () => onSelect(opt),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 15),
+                    decoration: BoxDecoration(
                       color: isSel
-                          ? AppColors.textStrong
-                          : AppColors.textFaint,
-                      fontSize: 9,
-                      fontWeight:
-                          isSel ? FontWeight.w700 : FontWeight.w500,
-                      height: 1.3,
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-          // Selected level description
-          AnimatedSize(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeInOut,
-            child: hasSelection
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 18, vertical: 14),
-                      decoration: BoxDecoration(
-                        color: _levels[sel! - 1]
-                            .color
-                            .withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: _levels[sel - 1]
-                              .color
-                              .withValues(alpha: 0.4),
-                          width: 1,
-                        ),
+                          ? AppColors.primaryDeep.withValues(alpha: 0.4)
+                          : AppColors.surfaceDark,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: isSel
+                            ? AppColors.primary.withValues(alpha: 0.5)
+                            : AppColors.divider,
+                        width: 1.5,
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            _levels[sel - 1].emoji,
-                            style: const TextStyle(fontSize: 22),
+                    ),
+                    child: Row(
+                      children: [
+                        // Number badge
+                        Container(
+                          width: 26,
+                          height: 26,
+                          decoration: BoxDecoration(
+                            color: isSel
+                                ? AppColors.primary.withValues(alpha: 0.25)
+                                : AppColors.formTipStart,
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
+                          child: Center(
                             child: Text(
-                              _levelDescription(sel),
+                              '${i + 1}',
                               style: TextStyle(
-                                color: AppColors.textStrong,
-                                fontSize: 13,
-                                height: 1.4,
+                                color: isSel
+                                    ? AppColors.primaryLight
+                                    : AppColors.formTipAccent,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          opt.substring(3), // strip leading "N  "
+                          style: TextStyle(
+                            color: isSel
+                                ? AppColors.textPrimary
+                                : AppColors.textSecondary,
+                            fontSize: 15,
+                            fontWeight: isSel
+                                ? FontWeight.w700
+                                : FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
-                  )
-                : const SizedBox.shrink(),
+                  ),
+                );
+              },
+            ),
           ),
-          const Spacer(),
-          _MDPrimaryButton(
+          const SizedBox(height: 16),
+          _HOFPrimaryButton(
             label: 'CONTINUE',
             icon: Icons.chevron_right,
-            onTap: hasSelection ? onContinue : null,
+            onTap: selected != null ? onContinue : null,
           ),
           const SizedBox(height: 24),
         ],
       ),
     );
   }
+}
 
-  static String _levelDescription(int level) {
-    switch (level) {
-      case 1:
-        return 'Great! You were in the zone today. Let\'s find out what kept you focused.';
-      case 2:
-        return 'Pretty good. Minor distractions but you mostly stayed on track.';
-      case 3:
-        return 'A mixed day — some focus, some drift. Let\'s figure out what pulled you away.';
-      case 4:
-        return 'Distractions were frequent today. Identifying them is the first step to fixing it.';
-      case 5:
-        return 'Your mind was all over the place. That\'s okay — this assessment will help you understand why.';
-      default:
-        return '';
-    }
+// ─── Single Select Page (Q2, Q3, Q5, Q6) ─────────────────────────────────────
+
+class _SingleSelectPage extends StatelessWidget {
+  final String badge;
+  final int number;
+  final String question;
+  final List<String> options;
+  final String? selected;
+  final ValueChanged<String> onSelect;
+  final VoidCallback onContinue;
+  final bool highlightLast;
+  final String? otherKey;
+  final TextEditingController? otherController;
+
+  const _SingleSelectPage({
+    required this.badge,
+    required this.number,
+    required this.question,
+    required this.options,
+    required this.selected,
+    required this.onSelect,
+    required this.onContinue,
+    this.highlightLast = false,
+    this.otherKey,
+    this.otherController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final showOther =
+        otherKey != null && selected == otherKey && otherController != null;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _HOFBadge(label: badge),
+          const SizedBox(height: 16),
+          Text(
+            '⭐ $number. $question',
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ...List.generate(options.length, (i) {
+            final opt = options[i];
+            final isSel = selected == opt;
+            final isLastAndHighlight =
+                highlightLast && i == options.length - 1;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: GestureDetector(
+                onTap: () => onSelect(opt),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 18, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: isSel
+                        ? AppColors.primaryDeep.withValues(alpha: 0.4)
+                        : AppColors.surfaceDark,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: isSel
+                          ? AppColors.primary.withValues(alpha: 0.5)
+                          : AppColors.divider,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Text(
+                    opt,
+                    style: TextStyle(
+                      color: isSel
+                          ? AppColors.textPrimary
+                          : isLastAndHighlight
+                              ? AppColors.error.withValues(alpha: 0.8)
+                              : AppColors.textSecondary,
+                      fontSize: 15,
+                      fontWeight:
+                          isSel ? FontWeight.w700 : FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+          // "Other" text field
+          AnimatedSize(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeInOut,
+            child: showOther
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: FormOtherTextField(controller: otherController!),
+                  )
+                : const SizedBox.shrink(),
+          ),
+          const SizedBox(height: 6),
+          _HOFPrimaryButton(
+            label: 'CONTINUE',
+            icon: Icons.chevron_right,
+            onTap: selected != null ? onContinue : null,
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
   }
 }
 
-class _RatingLevel {
-  final String value;
-  final String emoji;
-  final String label;
-  final Color color;
-  const _RatingLevel(this.value, this.emoji, this.label, this.color);
+// ─── MCQ Grid Page (Q4) ───────────────────────────────────────────────────────
+
+class _McqGridPage extends StatelessWidget {
+  final String badge;
+  final int number;
+  final String question;
+  final List<String> options;
+  final Set<String> selected;
+  final String otherKey;
+  final TextEditingController otherController;
+  final ValueChanged<String> onToggle;
+  final VoidCallback onContinue;
+
+  const _McqGridPage({
+    required this.badge,
+    required this.number,
+    required this.question,
+    required this.options,
+    required this.selected,
+    required this.otherKey,
+    required this.otherController,
+    required this.onToggle,
+    required this.onContinue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final showOther = selected.contains(otherKey);
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _HOFBadge(label: badge),
+          const SizedBox(height: 16),
+          Text(
+            '⭐ $number. $question',
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            'CHOOSE AS MANY AS APPLY',
+            style: TextStyle(
+              color: AppColors.textDim,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.3,
+            ),
+          ),
+          const SizedBox(height: 14),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 1.1,
+            ),
+            itemCount: options.length,
+            itemBuilder: (_, i) {
+              final opt = options[i];
+              return FormMcqTile(
+                label: opt,
+                selected: selected.contains(opt),
+                onTap: () => onToggle(opt),
+              );
+            },
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInOut,
+            child: showOther
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: FormOtherTextField(controller: otherController),
+                  )
+                : const SizedBox.shrink(),
+          ),
+          const SizedBox(height: 20),
+          _HOFPrimaryButton(
+            label: 'DONE FOR NOW',
+            icon: Icons.chevron_right,
+            onTap: onContinue,
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
 }
 
-// ─── Text Question Page ───────────────────────────────────────────────────────
+// ─── Text Question Page (Q7, Q8) ─────────────────────────────────────────────
 
-class _MDTextQuestionPage extends StatefulWidget {
+class _HOFTextQuestionPage extends StatefulWidget {
   final String badge;
   final int number;
   final String question;
@@ -592,7 +727,7 @@ class _MDTextQuestionPage extends StatefulWidget {
   final TextEditingController controller;
   final VoidCallback onContinue;
 
-  const _MDTextQuestionPage({
+  const _HOFTextQuestionPage({
     required this.badge,
     required this.number,
     required this.question,
@@ -602,10 +737,10 @@ class _MDTextQuestionPage extends StatefulWidget {
   });
 
   @override
-  State<_MDTextQuestionPage> createState() => _MDTextQuestionPageState();
+  State<_HOFTextQuestionPage> createState() => _HOFTextQuestionPageState();
 }
 
-class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
+class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
   @override
   void initState() {
     super.initState();
@@ -613,7 +748,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
   }
 
   @override
-  void didUpdateWidget(_MDTextQuestionPage oldWidget) {
+  void didUpdateWidget(_HOFTextQuestionPage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != widget.controller) {
       oldWidget.controller.removeListener(_rebuild);
@@ -637,7 +772,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _MDBadge(label: widget.badge),
+          _HOFBadge(label: widget.badge),
           const SizedBox(height: 16),
           Text(
             '⭐ ${widget.number}. ${widget.question}',
@@ -693,7 +828,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
             ),
           ),
           const SizedBox(height: 16),
-          _MDPrimaryButton(
+          _HOFPrimaryButton(
             label: 'CONTINUE',
             icon: Icons.chevron_right,
             onTap: hasText ? widget.onContinue : null,
@@ -719,7 +854,6 @@ class _CompletionPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
               Container(
@@ -755,7 +889,7 @@ class _CompletionPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              _MDPrimaryButton(
+              _HOFPrimaryButton(
                 label: 'Finish Reflection',
                 onTap: onFinish,
                 active: true,
@@ -771,9 +905,9 @@ class _CompletionPage extends StatelessWidget {
 
 // ─── Shared Widgets ───────────────────────────────────────────────────────────
 
-class _MDBackButton extends StatelessWidget {
+class _HOFBackButton extends StatelessWidget {
   final VoidCallback onTap;
-  const _MDBackButton({required this.onTap});
+  const _HOFBackButton({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -793,9 +927,9 @@ class _MDBackButton extends StatelessWidget {
   }
 }
 
-class _MDBadge extends StatelessWidget {
+class _HOFBadge extends StatelessWidget {
   final String label;
-  const _MDBadge({required this.label});
+  const _HOFBadge({required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -818,13 +952,14 @@ class _MDBadge extends StatelessWidget {
   }
 }
 
-class _MDPrimaryButton extends StatelessWidget {
+
+class _HOFPrimaryButton extends StatelessWidget {
   final String label;
   final IconData? icon;
   final VoidCallback? onTap;
   final bool active;
 
-  const _MDPrimaryButton({
+  const _HOFPrimaryButton({
     required this.label,
     this.icon,
     this.onTap,
@@ -862,7 +997,8 @@ class _MDPrimaryButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
+                color:
+                    usePrimary ? AppColors.surfaceDeep : AppColors.textIcon,
                 fontSize: 14,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.0,

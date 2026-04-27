@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/constants.dart';
-import 'form_shared_widgets.dart';
+import '../../../core/constants/constants.dart';
+import '../../custom_widgets/form_shared_widget.dart';
 
 class AssessmentFocusScreen extends StatefulWidget {
   const AssessmentFocusScreen({super.key});
@@ -47,13 +47,7 @@ class _AssessmentFocusScreenState extends State<AssessmentFocusScreen> {
 
   void _next() => setState(() => _step++);
 
-  void _back() {
-    if (_step == 0) {
-      Navigator.pop(context);
-    } else {
-      setState(() => _step--);
-    }
-  }
+  void _back() => Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {

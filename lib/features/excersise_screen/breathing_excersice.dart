@@ -129,7 +129,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
               top: 12,
               left: 16,
               child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
                 child: Container(
                   width: 42,
                   height: 42,

@@ -225,7 +225,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                 children: [
                   // Back button
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
                     child: Container(
                       width: 42,
                       height: 42,
