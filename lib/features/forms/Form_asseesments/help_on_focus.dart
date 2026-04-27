@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/l10n/app_localizations.dart';
 import '../../custom_widgets/form_shared_widget.dart';
 
 class HelpOnFocusScreen extends StatefulWidget {
@@ -30,49 +31,6 @@ class _HelpOnFocusScreenState extends State<HelpOnFocusScreen> {
   final _q4Other = TextEditingController();
   final _q6Other = TextEditingController();
 
-  static const _q1Options = [
-    '1  Very poor',
-    '2  Poor',
-    '3  Average',
-    '4  Good',
-    '5  Excellent',
-  ];
-
-  static const _q2Options = [
-    'Concentrating well',
-    'Sometimes distracted',
-    'Often distracted',
-    'Unable to continue the task',
-  ];
-
-  static const _q3Options = [
-    'No distractions',
-    'Once',
-    '2–3 times',
-    'More than 3 times',
-  ];
-
-  static const _q4Options = [
-    'MY PHONE', 'NOISE', 'PEOPLE AROUND ME',
-    'INTERNAL THOUGHTS', 'BOREDOM', 'FATIGUE', 'SOMETHING ELSE',
-  ];
-
-  static const _q5Options = [
-    'Yes, easily',
-    'Yes, with difficulty',
-    "I tried but couldn't",
-    "I didn't try",
-  ];
-
-  static const _q6Options = [
-    'Deep breathing',
-    'Turning off distractions',
-    'Changing your sitting position',
-    'Taking a short break',
-    'Nothing helped',
-    'Other',
-  ];
-
   @override
   void dispose() {
     _q7.dispose();
@@ -87,57 +45,71 @@ class _HelpOnFocusScreenState extends State<HelpOnFocusScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     if (_step == 0) return _IntroPage(onStart: _next);
     if (_step == 9) return _CompletionPage(onFinish: () => Navigator.pop(context));
     return _QuestionShell(
       step: _step,
       total: 8,
-      sessionLabel: 'FOCUS CHECK',
+      sessionLabel: l.hofSessionLabel,
       onBack: _back,
       child: _buildQuestion(),
     );
   }
 
   Widget _buildQuestion() {
+    final l = context.l10n;
+    final q1Options = [l.hofQ1O1, l.hofQ1O2, l.hofQ1O3, l.hofQ1O4, l.hofQ1O5];
+    final q2Options = [l.hofQ2O1, l.hofQ2O2, l.hofQ2O3, l.hofQ2O4];
+    final q3Options = [l.hofQ3O1, l.hofQ3O2, l.hofQ3O3, l.hofQ3O4];
+    final q4Options = [
+      l.hofQ4O1, l.hofQ4O2, l.hofQ4O3, l.hofQ4O4,
+      l.hofQ4O5, l.hofQ4O6, l.optSomethingElse,
+    ];
+    final q5Options = [l.hofQ5O1, l.hofQ5O2, l.hofQ5O3, l.hofQ5O4];
+    final q6Options = [
+      l.hofQ6O1, l.hofQ6O2, l.hofQ6O3, l.hofQ6O4, l.hofQ6O5, l.hofQ6O6,
+    ];
+
     switch (_step) {
       case 1:
         return _NumberedListPage(
-          badge: 'CHECK-IN',
+          badge: l.badgeCheckIn,
           number: 1,
-          question: 'How would you rate your overall attention level today?',
-          options: _q1Options,
+          question: l.hofQ1,
+          options: q1Options,
           selected: _q1,
           onSelect: (v) => setState(() => _q1 = v),
           onContinue: _next,
         );
       case 2:
         return _SingleSelectPage(
-          badge: 'CHECK-IN',
+          badge: l.badgeCheckIn,
           number: 2,
-          question: 'While performing the required task, I was:',
-          options: _q2Options,
+          question: l.hofQ2,
+          options: q2Options,
           selected: _q2,
           onSelect: (v) => setState(() => _q2 = v),
           onContinue: _next,
         );
       case 3:
         return _SingleSelectPage(
-          badge: 'CHECK-IN',
+          badge: l.badgeCheckIn,
           number: 3,
-          question: 'Number of times distracted during the task:',
-          options: _q3Options,
+          question: l.hofQ3,
+          options: q3Options,
           selected: _q3,
           onSelect: (v) => setState(() => _q3 = v),
           onContinue: _next,
         );
       case 4:
         return _McqGridPage(
-          badge: 'MULTIPLE CHOICE',
+          badge: l.badgeMultiChoice,
           number: 4,
-          question: 'What distracted me most today was:',
-          options: _q4Options,
+          question: l.hofQ4,
+          options: q4Options,
           selected: _q4Selected,
-          otherKey: 'SOMETHING ELSE',
+          otherKey: l.optSomethingElse,
           otherController: _q4Other,
           onToggle: (v) => setState(() {
             _q4Selected.contains(v)
@@ -148,10 +120,10 @@ class _HelpOnFocusScreenState extends State<HelpOnFocusScreen> {
         );
       case 5:
         return _SingleSelectPage(
-          badge: 'CHECK-IN',
+          badge: l.badgeCheckIn,
           number: 5,
-          question: 'Were you able to regain your focus after being distracted?',
-          options: _q5Options,
+          question: l.hofQ5,
+          options: q5Options,
           selected: _q5,
           onSelect: (v) => setState(() => _q5 = v),
           onContinue: _next,
@@ -159,31 +131,31 @@ class _HelpOnFocusScreenState extends State<HelpOnFocusScreen> {
         );
       case 6:
         return _SingleSelectPage(
-          badge: 'CHECK-IN',
+          badge: l.badgeCheckIn,
           number: 6,
-          question: 'What helped you regain your attention?',
-          options: _q6Options,
+          question: l.hofQ6,
+          options: q6Options,
           selected: _q6,
           onSelect: (v) => setState(() => _q6 = v),
           onContinue: _next,
-          otherKey: 'Other',
+          otherKey: l.hofQ6O6,
           otherController: _q6Other,
         );
       case 7:
         return _HOFTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 7,
-          question: 'Describe my attention today in one word:',
-          placeholder: 'One word focus...',
+          question: l.hofQ7,
+          placeholder: l.hofQ7Hint,
           controller: _q7,
           onContinue: _next,
         );
       case 8:
         return _HOFTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 8,
-          question: 'What will I do tomorrow to improve my attention?',
-          placeholder: 'My improvement plan...',
+          question: l.hofQ8,
+          placeholder: l.hofQ8Hint,
           controller: _q8,
           onContinue: _next,
         );
@@ -201,6 +173,7 @@ class _IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -263,10 +236,10 @@ class _IntroPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'FOCUS ASSESSMENT',
+                    Text(
+                      l.hofIntroTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -275,7 +248,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'A comprehensive check-in on your attention\nquality throughout today\'s activities.',
+                      l.hofIntroBody,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textMuted,
@@ -285,7 +258,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     _HOFPrimaryButton(
-                      label: 'START SESSION',
+                      label: l.startSession,
                       icon: Icons.bolt,
                       onTap: onStart,
                       active: true,
@@ -404,6 +377,7 @@ class _NumberedListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
@@ -493,7 +467,7 @@ class _NumberedListPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _HOFPrimaryButton(
-            label: 'CONTINUE',
+            label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: selected != null ? onContinue : null,
           ),
@@ -533,6 +507,7 @@ class _SingleSelectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final showOther =
         otherKey != null && selected == otherKey && otherController != null;
 
@@ -608,7 +583,7 @@ class _SingleSelectPage extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           _HOFPrimaryButton(
-            label: 'CONTINUE',
+            label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: selected != null ? onContinue : null,
           ),
@@ -646,6 +621,7 @@ class _McqGridPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final showOther = selected.contains(otherKey);
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -665,7 +641,7 @@ class _McqGridPage extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            'CHOOSE AS MANY AS APPLY',
+            l.chooseAsMany,
             style: TextStyle(
               color: AppColors.textDim,
               fontSize: 10,
@@ -706,7 +682,7 @@ class _McqGridPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           _HOFPrimaryButton(
-            label: 'DONE FOR NOW',
+            label: l.doneForNow,
             icon: Icons.chevron_right,
             onTap: onContinue,
           ),
@@ -815,7 +791,7 @@ class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
                     ),
                   ),
                   Text(
-                    '${widget.controller.text.length} CHARS',
+                    '${widget.controller.text.length} ${context.l10n.chars}',
                     style: TextStyle(
                       color: AppColors.textHint,
                       fontSize: 10,
@@ -829,7 +805,7 @@ class _HOFTextQuestionPageState extends State<_HOFTextQuestionPage> {
           ),
           const SizedBox(height: 16),
           _HOFPrimaryButton(
-            label: 'CONTINUE',
+            label: context.l10n.continueUpper,
             icon: Icons.chevron_right,
             onTap: hasText ? widget.onContinue : null,
           ),
@@ -848,6 +824,7 @@ class _CompletionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -870,9 +847,9 @@ class _CompletionPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 28),
-              const Text(
-                'Focus Logged!',
-                style: TextStyle(
+              Text(
+                l.focusLogged,
+                style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
@@ -880,7 +857,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Awesome! Your self-reflection is the first\nstep to mastering your focus.',
+                l.focusLoggedBody,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textMuted,
@@ -890,7 +867,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const Spacer(),
               _HOFPrimaryButton(
-                label: 'Finish Reflection',
+                label: l.finishReflection,
                 onTap: onFinish,
                 active: true,
               ),

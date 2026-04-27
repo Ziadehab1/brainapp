@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 import 'package:brainflow/features/onboarding_screen/select_interest.dart';
 
 class OnboardingSignupScreen extends StatefulWidget {
@@ -43,6 +44,7 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.backgroundOnboarding,
       body: SafeArea(
@@ -51,9 +53,9 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Create Profile',
-                style: TextStyle(
+              Text(
+                l.createProfile,
+                style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
@@ -62,30 +64,27 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
               ),
               const SizedBox(height: 6),
               Text(
-                'Join us to start your journey',
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 14,
-                ),
+                l.joinJourney,
+                style: TextStyle(color: AppColors.textMuted, fontSize: 14),
               ),
               const SizedBox(height: 32),
 
               // Full Name
-              _FieldLabel('FULL NAME'),
+              _FieldLabel(l.fullName),
               const SizedBox(height: 8),
               _InputField(
                 controller: _nameController,
-                hint: 'e.g. John Doe',
+                hint: l.fullNameHint,
                 prefixIcon: Icons.person_outline,
               ),
               const SizedBox(height: 20),
 
               // Email
-              _FieldLabel('EMAIL ADDRESS'),
+              _FieldLabel(l.emailAddress),
               const SizedBox(height: 8),
               _InputField(
                 controller: _emailController,
-                hint: 'e.g. name@example.com',
+                hint: l.emailHint,
                 prefixIcon: Icons.mail_outline,
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -98,7 +97,7 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _FieldLabel('REGION'),
+                      _FieldLabel(l.region),
                       const SizedBox(height: 8),
                       Container(
                         height: 54,
@@ -133,11 +132,11 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _FieldLabel('PHONE NUMBER'),
+                        _FieldLabel(l.phoneNumber),
                         const SizedBox(height: 8),
                         _InputField(
                           controller: _phoneController,
-                          hint: 'e.g. 123456789',
+                          hint: l.phoneHint,
                           prefixIcon: Icons.phone_outlined,
                           keyboardType: TextInputType.phone,
                         ),
@@ -149,7 +148,7 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
               const SizedBox(height: 20),
 
               // Gender
-              _FieldLabel('SELECT GENDER'),
+              _FieldLabel(l.selectGender),
               const SizedBox(height: 8),
               _GenderSelector(
                 selected: _selectedGender,
@@ -158,11 +157,11 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
               const SizedBox(height: 20),
 
               // Password
-              _FieldLabel('PASSWORD'),
+              _FieldLabel(l.password),
               const SizedBox(height: 8),
               _InputField(
                 controller: _passwordController,
-                hint: 'Min. 8 characters',
+                hint: l.passwordHint,
                 prefixIcon: Icons.lock_outline,
                 obscure: !_passwordVisible,
                 suffixIcon: IconButton(
@@ -178,19 +177,19 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              _PasswordRequirement(met: _has8Chars, label: 'At least 8 characters'),
+              _PasswordRequirement(met: _has8Chars,    label: l.req8Chars),
               const SizedBox(height: 6),
-              _PasswordRequirement(met: _hasUppercase, label: 'One upper case letter'),
+              _PasswordRequirement(met: _hasUppercase, label: l.reqUppercase),
               const SizedBox(height: 6),
-              _PasswordRequirement(met: _hasDigit, label: 'At least 1 digital number'),
+              _PasswordRequirement(met: _hasDigit,     label: l.reqDigit),
               const SizedBox(height: 20),
 
               // Confirm Password
-              _FieldLabel('CONFIRM PASSWORD'),
+              _FieldLabel(l.confirmPassword),
               const SizedBox(height: 8),
               _InputField(
                 controller: _confirmPasswordController,
-                hint: 'Confirm your password',
+                hint: l.confirmPasswordHint,
                 prefixIcon: Icons.lock_outline,
                 obscure: !_confirmPasswordVisible,
                 suffixIcon: IconButton(
@@ -302,7 +301,7 @@ class _GenderSelector extends StatelessWidget {
       children: [
         Expanded(
           child: _GenderOption(
-            label: 'Male',
+            label: context.l10n.male,
             selected: selected == 'Male',
             onTap: () => onChanged('Male'),
           ),
@@ -310,7 +309,7 @@ class _GenderSelector extends StatelessWidget {
         const SizedBox(width: 12),
         Expanded(
           child: _GenderOption(
-            label: 'Female',
+            label: context.l10n.female,
             selected: selected == 'Female',
             onTap: () => onChanged('Female'),
           ),
@@ -442,11 +441,11 @@ class _CreateAccountButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: AppColors.surfaceMedium,
         ),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Create Account',
+              context.l10n.createAccount,
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 16,

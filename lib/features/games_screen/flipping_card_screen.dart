@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class FlippingCardScreen extends StatefulWidget {
   const FlippingCardScreen({super.key});
@@ -133,6 +134,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
 
   void _showWinDialog() {
     timer?.cancel();
+    final l = context.l10n;
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -149,9 +151,9 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                 style: TextStyle(color: AppColors.primaryLight, fontSize: 32),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'Session Complete',
-                style: TextStyle(
+              Text(
+                l.sessionComplete,
+                style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -159,7 +161,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                'Time: ${_formatTime(seconds)}',
+                '${l.timeLabelColon}${_formatTime(seconds)}',
                 style: TextStyle(
                   color: AppColors.textMuted,
                   fontSize: 14,
@@ -167,7 +169,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Score: $score',
+                '${l.scoreLabelColon}$score',
                 style: const TextStyle(
                   color: AppColors.primary,
                   fontSize: 22,
@@ -187,10 +189,10 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                     color: AppColors.primaryLight,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      'PLAY AGAIN',
-                      style: TextStyle(
+                      l.playAgain,
+                      style: const TextStyle(
                         color: AppColors.surfaceDeep,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -209,6 +211,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final size = MediaQuery.of(context).size;
     final double cardWidth = (size.width - 48) / 4;
     final double cardHeight = cardWidth * 1.25;
@@ -260,7 +263,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  'TIME',
+                                  l.timeLabel,
                                   style: TextStyle(
                                     color:
                                         AppColors.textFaint,
@@ -293,7 +296,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  'SCORE',
+                                  l.scoreLabel,
                                   style: TextStyle(
                                     color:
                                         AppColors.textFaint,

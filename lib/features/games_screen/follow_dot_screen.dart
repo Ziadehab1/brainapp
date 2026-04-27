@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:async';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class FollowDotScreen extends StatefulWidget {
   const FollowDotScreen({super.key});
@@ -138,6 +139,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: size == null
@@ -225,7 +227,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Follow the Dot',
+                            l.followTheDot,
                             style: TextStyle(
                               color: AppColors.textMuted,
                               fontSize: 13,
@@ -251,18 +253,18 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                                   ),
                                 ],
                               ),
-                              child: const Row(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.play_circle_outline_rounded,
                                     color: AppColors.surfaceDeep,
                                     size: 22,
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Text(
-                                    'START SESSION',
-                                    style: TextStyle(
+                                    l.startSession,
+                                    style: const TextStyle(
                                       color: AppColors.surfaceDeep,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -281,7 +283,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                   if (showReady)
                     Center(
                       child: Text(
-                        'READY',
+                        l.ready,
                         style: TextStyle(
                           color: AppColors.textSecondary,
                           fontSize: 40,
@@ -295,7 +297,7 @@ class _FollowDotScreenState extends State<FollowDotScreen>
                   if (showGo)
                     Center(
                       child: Text(
-                        'GO',
+                        l.go,
                         style: TextStyle(
                           color: AppColors.primaryLight,
                           fontSize: 56,

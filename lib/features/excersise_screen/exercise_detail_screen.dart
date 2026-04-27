@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class ExerciseDetailData {
   final String title;
@@ -30,6 +31,7 @@ class ExerciseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -183,7 +185,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'EXERCISE SESSION',
+                      l.exerciseSession,
                       style: TextStyle(
                         color: AppColors.textDim,
                         fontSize: 12,
@@ -220,7 +222,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'SESSION HIGHLIGHTS',
+                        l.sessionHighlights,
                         style: TextStyle(
                           color: AppColors.textFaint,
                           fontSize: 11,
@@ -274,15 +276,15 @@ class ExerciseDetailScreen extends StatelessWidget {
                       color: AppColors.primaryLight,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.play_circle_outline_rounded,
+                        const Icon(Icons.play_circle_outline_rounded,
                             color: AppColors.surfaceDeep, size: 22),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
-                          'START SESSION',
-                          style: TextStyle(
+                          l.startSession,
+                          style: const TextStyle(
                             color: AppColors.surfaceDeep,
                             fontSize: 15,
                             fontWeight: FontWeight.w700,

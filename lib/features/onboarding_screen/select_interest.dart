@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 import 'package:brainflow/features/home_screen/home_screen.dart';
 
 class Interest {
@@ -53,7 +54,7 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
     if (_selected.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Please select at least one interest'),
+          content: Text(context.l10n.selectAtLeastOne),
           backgroundColor: AppColors.surface,
           behavior: SnackBarBehavior.floating,
           shape:
@@ -77,8 +78,29 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
     }
   }
 
+  String _interestName(BuildContext context, String key) {
+    final l = context.l10n;
+    switch (key) {
+      case 'Fashion': return l.interestFashion;
+      case 'Beauty': return l.interestBeauty;
+      case 'Technology': return l.interestTech;
+      case 'Food': return l.interestFood;
+      case 'Health': return l.interestHealth;
+      case 'Adventure': return l.interestAdventure;
+      case 'Gaming': return l.interestGaming;
+      case 'Home & Decor': return l.interestHomeDecor;
+      case 'Crafts': return l.interestCrafts;
+      case 'Music': return l.interestMusic;
+      case 'Pets & Animals': return l.interestPets;
+      case 'Art': return l.interestArt;
+      case 'Automotive': return l.interestAutomotive;
+      default: return key;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.backgroundOnboarding,
       body: SafeArea(
@@ -87,9 +109,9 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Select Interests',
-                style: TextStyle(
+              Text(
+                l.selectInterests,
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
@@ -100,7 +122,7 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
               Row(
                 children: [
                   Text(
-                    'Pick up to $_maxSelections topics you care about',
+                    l.pickUpTo3,
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.textMuted,
@@ -128,6 +150,7 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
                     final isMaxed = _selected.length >= _maxSelections;
                     return _InterestChip(
                       interest: interest,
+                      displayName: _interestName(context, interest.name),
                       isSelected: isSelected,
                       isDisabled: isMaxed && !isSelected,
                       onTap: () => _toggle(interest.name),
@@ -184,12 +207,14 @@ class _SelectionBadge extends StatelessWidget {
 
 class _InterestChip extends StatelessWidget {
   final Interest interest;
+  final String displayName;
   final bool isSelected;
   final bool isDisabled;
   final VoidCallback onTap;
 
   const _InterestChip({
     required this.interest,
+    required this.displayName,
     required this.isSelected,
     required this.isDisabled,
     required this.onTap,
@@ -232,7 +257,7 @@ class _InterestChip extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                interest.name,
+                displayName,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -279,12 +304,12 @@ class _ContinueButton extends StatelessWidget {
                   ),
                 ),
               )
-            : const Row(
+            : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Continue',
-                    style: TextStyle(
+                    context.l10n.continueBtn,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: AppColors.surfaceDeep,

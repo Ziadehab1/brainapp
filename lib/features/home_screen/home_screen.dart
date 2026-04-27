@@ -4,6 +4,7 @@ import 'package:brainflow/features/games_screen/games_screen.dart';
 import 'package:brainflow/features/tutorials_screen/tutorials.dart';
 import 'package:brainflow/features/more_screen/more_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,6 +53,7 @@ class _BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return SafeArea(
       top: false,
       child: Padding(
@@ -74,25 +76,25 @@ class _BottomNav extends StatelessWidget {
             children: [
               _NavItem(
                 icon: Icons.show_chart_rounded,
-                label: 'EXERCISE',
+                label: l.navExercise,
                 isSelected: selectedIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
                 icon: Icons.videogame_asset_outlined,
-                label: 'GAMES',
+                label: l.navGames,
                 isSelected: selectedIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
                 icon: Icons.play_circle_outline_rounded,
-                label: 'TUTORIALS',
+                label: l.navTutorials,
                 isSelected: selectedIndex == 2,
                 onTap: () => onTap(2),
               ),
               _NavItem(
                 icon: Icons.more_horiz_rounded,
-                label: 'MORE',
+                label: l.navMore,
                 isSelected: selectedIndex == 3,
                 onTap: () => onTap(3),
               ),

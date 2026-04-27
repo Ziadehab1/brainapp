@@ -4,43 +4,43 @@ import 'package:brainflow/features/games_screen/game_detail_screen.dart';
 import 'package:brainflow/features/games_screen/follow_dot_screen.dart';
 import 'package:brainflow/features/games_screen/flipping_card_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
-
-final List<GameData> allGames = [
-  GameData(
-    title: 'Follow the Dot',
-    tag: 'FOCUS',
-    duration: '5 - 20 M',
-    thumbHeight: 170,
-    description:
-        'Enhance your sustained attention by tracking a rhythmic moving point through a shifting landscape.',
-    highlights: [
-      'Saccadic eye training',
-      'Peripheral awareness',
-      'Patience building',
-    ],
-    gradientStart: AppColors.gameBrownStart,
-    gradientEnd: AppColors.gameBrownEnd,
-    destination: const FollowDotScreen(),
-  ),
-  GameData(
-    title: 'Flipping Card',
-    tag: 'MEMORY',
-    duration: '5 - 10 M',
-    thumbHeight: 125,
-    description:
-        'A memory-matching experience designed to strengthen short-term recall and visual processing speed.',
-    highlights: ['Pattern memorization', 'Recall accuracy', 'Cognitive speed'],
-    gradientStart: AppColors.gameForestStart,
-    gradientEnd: AppColors.gameForestEnd,
-    destination: const FlippingCardScreen(),
-  ),
-];
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class GamesScreen extends StatelessWidget {
   const GamesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final List<GameData> allGames = [
+      GameData(
+        title: l.followTheDot,
+        tag: l.tagFocus,
+        duration: l.dur5to20M,
+        thumbHeight: 170,
+        description: l.followDotDesc,
+        highlights: [
+          l.followDotH1,
+          l.followDotH2,
+          l.followDotH3,
+        ],
+        gradientStart: AppColors.gameBrownStart,
+        gradientEnd: AppColors.gameBrownEnd,
+        destination: const FollowDotScreen(),
+      ),
+      GameData(
+        title: l.flippingCard,
+        tag: l.tagMemory,
+        duration: l.dur5to10M,
+        thumbHeight: 125,
+        description: l.flippingCardDesc,
+        highlights: [l.flippingH1, l.flippingH2, l.flippingH3],
+        gradientStart: AppColors.gameForestStart,
+        gradientEnd: AppColors.gameForestEnd,
+        destination: const FlippingCardScreen(),
+      ),
+    ];
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,9 +50,9 @@ class GamesScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Cognitive Games',
-                  style: TextStyle(
+                Text(
+                  l.cognitiveGames,
+                  style: const TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
@@ -60,7 +60,7 @@ class GamesScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Train your brain while having fun',
+                  l.gamesSubtitle,
                   style: TextStyle(color: AppColors.textDim, fontSize: 13),
                 ),
               ],

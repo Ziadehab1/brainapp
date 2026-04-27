@@ -5,59 +5,58 @@ import 'package:brainflow/features/excersise_screen/emotions_diary.dart';
 import 'package:brainflow/features/excersise_screen/exercise_detail_screen.dart';
 import 'package:brainflow/features/excersise_screen/todo_list.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class ExerciseScreen extends StatelessWidget {
   const ExerciseScreen({super.key});
 
-  static final List<_ExerciseItem> _items = [
-    _ExerciseItem(
-      title: 'Breathing Exercise',
-      duration: '1 MIN',
-      description:
-          'Guided box breathing to stabilize the nervous system and clear mental fog.',
-      highlights: [
-        'Vagus nerve stimulation',
-        'Stress reduction',
-        'CO2 tolerance',
-      ],
-      icon: Icons.air_rounded,
-      thumbHeight: 155,
-      gradientStart: AppColors.exerciseTealStart,
-      gradientEnd: AppColors.exerciseTealEnd,
-      destination: const BreathingExerciseScreen(),
-    ),
-    _ExerciseItem(
-      title: 'Emotions Diary',
-      duration: '5 - 20 MIN',
-      description:
-          'Track and reflect on your emotions to build self-awareness over time.',
-      highlights: [
-        'Emotional awareness',
-        'Pattern recognition',
-        'Mood tracking',
-      ],
-      icon: Icons.favorite_border_rounded,
-      thumbHeight: 185,
-      gradientStart: AppColors.exercisePinkStart,
-      gradientEnd: AppColors.exercisePinkEnd,
-      destination: const EmotionsDiaryScreen(),
-    ),
-    _ExerciseItem(
-      title: 'My TODOS',
-      duration: 'TASKS',
-      description:
-          'Organizes your day into focused tasks and track your progress step by step.',
-      highlights: ['Task breakdown', 'Step tracking', 'Daily planning'],
-      icon: Icons.checklist_rounded,
-      thumbHeight: 140,
-      gradientStart: AppColors.exercisePurpleStart,
-      gradientEnd: AppColors.exercisePurpleEnd,
-      destination: const TodoListScreen(),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final List<_ExerciseItem> items = [
+      _ExerciseItem(
+        title: l.breathingTitle,
+        duration: l.dur1Min,
+        description: l.breathingDesc,
+        highlights: [
+          l.breathingH1,
+          l.breathingH2,
+          l.breathingH3,
+        ],
+        icon: Icons.air_rounded,
+        thumbHeight: 155,
+        gradientStart: AppColors.exerciseTealStart,
+        gradientEnd: AppColors.exerciseTealEnd,
+        destination: const BreathingExerciseScreen(),
+      ),
+      _ExerciseItem(
+        title: l.emotionsDiaryTitle,
+        duration: l.dur5to20Min,
+        description: l.emotionsDiaryDesc,
+        highlights: [
+          l.emotionsH1,
+          l.emotionsH2,
+          l.emotionsH3,
+        ],
+        icon: Icons.favorite_border_rounded,
+        thumbHeight: 185,
+        gradientStart: AppColors.exercisePinkStart,
+        gradientEnd: AppColors.exercisePinkEnd,
+        destination: const EmotionsDiaryScreen(),
+      ),
+      _ExerciseItem(
+        title: l.todosTitle,
+        duration: l.tasksDuration,
+        description: l.todosDesc,
+        highlights: [l.todosH1, l.todosH2, l.todosH3],
+        icon: Icons.checklist_rounded,
+        thumbHeight: 140,
+        gradientStart: AppColors.exercisePurpleStart,
+        gradientEnd: AppColors.exercisePurpleEnd,
+        destination: const TodoListScreen(),
+      ),
+    ];
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +66,9 @@ class ExerciseScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Exercise',
-                  style: TextStyle(
+                Text(
+                  l.exercise,
+                  style: const TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
@@ -77,7 +76,7 @@ class ExerciseScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Move your body, sharpen your mind',
+                  l.exerciseSubtitle,
                   style: TextStyle(color: AppColors.textDim, fontSize: 13),
                 ),
               ],
@@ -90,8 +89,8 @@ class ExerciseScreen extends StatelessWidget {
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-              itemCount: _items.length,
-              itemBuilder: (context, i) => _ExerciseCard(item: _items[i]),
+              itemCount: items.length,
+              itemBuilder: (context, i) => _ExerciseCard(item: items[i]),
             ),
           ),
         ],
@@ -129,13 +128,14 @@ class _ExerciseCard extends StatelessWidget {
   const _ExerciseCard({required this.item});
 
   void _navigate(BuildContext context) {
+    final l = context.l10n;
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => ExerciseDetailScreen(
           data: ExerciseDetailData(
             title: item.title,
-            tag: 'EXERCISE',
+            tag: l.exercise,
             duration: item.duration,
             description: item.description,
             highlights: item.highlights,

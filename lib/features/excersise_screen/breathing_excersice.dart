@@ -1,6 +1,7 @@
 ﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class BreathingExerciseScreen extends StatefulWidget {
   const BreathingExerciseScreen({super.key});
@@ -119,6 +120,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -261,12 +263,12 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                       position: slideAnim,
                       child: Text(
                         showReady
-                            ? 'Ready'
+                            ? l.breatheReady
                             : (countdown == 0
                                   ? ''
                                   : (isBreathingIn
-                                        ? 'Breathe In'
-                                        : 'Breathe Out')),
+                                        ? l.breatheIn
+                                        : l.breatheOut)),
                         style: const TextStyle(
                           fontSize: 24,
                           color: AppColors.textPrimary,
@@ -304,9 +306,9 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                                 ),
                               ],
                             ),
-                            child: const Text(
-                              'REPEAT',
-                              style: TextStyle(
+                            child: Text(
+                              l.breatheRepeat,
+                              style: const TextStyle(
                                 color: AppColors.surfaceDeep,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,

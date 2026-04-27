@@ -1,4 +1,5 @@
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 import 'package:brainflow/features/forms/Form_asseesments/Mental_distraction%20_assessment.dart';
 import 'package:brainflow/features/forms/Form_asseesments/assessment_focus.dart';
 import 'package:brainflow/features/forms/Form_asseesments/help_on_focus.dart';
@@ -28,45 +29,45 @@ class _FormData {
   });
 }
 
-final List<_FormData> _allForms = [
-  _FormData(
-    title: 'Focus Assessment',
-    tag: 'CLINICAL',
-    description: 'Assess attention sustainability and cognitive stamina.',
-    thumbHeight: 170,
-    gradientStart: AppColors.formNavyStart,
-    gradientEnd: AppColors.formNavyEnd,
-    icon: Icons.track_changes_rounded,
-    destination: const AssessmentFocusScreen(),
-  ),
-  _FormData(
-    title: 'Mental Distraction Assessment',
-    tag: 'Mental Distraction',
-    description:
-        'Evaluate your susceptibility to common mental distractions and their impact on focus.',
-    thumbHeight: 140,
-    gradientStart: AppColors.formBlueStart,
-    gradientEnd: AppColors.formBlueEnd,
-    icon: Icons.bedtime_outlined,
-    destination: const MentalDistractionAssessmentScreen(),
-  ),
-  _FormData(
-    title: 'Help On Focus',
-    tag: 'FOCUS',
-    description: 'Get guidance on improving your focus and concentration.',
-    thumbHeight: 155,
-    gradientStart: AppColors.formVioletStart,
-    gradientEnd: AppColors.formVioletEnd,
-    icon: Icons.psychology_outlined,
-    destination: const HelpOnFocusScreen(),
-  ),
-];
-
 class FormHomePage extends StatelessWidget {
   const FormHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final List<_FormData> allForms = [
+      _FormData(
+        title: l.focusAssessment,
+        tag: l.tagClinical,
+        description: l.focusAssessDesc,
+        thumbHeight: 170,
+        gradientStart: AppColors.formNavyStart,
+        gradientEnd: AppColors.formNavyEnd,
+        icon: Icons.track_changes_rounded,
+        destination: const AssessmentFocusScreen(),
+      ),
+      _FormData(
+        title: l.mentalDistractionTitle,
+        tag: l.tagMentalDistraction,
+        description: l.mentalDistractionDesc,
+        thumbHeight: 140,
+        gradientStart: AppColors.formBlueStart,
+        gradientEnd: AppColors.formBlueEnd,
+        icon: Icons.bedtime_outlined,
+        destination: const MentalDistractionAssessmentScreen(),
+      ),
+      _FormData(
+        title: l.helpOnFocusTitle,
+        tag: l.tagFocus,
+        description: l.helpOnFocusDesc,
+        thumbHeight: 155,
+        gradientStart: AppColors.formVioletStart,
+        gradientEnd: AppColors.formVioletEnd,
+        icon: Icons.psychology_outlined,
+        destination: const HelpOnFocusScreen(),
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -85,9 +86,9 @@ class FormHomePage extends StatelessWidget {
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  const Text(
-                    'Evaluations',
-                    style: TextStyle(
+                  Text(
+                    l.evaluations,
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -102,9 +103,9 @@ class FormHomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Assessment Library',
-                    style: TextStyle(
+                  Text(
+                    l.assessmentLibrary,
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 26,
                       fontWeight: FontWeight.w800,
@@ -112,7 +113,7 @@ class FormHomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Understand your mind through guided forms',
+                    l.assessmentSubtitle,
                     style: TextStyle(color: AppColors.cancelText, fontSize: 13),
                   ),
                 ],
@@ -125,8 +126,8 @@ class FormHomePage extends StatelessWidget {
                 mainAxisSpacing: 14,
                 crossAxisSpacing: 14,
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-                itemCount: _allForms.length,
-                itemBuilder: (context, i) => _FormCard(data: _allForms[i]),
+                itemCount: allForms.length,
+                itemBuilder: (context, i) => _FormCard(data: allForms[i]),
               ),
             ),
           ],

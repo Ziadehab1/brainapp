@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class EmotionsDiaryScreen extends StatefulWidget {
   const EmotionsDiaryScreen({super.key});
@@ -46,13 +47,14 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
   }
 
   void saveNote() {
+    final l = context.l10n;
     final text = diaryController.text.trim();
     if (selectedEmoji.isEmpty) {
-      _showSnack('Select a feeling first');
+      _showSnack(l.selectFeelingFirst);
       return;
     }
     if (text.isEmpty) {
-      _showSnack('Write what you feel');
+      _showSnack(l.writeWhatYouFeel);
       return;
     }
 
@@ -69,7 +71,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
       diaryController.clear();
       selectedEmoji = '';
     });
-    _showSnack('Entry saved');
+    _showSnack(l.entrySaved);
   }
 
   void deleteNote(int index) {
@@ -95,6 +97,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -123,9 +126,9 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  const Text(
-                    'Emotions Diary',
-                    style: TextStyle(
+                  Text(
+                    l.emotionsDiaryTitle,
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
@@ -145,7 +148,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                   children: [
                     // Feeling label
                     Text(
-                      'Choose your feeling',
+                      l.chooseFeeling,
                       style: TextStyle(
                         color: AppColors.textSecondary,
                         fontSize: 13,
@@ -229,7 +232,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                           height: 1.5,
                         ),
                         decoration: InputDecoration(
-                          hintText: 'What are you feeling today?',
+                          hintText: l.feelingToday,
                           hintStyle: TextStyle(
                             color: AppColors.textHint,
                             fontSize: 14,
@@ -278,7 +281,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
 
                     // Saved notes label
                     Text(
-                      'SAVED ENTRIES',
+                      l.savedEntries,
                       style: TextStyle(
                         color: AppColors.textFaint,
                         fontSize: 11,
@@ -295,7 +298,7 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 32),
                         child: Center(
                           child: Text(
-                            'No entries yet — write your first one above.',
+                            l.noEntriesYet,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.textHint,

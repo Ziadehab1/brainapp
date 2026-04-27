@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/l10n/app_localizations.dart';
 import '../../custom_widgets/form_shared_widget.dart';
 
 class AssessmentFocusScreen extends StatefulWidget {
@@ -22,16 +23,6 @@ class _AssessmentFocusScreenState extends State<AssessmentFocusScreen> {
 
   final Set<String> _q2Selected = {};
   final Set<String> _q3Selected = {};
-
-  static const _q2Options = [
-    'A QUIET PLACE', 'TURN OFF YOUR PHONE', 'TIDY YOUR TABLE',
-    'SET A SMALL GOAL', 'SET A TIMER', 'LISTEN TO CALMING MUSIC',
-    'TAKE DEEP BREATHS', 'GET ENOUGH SLEEP', 'SOMETHING ELSE',
-  ];
-
-  static const _q3Options = [
-    'NO ONE', 'FRIEND', 'FAMILY MEMBER', 'COACH/TEACHER', 'OTHER',
-  ];
 
   @override
   void dispose() {
@@ -62,25 +53,34 @@ class _AssessmentFocusScreenState extends State<AssessmentFocusScreen> {
   }
 
   Widget _buildQuestion() {
+    final l = context.l10n;
+    final q2Options = [
+      l.afQ2OptA, l.afQ2OptB, l.afQ2OptC, l.afQ2OptD,
+      l.afQ2OptE, l.afQ2OptF, l.afQ2OptG, l.afQ2OptH, l.optSomethingElse,
+    ];
+    final q3Options = [
+      l.afQ3OptA, l.afQ3OptB, l.afQ3OptC, l.afQ3OptD, l.optOther,
+    ];
+
     switch (_step) {
       case 1:
         return _TextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 1,
-          question: 'The moment I felt most focused today:',
-          placeholder: 'Describe your most focused moment...',
+          question: l.afQ1,
+          placeholder: l.afQ1Hint,
           controller: _q1,
           onContinue: _next,
-          buttonLabel: 'CONTINUE',
+          buttonLabel: l.continueUpper,
         );
       case 2:
         return _McqQuestionPage(
-          badge: 'MULTIPLE CHOICE',
+          badge: l.badgeMultiChoice,
           number: 2,
-          question: 'What helped me reach this moment?',
-          options: _q2Options,
+          question: l.afQ2,
+          options: q2Options,
           selected: _q2Selected,
-          otherKey: 'SOMETHING ELSE',
+          otherKey: l.optSomethingElse,
           otherController: _q2Other,
           onToggle: (v) => setState(() {
             _q2Selected.contains(v) ? _q2Selected.remove(v) : _q2Selected.add(v);
@@ -89,12 +89,12 @@ class _AssessmentFocusScreenState extends State<AssessmentFocusScreen> {
         );
       case 3:
         return _McqQuestionPage(
-          badge: 'MULTIPLE CHOICE',
+          badge: l.badgeMultiChoice,
           number: 3,
-          question: 'People who helped me focus (if any):',
-          options: _q3Options,
+          question: l.afQ3,
+          options: q3Options,
           selected: _q3Selected,
-          otherKey: 'OTHER',
+          otherKey: l.optOther,
           otherController: _q3Other,
           onToggle: (v) => setState(() {
             _q3Selected.contains(v) ? _q3Selected.remove(v) : _q3Selected.add(v);
@@ -103,43 +103,43 @@ class _AssessmentFocusScreenState extends State<AssessmentFocusScreen> {
         );
       case 4:
         return _TextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 4,
-          question: 'Things I said to myself that encouraged me to focus:',
-          placeholder: 'What did you tell yourself?',
+          question: l.afQ4,
+          placeholder: l.afQ4Hint,
           controller: _q4,
           onContinue: _next,
-          buttonLabel: 'CONTINUE',
+          buttonLabel: l.continueUpper,
         );
       case 5:
         return _TextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 5,
-          question: 'One thing I will repeat tomorrow because it helped me today:',
-          placeholder: 'Repeat this...',
+          question: l.afQ5,
+          placeholder: l.afQ5Hint,
           controller: _q5,
           onContinue: _next,
-          buttonLabel: 'CONTINUE',
+          buttonLabel: l.continueUpper,
         );
       case 6:
         return _TextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 6,
-          question: 'One thing I will try to avoid because it weakens my concentration:',
-          placeholder: 'Avoid this...',
+          question: l.afQ6,
+          placeholder: l.afQ6Hint,
           controller: _q6,
           onContinue: _next,
-          buttonLabel: 'CONTINUE',
+          buttonLabel: l.continueUpper,
         );
       case 7:
         return _TextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 7,
-          question: 'My words about my focus today:',
-          placeholder: 'Example: Good – Average – Better – Consistent – Stronger than yesterday',
+          question: l.afQ7,
+          placeholder: l.afQ7Hint,
           controller: _q7,
           onContinue: _next,
-          buttonLabel: 'CONTINUE',
+          buttonLabel: l.continueUpper,
         );
       case 8:
         return _ReminderPage(onFinish: _next);
@@ -157,6 +157,7 @@ class _IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -224,10 +225,10 @@ class _IntroPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'WHAT HELPED ME TO\nFOCUS TODAY?',
+                    Text(
+                      l.afIntroTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -236,7 +237,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Pinpoint exactly what triggered your flow\nstate today so you can replicate it tomorrow.',
+                      l.afIntroBody,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textMuted,
@@ -246,7 +247,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     _PrimaryButton(
-                      label: 'START SESSION',
+                      label: l.startSession,
                       icon: Icons.bolt,
                       onTap: onStart,
                     ),
@@ -279,6 +280,7 @@ class _QuestionShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -295,7 +297,7 @@ class _QuestionShell extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        'FOCUS FACTORS',
+                        l.afSessionLabel,
                         style: TextStyle(
                           color: AppColors.textMuted,
                           fontSize: 10,
@@ -441,7 +443,7 @@ class _TextQuestionPageState extends State<_TextQuestionPage> {
                     ),
                   ),
                   Text(
-                    '${widget.controller.text.length} CHARS',
+                    '${widget.controller.text.length} ${context.l10n.chars}',
                     style: TextStyle(
                       color: AppColors.textHint,
                       fontSize: 10,
@@ -493,6 +495,7 @@ class _McqQuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final showOther = selected.contains(otherKey);
 
     return SingleChildScrollView(
@@ -513,7 +516,7 @@ class _McqQuestionPage extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            'CHOOSE AS MANY AS APPLY',
+            l.chooseAsMany,
             style: TextStyle(
               color: AppColors.textDim,
               fontSize: 10,
@@ -556,7 +559,7 @@ class _McqQuestionPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           _PrimaryButton(
-            label: 'DONE FOR NOW',
+            label: l.doneForNow,
             icon: Icons.chevron_right,
             onTap: onContinue,
           ),
@@ -575,16 +578,17 @@ class _ReminderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Badge(label: 'CHECK-IN'),
+          _Badge(label: l.badgeCheckIn),
           const SizedBox(height: 16),
-          const Text(
-            '⭐ 8. A reminder to myself:',
-            style: TextStyle(
+          Text(
+            '⭐ 8. ${l.afReminder}',
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -599,10 +603,10 @@ class _ReminderPage extends StatelessWidget {
               color: AppColors.surfaceDark,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Text(
-              '“I can concentrate when I create the right conditions for myself.”',
+            child: Text(
+              l.afReminderQuote,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 18,
                 fontStyle: FontStyle.italic,
@@ -613,7 +617,7 @@ class _ReminderPage extends StatelessWidget {
           ),
           const Spacer(),
           _PrimaryButton(
-            label: 'FINISH REFLECTION',
+            label: l.finishReflectionUpper,
             icon: Icons.track_changes,
             onTap: onFinish,
             active: true,
@@ -633,6 +637,7 @@ class _CompletionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -656,9 +661,9 @@ class _CompletionPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 28),
-              const Text(
-                'Focus Logged!',
-                style: TextStyle(
+              Text(
+                l.focusLogged,
+                style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
@@ -666,7 +671,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Awesome! Your self-reflection is the first\nstep to mastering your focus.',
+                l.focusLoggedBody,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textMuted,
@@ -676,7 +681,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const Spacer(),
               _PrimaryButton(
-                label: 'Finish Reflection',
+                label: l.finishReflection,
                 onTap: onFinish,
                 active: true,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/l10n/app_localizations.dart';
 
 class MentalDistractionAssessmentScreen extends StatefulWidget {
   const MentalDistractionAssessmentScreen({super.key});
@@ -49,18 +50,20 @@ class _MentalDistractionAssessmentScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     if (_step == 0) return _IntroPage(onStart: _next);
     if (_step == 12) return _CompletionPage(onFinish: () => Navigator.pop(context));
     return _QuestionShell(
       step: _step,
       total: 11,
-      sessionLabel: 'DISTRACTION PULSE',
+      sessionLabel: l.mdSessionLabel,
       onBack: _back,
       child: _buildQuestion(),
     );
   }
 
   Widget _buildQuestion() {
+    final l = context.l10n;
     switch (_step) {
       case 1:
         return _RatingQuestionPage(
@@ -70,93 +73,91 @@ class _MentalDistractionAssessmentScreenState
         );
       case 2:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 1,
-          question: 'What things distract me?',
-          placeholder: 'List your main distractions...',
+          question: l.mdQ1,
+          placeholder: l.mdQ1Hint,
           controller: _q1,
           onContinue: _next,
         );
       case 3:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 2,
-          question: 'What times am I most distracted?',
-          placeholder: 'Morning? Evening? After lunch?',
+          question: l.mdQ2,
+          placeholder: l.mdQ2Hint,
           controller: _q2,
           onContinue: _next,
         );
       case 4:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 3,
-          question: 'Who are the people who distract me?',
-          placeholder: 'Friends? Family? Colleagues?',
+          question: l.mdQ3,
+          placeholder: l.mdQ3Hint,
           controller: _q3,
           onContinue: _next,
         );
       case 5:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 4,
-          question: 'What thoughts most often recur in my mind when I am distracted?',
-          placeholder: 'Describe your recurring thoughts...',
+          question: l.mdQ4,
+          placeholder: l.mdQ4Hint,
           controller: _q4,
           onContinue: _next,
         );
       case 6:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 5,
-          question: "What did I want to focus on but couldn't?",
-          placeholder: 'What was your goal?',
+          question: l.mdQ5,
+          placeholder: l.mdQ5Hint,
           controller: _q5,
           onContinue: _next,
         );
       case 7:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 6,
-          question: 'What feelings did I experience when I was distracted?',
-          placeholder:
-              'Example: anxiety, boredom, annoyance, tension, sudden excitement, fear, overthinking',
+          question: l.mdQ6,
+          placeholder: l.mdQ6Hint,
           controller: _q6,
           onContinue: _next,
         );
       case 8:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 7,
-          question: 'What behavior did I exhibit because of the distraction?',
-          placeholder:
-              'Example: I picked up my phone, stopped studying, daydreamed, suddenly changed my task',
+          question: l.mdQ7,
+          placeholder: l.mdQ7Hint,
           controller: _q7,
           onContinue: _next,
         );
       case 9:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 8,
-          question: 'What helped me refocus?',
-          placeholder: 'How did you get back in the zone?',
+          question: l.mdQ8,
+          placeholder: l.mdQ8Hint,
           controller: _q8,
           onContinue: _next,
         );
       case 10:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 9,
-          question: 'My plan to improve focus for the next day:',
-          placeholder: 'What will you change tomorrow?',
+          question: l.mdQ9,
+          placeholder: l.mdQ9Hint,
           controller: _q9,
           onContinue: _next,
         );
       case 11:
         return _MDTextQuestionPage(
-          badge: 'QUICK NOTE',
+          badge: l.badgeQuickNote,
           number: 10,
-          question: 'A sentence I write to encourage myself to focus:',
-          placeholder: 'Write your power sentence...',
+          question: l.mdQ10,
+          placeholder: l.mdQ10Hint,
           controller: _q10,
           onContinue: _next,
         );
@@ -174,6 +175,7 @@ class _IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -236,10 +238,10 @@ class _IntroPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'MENTAL DISTRACTION\nASSESSMENT',
+                    Text(
+                      l.mdIntroTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 22,
                         fontWeight: FontWeight.w800,
@@ -248,7 +250,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Track and analyze mental distractions to\nbuild stronger concentration walls.',
+                      l.mdIntroBody,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.textMuted,
@@ -258,7 +260,7 @@ class _IntroPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     _MDPrimaryButton(
-                      label: 'START SESSION',
+                      label: l.startSession,
                       icon: Icons.bolt,
                       onTap: onStart,
                       active: true,
@@ -367,29 +369,41 @@ class _RatingQuestionPage extends StatelessWidget {
     required this.onContinue,
   });
 
-  static const _levels = [
-    _RatingLevel('1', '😌', 'Very\nFocused',       AppColors.ratingFocused),
-    _RatingLevel('2', '🙂', 'Minimal\nDistraction', AppColors.ratingMinimal),
-    _RatingLevel('3', '😐', 'Moderate',             AppColors.ratingModerate),
-    _RatingLevel('4', '😤', 'Many\nDistractions',   AppColors.ratingMany),
-    _RatingLevel('5', '😵', 'Scattered',            AppColors.ratingScattered),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final levels = [
+      _RatingLevel('1', '😌', l.mdR1Label, AppColors.ratingFocused),
+      _RatingLevel('2', '🙂', l.mdR2Label, AppColors.ratingMinimal),
+      _RatingLevel('3', '😐', l.mdR3Label, AppColors.ratingModerate),
+      _RatingLevel('4', '😤', l.mdR4Label, AppColors.ratingMany),
+      _RatingLevel('5', '😵', l.mdR5Label, AppColors.ratingScattered),
+    ];
+
     final sel = selected != null ? int.tryParse(selected!) : null;
     final hasSelection = selected != null;
+
+    String levelDescription(int level) {
+      switch (level) {
+        case 1: return l.mdFeedback1;
+        case 2: return l.mdFeedback2;
+        case 3: return l.mdFeedback3;
+        case 4: return l.mdFeedback4;
+        case 5: return l.mdFeedback5;
+        default: return '';
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _MDBadge(label: 'CHECK-IN'),
+          _MDBadge(label: l.badgeCheckIn),
           const SizedBox(height: 16),
-          const Text(
-            '⭐ Rate your distraction level today:',
-            style: TextStyle(
+          Text(
+            l.mdRateQuestion,
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -398,7 +412,7 @@ class _RatingQuestionPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Tap a number from 1 (very focused) to 5 (totally scattered)',
+            l.mdRateHint,
             style: TextStyle(
               color: AppColors.textMuted,
               fontSize: 13,
@@ -408,8 +422,8 @@ class _RatingQuestionPage extends StatelessWidget {
           const SizedBox(height: 28),
           // 5 number tiles in a row
           Row(
-            children: List.generate(_levels.length, (i) {
-              final lvl = _levels[i];
+            children: List.generate(levels.length, (i) {
+              final lvl = levels[i];
               final isSel = sel == i + 1;
               return Expanded(
                 child: Padding(
@@ -469,8 +483,8 @@ class _RatingQuestionPage extends StatelessWidget {
           const SizedBox(height: 16),
           // Labels row
           Row(
-            children: List.generate(_levels.length, (i) {
-              final lvl = _levels[i];
+            children: List.generate(levels.length, (i) {
+              final lvl = levels[i];
               final isSel = sel == i + 1;
               return Expanded(
                 child: Padding(
@@ -504,12 +518,12 @@ class _RatingQuestionPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18, vertical: 14),
                       decoration: BoxDecoration(
-                        color: _levels[sel! - 1]
+                        color: levels[sel! - 1]
                             .color
                             .withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: _levels[sel - 1]
+                          color: levels[sel - 1]
                               .color
                               .withValues(alpha: 0.4),
                           width: 1,
@@ -518,13 +532,13 @@ class _RatingQuestionPage extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            _levels[sel - 1].emoji,
+                            levels[sel - 1].emoji,
                             style: const TextStyle(fontSize: 22),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              _levelDescription(sel),
+                              levelDescription(sel),
                               style: TextStyle(
                                 color: AppColors.textStrong,
                                 fontSize: 13,
@@ -540,7 +554,7 @@ class _RatingQuestionPage extends StatelessWidget {
           ),
           const Spacer(),
           _MDPrimaryButton(
-            label: 'CONTINUE',
+            label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: hasSelection ? onContinue : null,
           ),
@@ -548,23 +562,6 @@ class _RatingQuestionPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  static String _levelDescription(int level) {
-    switch (level) {
-      case 1:
-        return 'Great! You were in the zone today. Let\'s find out what kept you focused.';
-      case 2:
-        return 'Pretty good. Minor distractions but you mostly stayed on track.';
-      case 3:
-        return 'A mixed day — some focus, some drift. Let\'s figure out what pulled you away.';
-      case 4:
-        return 'Distractions were frequent today. Identifying them is the first step to fixing it.';
-      case 5:
-        return 'Your mind was all over the place. That\'s okay — this assessment will help you understand why.';
-      default:
-        return '';
-    }
   }
 }
 
@@ -674,7 +671,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
                     ),
                   ),
                   Text(
-                    '${widget.controller.text.length} CHARS',
+                    '${widget.controller.text.length} ${context.l10n.chars}',
                     style: TextStyle(
                       color: AppColors.textHint,
                       fontSize: 10,
@@ -688,7 +685,7 @@ class _MDTextQuestionPageState extends State<_MDTextQuestionPage> {
           ),
           const SizedBox(height: 16),
           _MDPrimaryButton(
-            label: 'CONTINUE',
+            label: context.l10n.continueUpper,
             icon: Icons.chevron_right,
             onTap: hasText ? widget.onContinue : null,
           ),
@@ -707,6 +704,7 @@ class _CompletionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -730,9 +728,9 @@ class _CompletionPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 28),
-              const Text(
-                'Focus Logged!',
-                style: TextStyle(
+              Text(
+                l.focusLogged,
+                style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
@@ -740,7 +738,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Awesome! Your self-reflection is the first\nstep to mastering your focus.',
+                l.focusLoggedBody,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: AppColors.textMuted,
@@ -750,7 +748,7 @@ class _CompletionPage extends StatelessWidget {
               ),
               const Spacer(),
               _MDPrimaryButton(
-                label: 'Finish Reflection',
+                label: l.finishReflection,
                 onTap: onFinish,
                 active: true,
               ),

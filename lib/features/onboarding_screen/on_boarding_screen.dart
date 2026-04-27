@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:brainflow/features/onboarding_screen/onboarding_Signup_screen/onboarding_Signup_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -14,30 +15,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<_OnboardingData> _pages = const [
-    _OnboardingData(
-      icon: Icons.bolt,
-      title: 'Embrace Your Mind',
-      subtitle:
-          'Designed for the unique rhythms of ADHD. We help you work with your brain, not against it.',
-    ),
-
-    _OnboardingData(
-      icon: Icons.adjust,
-      title: 'Find Your Focus',
-      subtitle:
-          'Gentle nudges and science-backed techniques to anchor your attention when it wanders.',
-    ),
-    _OnboardingData(
-      icon: Icons.star_outline_rounded,
-      title: 'Rest Deeply',
-      subtitle:
-          "Switch off the evening buzz with routines that calm the 'always-on' mind for better sleep.",
-    ),
+  List<_OnboardingData> _pages(AppLocalizations l) => [
+    _OnboardingData(icon: Icons.bolt,             title: l.onboardTitle1, subtitle: l.onboardBody1),
+    _OnboardingData(icon: Icons.adjust,           title: l.onboardTitle2, subtitle: l.onboardBody2),
+    _OnboardingData(icon: Icons.star_outline_rounded, title: l.onboardTitle3, subtitle: l.onboardBody3),
   ];
 
+  static const _pageCount = 3;
+
   void _next() {
-    if (_currentPage < _pages.length - 1) {
+    if (_currentPage < _pageCount - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
@@ -58,6 +45,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final pages = _pages(l);
     return Scaffold(
       backgroundColor: AppColors.backgroundOnboarding,
       body: SafeArea(
@@ -67,22 +56,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (i) => setState(() => _currentPage = i),
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 itemBuilder: (context, index) =>
-                    _OnboardingPage(data: _pages[index]),
+                    _OnboardingPage(data: pages[index]),
               ),
             ),
             _PageIndicator(
-              count: _pages.length,
+              count: pages.length,
               current: _currentPage,
             ),
             const SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: _ContinueButton(
-                label: _currentPage == _pages.length - 1
-                    ? 'Get Started'
-                    : 'Continue',
+                label: _currentPage == pages.length - 1
+                    ? l.getStarted
+                    : l.continueBtn,
                 onTap: _next,
               ),
             ),

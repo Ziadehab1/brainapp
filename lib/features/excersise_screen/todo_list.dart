@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
@@ -56,6 +57,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   }
 
   Future<bool> _confirmDelete(BuildContext context, String title) async {
+    final l = context.l10n;
     return await showDialog<bool>(
           context: context,
           barrierColor: AppColors.barrierDark,
@@ -81,9 +83,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                         color: AppColors.error, size: 26),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Delete Task?',
-                    style: TextStyle(
+                  Text(
+                    l.deleteTask,
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -91,7 +93,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '"$title" will be permanently removed.',
+                    '"$title" ${l.deletedMsg}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.textMuted,
@@ -112,10 +114,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               color: AppColors.surfaceDark,
                               borderRadius: BorderRadius.circular(14),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Cancel',
-                                style: TextStyle(
+                                l.cancel,
+                                style: const TextStyle(
                                   color: AppColors.textPrimary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -136,10 +138,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
                               color: AppColors.error,
                               borderRadius: BorderRadius.circular(14),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Delete',
-                                style: TextStyle(
+                                l.delete,
+                                style: const TextStyle(
                                   color: AppColors.textPrimary,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -192,6 +194,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final bottomInset = MediaQuery.of(context).padding.bottom;
     final listPad = bottomInset + 24;
     final fabBottom = bottomInset + 24;
@@ -228,9 +231,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Daily Flow',
-                            style: TextStyle(
+                          Text(
+                            l.dailyFlow,
+                            style: const TextStyle(
                               color: AppColors.textPrimary,
                               fontSize: 24,
                               fontWeight: FontWeight.w800,
@@ -238,7 +241,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                             ),
                           ),
                           Text(
-                            'Design your day, find your focus',
+                            l.dailyFlowSubtitle,
                             style: TextStyle(
                               color: AppColors.textDim,
                               fontSize: 12,
@@ -254,7 +257,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 child: _tasks.isEmpty
                     ? Center(
                         child: Text(
-                          'No tasks yet.\nTap + to add your first flow.',
+                          l.noTasksYet,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.textDisabled,
@@ -379,6 +382,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final task = widget.task;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 260),
@@ -539,7 +543,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                             color: AppColors.textPrimary, fontSize: 14),
                         cursorColor: AppColors.primary,
                         decoration: InputDecoration(
-                          hintText: 'Step description...',
+                          hintText: l.stepHint,
                           hintStyle: TextStyle(
                               color: AppColors.textHint,
                               fontSize: 14),
@@ -571,7 +575,7 @@ class _FlowTaskCardState extends State<_FlowTaskCard> {
                         color: AppColors.primary, size: 16),
                     const SizedBox(width: 8),
                     Text(
-                      'ADD DESCRIPTION/STEP',
+                      l.addStep,
                       style: TextStyle(
                         color: AppColors.textDim,
                         fontSize: 11,
@@ -704,6 +708,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Container(
       padding: EdgeInsets.fromLTRB(24, 12, 24, 24 + bottom),
@@ -726,9 +731,9 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'New Flow Task',
-            style: TextStyle(
+          Text(
+            l.newFlowTask,
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 22,
               fontWeight: FontWeight.w800,
@@ -736,7 +741,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
           ),
           const SizedBox(height: 24),
           Text(
-            'MAIN TASK TITLE',
+            l.mainTaskTitle,
             style: TextStyle(
               color: AppColors.textDim,
               fontSize: 11,
@@ -755,7 +760,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
               style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
               cursorColor: AppColors.primary,
               decoration: InputDecoration(
-                hintText: 'e.g., Critical Project Focus',
+                hintText: l.taskTitleHint,
                 hintStyle: TextStyle(
                     color: AppColors.textDisabled,
                     fontSize: 15),
@@ -767,7 +772,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
           ),
           const SizedBox(height: 20),
           Text(
-            'TARGET TIME',
+            l.targetTime,
             style: TextStyle(
               color: AppColors.textDim,
               fontSize: 11,
@@ -811,12 +816,12 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
                     child: Center(
                       child: Text(
-                        'Cancel',
-                        style: TextStyle(
+                        l.cancel,
+                        style: const TextStyle(
                           color: AppColors.cancelText,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -837,10 +842,10 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'Add to Flow',
-                        style: TextStyle(
+                        l.addToFlow,
+                        style: const TextStyle(
                           color: AppColors.surfaceDeep,
                           fontSize: 15,
                           fontWeight: FontWeight.w700,

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:brainflow/features/onboarding_screen/on_boarding_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -144,9 +145,9 @@ class _SplashScreenState extends State<SplashScreen>
                   const SizedBox(height: 36),
 
                   // Brain Flow title
-                  const Text(
-                    'Brain Flow',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.appName,
+                    style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 36,
                       fontWeight: FontWeight.w800,
@@ -158,7 +159,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                   // Tagline
                   Text(
-                    'FOCUS.  REST.  THRIVE.',
+                    context.l10n.splashTagline,
                     style: TextStyle(
                       color: AppColors.textMuted,
                       fontSize: 12,
@@ -190,7 +191,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                   // Inhale/Exhale text
                   Text(
-                    _isInhale ? 'INHALE.  EXHALE.' : 'EXHALE.  INHALE.',
+                    _isInhale ? context.l10n.inhaleExhale : context.l10n.exhaleInhale,
                     style: TextStyle(
                       color: AppColors.textFaint,
                       fontSize: 11,
