@@ -139,6 +139,10 @@ class AppColors {
   static const Color formAccent      = Color(0xFF3A3060);
   static const Color formTipStart    = Color(0xFF2A3A6A);
   static const Color formTipAccent   = Color(0xFF7A9AE8);
+  static const Color formTealStart   = Color(0xFF1A352E);
+  static const Color formTealEnd     = Color(0xFF1E4A3A);
+  static const Color formIndigoStart = Color(0xFF1E1A38);
+  static const Color formIndigoEnd   = Color(0xFF342A60);
 
   // Distraction rating scale (green → red)
   static const Color ratingFocused   = Color(0xFF2E6B4A);
@@ -173,5 +177,11 @@ class AppColors {
     Color(0xFF8E44AD),
     Color(0xFF16A085),
     Color(0xFFD35400),
+    Color(0xFF2471A3),
+    Color(0xFF229954),
+    Color(0xFFC0392B),
+    Color(0xFF7D3C98),
+    Color(0xFF148F77),
+    Color(0xFFCA6F1E),
   ];
 }

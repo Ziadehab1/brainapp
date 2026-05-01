@@ -525,27 +525,15 @@ class _McqQuestionPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          // 2-column grid
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.1,
+          ...options.map((opt) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormSelectTile(
+              label: opt,
+              selected: selected.contains(opt),
+              multiSelect: true,
+              onTap: () => onToggle(opt),
             ),
-            itemCount: options.length,
-            itemBuilder: (_, i) {
-              final opt = options[i];
-              final isSel = selected.contains(opt);
-              return FormMcqTile(
-                label: opt,
-                selected: isSel,
-                onTap: () => onToggle(opt),
-              );
-            },
-          ),
+          )),
           // "Other" text field — animates in when otherKey is selected
           AnimatedSize(
             duration: const Duration(milliseconds: 250),

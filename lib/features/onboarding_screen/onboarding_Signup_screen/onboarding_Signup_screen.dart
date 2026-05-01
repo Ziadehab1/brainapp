@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:country_code_picker/country_code_picker.dart';
+// import 'package:country_code_picker/country_code_picker.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
 import 'package:brainflow/features/onboarding_screen/select_interest.dart';
@@ -14,7 +14,7 @@ class OnboardingSignupScreen extends StatefulWidget {
 class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
+    // final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -36,7 +36,7 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose();
+    // _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -90,62 +90,62 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Region + Phone
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _FieldLabel(l.region),
-                      const SizedBox(height: 8),
-                      Container(
-                        height: 54,
-                        decoration: BoxDecoration(
-                          color: AppColors.surfaceOnboarding,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: CountryCodePicker(
-                          onChanged: (_) {},
-                          initialSelection: 'US',
-                          showCountryOnly: false,
-                          showOnlyCountryWhenClosed: false,
-                          alignLeft: false,
-                          textStyle: const TextStyle(
-                            color: AppColors.textPrimary,
-                            fontSize: 14,
-                          ),
-                          dialogTextStyle: const TextStyle(color: Colors.black),
-                          searchStyle: const TextStyle(color: Colors.black),
-                          flagDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          dialogBackgroundColor: Colors.white,
-                          barrierColor: Colors.black54,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _FieldLabel(l.phoneNumber),
-                        const SizedBox(height: 8),
-                        _InputField(
-                          controller: _phoneController,
-                          hint: l.phoneHint,
-                          prefixIcon: Icons.phone_outlined,
-                          keyboardType: TextInputType.phone,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
+              // // Region + Phone
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         _FieldLabel(l.region),
+              //         const SizedBox(height: 8),
+              //         Container(
+              //           height: 54,
+              //           decoration: BoxDecoration(
+              //             color: AppColors.surfaceOnboarding,
+              //             borderRadius: BorderRadius.circular(14),
+              //           ),
+              //           child: CountryCodePicker(
+              //             onChanged: (_) {},
+              //             initialSelection: 'US',
+              //             showCountryOnly: false,
+              //             showOnlyCountryWhenClosed: false,
+              //             alignLeft: false,
+              //             textStyle: const TextStyle(
+              //               color: AppColors.textPrimary,
+              //               fontSize: 14,
+              //             ),
+              //             dialogTextStyle: const TextStyle(color: Colors.black),
+              //             searchStyle: const TextStyle(color: Colors.black),
+              //             flagDecoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(4),
+              //             ),
+              //             padding: const EdgeInsets.symmetric(horizontal: 8),
+              //             dialogBackgroundColor: Colors.white,
+              //             barrierColor: Colors.black54,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     const SizedBox(width: 12),
+              //     Expanded(
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           _FieldLabel(l.phoneNumber),
+              //           const SizedBox(height: 8),
+              //           _InputField(
+              //             controller: _phoneController,
+              //             hint: l.phoneHint,
+              //             prefixIcon: Icons.phone_outlined,
+              //             keyboardType: TextInputType.phone,
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 20),
 
               // Gender
               _FieldLabel(l.selectGender),
@@ -177,11 +177,11 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              _PasswordRequirement(met: _has8Chars,    label: l.req8Chars),
+              _PasswordRequirement(met: _has8Chars, label: l.req8Chars),
               const SizedBox(height: 6),
               _PasswordRequirement(met: _hasUppercase, label: l.reqUppercase),
               const SizedBox(height: 6),
-              _PasswordRequirement(met: _hasDigit,     label: l.reqDigit),
+              _PasswordRequirement(met: _hasDigit, label: l.reqDigit),
               const SizedBox(height: 20),
 
               // Confirm Password
@@ -201,20 +201,23 @@ class _OnboardingSignupScreenState extends State<OnboardingSignupScreen> {
                     size: 20,
                   ),
                   onPressed: () => setState(
-                      () => _confirmPasswordVisible = !_confirmPasswordVisible),
+                    () => _confirmPasswordVisible = !_confirmPasswordVisible,
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
 
               // Create Account button
-              _CreateAccountButton(onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const InterestSelectionScreen(),
-                  ),
-                );
-              }),
+              _CreateAccountButton(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const InterestSelectionScreen(),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 24),
             ],
           ),
@@ -274,15 +277,14 @@ class _InputField extends StatelessWidget {
         style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
         decoration: InputDecoration(
           hintText: hint,
-          hintStyle: TextStyle(
-            color: AppColors.textHint,
-            fontSize: 15,
-          ),
+          hintStyle: TextStyle(color: AppColors.textHint, fontSize: 15),
           prefixIcon: Icon(prefixIcon, color: AppColors.textIcon, size: 20),
           suffixIcon: suffixIcon,
           border: InputBorder.none,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
         ),
       ),
     );
@@ -373,7 +375,9 @@ class _GenderOption extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+                color: selected
+                    ? AppColors.textPrimary
+                    : AppColors.textSecondary,
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
               ),

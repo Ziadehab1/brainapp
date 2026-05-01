@@ -378,8 +378,8 @@ class _NumberedListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -394,84 +394,32 @@ class _NumberedListPage extends StatelessWidget {
               height: 1.3,
             ),
           ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: ListView.separated(
-              itemCount: options.length,
-              separatorBuilder: (_, i) => const SizedBox(height: 10),
-              itemBuilder: (_, i) {
-                final opt = options[i];
-                final isSel = selected == opt;
-                return GestureDetector(
-                  onTap: () => onSelect(opt),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 15),
-                    decoration: BoxDecoration(
-                      color: isSel
-                          ? AppColors.primaryDeep.withValues(alpha: 0.4)
-                          : AppColors.surfaceDark,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: isSel
-                            ? AppColors.primary.withValues(alpha: 0.5)
-                            : AppColors.divider,
-                        width: 1.5,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        // Number badge
-                        Container(
-                          width: 26,
-                          height: 26,
-                          decoration: BoxDecoration(
-                            color: isSel
-                                ? AppColors.primary.withValues(alpha: 0.25)
-                                : AppColors.formTipStart,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${i + 1}',
-                              style: TextStyle(
-                                color: isSel
-                                    ? AppColors.primaryLight
-                                    : AppColors.formTipAccent,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          opt.substring(3), // strip leading "N  "
-                          style: TextStyle(
-                            color: isSel
-                                ? AppColors.textPrimary
-                                : AppColors.textSecondary,
-                            fontSize: 15,
-                            fontWeight: isSel
-                                ? FontWeight.w700
-                                : FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+          const SizedBox(height: 8),
+          Text(
+            l.chooseOne,
+            style: TextStyle(
+              color: AppColors.textDim,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.3,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
+          ...options.map((opt) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormSelectTile(
+              label: opt,
+              selected: selected == opt,
+              multiSelect: false,
+              onTap: () => onSelect(opt),
+            ),
+          )),
+          const SizedBox(height: 8),
           _HOFPrimaryButton(
             label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: selected != null ? onContinue : null,
           ),
-          const SizedBox(height: 24),
         ],
       ),
     );
@@ -512,7 +460,7 @@ class _SingleSelectPage extends StatelessWidget {
         otherKey != null && selected == otherKey && otherController != null;
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -527,50 +475,26 @@ class _SingleSelectPage extends StatelessWidget {
               height: 1.3,
             ),
           ),
-          const SizedBox(height: 20),
-          ...List.generate(options.length, (i) {
-            final opt = options[i];
-            final isSel = selected == opt;
-            final isLastAndHighlight =
-                highlightLast && i == options.length - 1;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: GestureDetector(
-                onTap: () => onSelect(opt),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 18, vertical: 16),
-                  decoration: BoxDecoration(
-                    color: isSel
-                        ? AppColors.primaryDeep.withValues(alpha: 0.4)
-                        : AppColors.surfaceDark,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: isSel
-                          ? AppColors.primary.withValues(alpha: 0.5)
-                          : AppColors.divider,
-                      width: 1.5,
-                    ),
-                  ),
-                  child: Text(
-                    opt,
-                    style: TextStyle(
-                      color: isSel
-                          ? AppColors.textPrimary
-                          : isLastAndHighlight
-                              ? AppColors.error.withValues(alpha: 0.8)
-                              : AppColors.textSecondary,
-                      fontSize: 15,
-                      fontWeight:
-                          isSel ? FontWeight.w700 : FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
-          // "Other" text field
+          const SizedBox(height: 8),
+          Text(
+            l.chooseOne,
+            style: TextStyle(
+              color: AppColors.textDim,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.3,
+            ),
+          ),
+          const SizedBox(height: 14),
+          ...options.map((opt) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormSelectTile(
+              label: opt,
+              selected: selected == opt,
+              multiSelect: false,
+              onTap: () => onSelect(opt),
+            ),
+          )),
           AnimatedSize(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeInOut,
@@ -581,13 +505,12 @@ class _SingleSelectPage extends StatelessWidget {
                   )
                 : const SizedBox.shrink(),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           _HOFPrimaryButton(
             label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: selected != null ? onContinue : null,
           ),
-          const SizedBox(height: 24),
         ],
       ),
     );
@@ -650,41 +573,31 @@ class _McqGridPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.1,
+          ...options.map((opt) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FormSelectTile(
+              label: opt,
+              selected: selected.contains(opt),
+              multiSelect: true,
+              onTap: () => onToggle(opt),
             ),
-            itemCount: options.length,
-            itemBuilder: (_, i) {
-              final opt = options[i];
-              return FormMcqTile(
-                label: opt,
-                selected: selected.contains(opt),
-                onTap: () => onToggle(opt),
-              );
-            },
-          ),
+          )),
           AnimatedSize(
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOut,
             child: showOther
                 ? Padding(
-                    padding: const EdgeInsets.only(top: 12),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: FormOtherTextField(controller: otherController),
                   )
                 : const SizedBox.shrink(),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           _HOFPrimaryButton(
-            label: l.doneForNow,
+            label: l.continueUpper,
             icon: Icons.chevron_right,
             onTap: onContinue,
+            active: true,
           ),
           const SizedBox(height: 24),
         ],

@@ -1,9 +1,26 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+
+// ─── Level config ─────────────────────────────────────────────────────────────
+
+class _LevelConfig {
+  final int pairs;
+  final int checkDelayMs;
+  const _LevelConfig(this.pairs, this.checkDelayMs);
+}
+
+const _levels = [
+  _LevelConfig(10, 1000), // Level 1 – Easy:   10 pairs, 1.0 s flip-back
+  _LevelConfig(12, 650),  // Level 2 – Medium: 12 pairs, 0.65 s flip-back
+  _LevelConfig(16, 400),  // Level 3 – Hard:   16 pairs, 0.4 s flip-back
+];
+
+// ─── Screen ───────────────────────────────────────────────────────────────────
 
 class FlippingCardScreen extends StatefulWidget {
   const FlippingCardScreen({super.key});
@@ -13,6 +30,8 @@ class FlippingCardScreen extends StatefulWidget {
 }
 
 class _FlippingCardScreenState extends State<FlippingCardScreen> {
+  int _currentLevel = 1; // 1-indexed
+
   int seconds = 0;
   Timer? timer;
   int score = 0;
@@ -26,6 +45,8 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
   final AudioPlayer flipPlayer = AudioPlayer();
   final AudioPlayer matchPlayer = AudioPlayer();
   final AudioPlayer wrongPlayer = AudioPlayer();
+
+  _LevelConfig get _cfg => _levels[_currentLevel - 1];
 
   @override
   void initState() {
@@ -42,22 +63,18 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     super.dispose();
   }
 
-  void _initializeGame() {
+  void _initializeGame({int level = 1}) {
+    _currentLevel = level;
     timer?.cancel();
     seconds = 0;
     score = 0;
     isChecking = false;
     flippedIndices.clear();
 
-    final List<Color> baseColors = List.from(AppColors.cardGameColors);
+    final base = AppColors.cardGameColors.take(_cfg.pairs).toList();
+    cardColors = [...base, ...base]..shuffle();
 
-    cardColors = [...baseColors, ...baseColors];
-    cardColors.shuffle();
-
-    cardKeys = List.generate(
-      cardColors.length,
-      (_) => GlobalKey<FlipCardState>(),
-    );
+    cardKeys = List.generate(cardColors.length, (_) => GlobalKey<FlipCardState>());
     isMatched = List.generate(cardColors.length, (_) => false);
 
     setState(() {});
@@ -70,11 +87,8 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     });
   }
 
-  String _formatTime(int totalSeconds) {
-    final m = totalSeconds ~/ 60;
-    final s = totalSeconds % 60;
-    return '${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}';
-  }
+  String _formatTime(int s) =>
+      '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
 
   Future<void> _playFlipSound() async {
     try {
@@ -99,11 +113,9 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
 
   void _onCardTap(int index) {
     if (isChecking || isMatched[index] || flippedIndices.contains(index)) return;
-
     cardKeys[index].currentState?.toggleCard();
     _playFlipSound();
     setState(() => flippedIndices.add(index));
-
     if (flippedIndices.length == 2) _checkForMatch();
   }
 
@@ -112,7 +124,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     final i1 = flippedIndices[0];
     final i2 = flippedIndices[1];
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: _cfg.checkDelayMs));
 
     if (cardColors[i1] == cardColors[i2]) {
       setState(() {
@@ -121,7 +133,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
         isMatched[i2] = true;
       });
       _playMatchSound();
-      if (isMatched.every((e) => e)) _showWinDialog();
+      if (isMatched.every((e) => e)) _showWinSheet();
     } else {
       cardKeys[i1].currentState?.toggleCard();
       cardKeys[i2].currentState?.toggleCard();
@@ -132,73 +144,172 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
     isChecking = false;
   }
 
-  void _showWinDialog() {
+  String _levelName(AppLocalizations l) {
+    switch (_currentLevel) {
+      case 1: return l.levelEasy;
+      case 2: return l.levelMedium;
+      case 3: return l.levelHard;
+      default: return l.levelEasy;
+    }
+  }
+
+  void _showWinSheet() {
     timer?.cancel();
+    if (!mounted) return;
     final l = context.l10n;
-    showDialog(
+    final bool hasNext = _currentLevel < 3;
+    double rating = 3;
+    final int finalTime = seconds;
+    final int finalScore = score;
+
+    showModalBottomSheet(
       context: context,
-      barrierDismissible: false,
-      builder: (ctx) => Dialog(
-        backgroundColor: AppColors.surfaceDark,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Padding(
-          padding: const EdgeInsets.all(28),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Container(
+          padding: EdgeInsets.fromLTRB(
+            28, 20, 28,
+            MediaQuery.of(ctx).padding.bottom + 28,
+          ),
+          decoration: const BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Handle
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.textFaint.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Level badge
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.35),
+                  ),
+                ),
+                child: Text(
+                  '${l.levelLabel} $_currentLevel  ·  ${_levelName(l)}',
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
               const Text(
                 '✦',
-                style: TextStyle(color: AppColors.primaryLight, fontSize: 32),
+                style: TextStyle(color: AppColors.primaryLight, fontSize: 28),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 l.sessionComplete,
                 style: const TextStyle(
                   color: AppColors.textPrimary,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
+
+              // Stats row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _StatPill(label: l.timeLabel, value: _formatTime(finalTime)),
+                  const SizedBox(width: 12),
+                  _StatPill(
+                    label: l.scoreLabel,
+                    value: '$finalScore',
+                    highlight: true,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Divider(color: AppColors.textGhost, height: 1),
+              const SizedBox(height: 20),
+
+              // Rating
               Text(
-                '${l.timeLabelColon}${_formatTime(seconds)}',
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 14,
+                l.rateSession,
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
-                '${l.scoreLabelColon}$score',
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                ),
+                l.rateGameSub,
+                style: TextStyle(color: AppColors.textFaint, fontSize: 13),
               ),
-              const SizedBox(height: 24),
-              GestureDetector(
+              const SizedBox(height: 18),
+              RatingBar.builder(
+                initialRating: rating,
+                minRating: 1,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 6),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star_rounded,
+                  color: AppColors.primary,
+                ),
+                onRatingUpdate: (val) => setSheetState(() => rating = val),
+              ),
+              const SizedBox(height: 28),
+
+              // Next Level button (levels 1 & 2)
+              if (hasNext)
+                _SheetButton(
+                  label: l.nextLevel,
+                  primary: true,
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    _initializeGame(level: _currentLevel + 1);
+                  },
+                ),
+              if (hasNext) const SizedBox(height: 12),
+
+              // Play Again button
+              _SheetButton(
+                label: hasNext ? l.playAgain : l.allLevelsDone,
+                primary: !hasNext,
                 onTap: () {
                   Navigator.pop(ctx);
                   _initializeGame();
                 },
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryLight,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Center(
-                    child: Text(
-                      l.playAgain,
-                      style: const TextStyle(
-                        color: AppColors.surfaceDeep,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
+              ),
+              const SizedBox(height: 12),
+
+              // Exit
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(ctx);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                },
+                child: Text(
+                  l.exitGame,
+                  style: TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.0,
                   ),
                 ),
               ),
@@ -228,7 +339,8 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                 children: [
                   // Back button
                   GestureDetector(
-                    onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                    onTap: () =>
+                        Navigator.of(context).popUntil((route) => route.isFirst),
                     child: Container(
                       width: 42,
                       height: 42,
@@ -243,7 +355,32 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 12),
+
+                  // Level badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.primary.withValues(alpha: 0.3),
+                      ),
+                    ),
+                    child: Text(
+                      '${l.levelLabel} $_currentLevel · ${_levelName(l)}',
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                  ),
+
                   const Spacer(),
+
                   // Stats pill
                   Container(
                     decoration: BoxDecoration(
@@ -259,14 +396,13 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 12),
+                                horizontal: 16, vertical: 10),
                             child: Column(
                               children: [
                                 Text(
                                   l.timeLabel,
                                   style: TextStyle(
-                                    color:
-                                        AppColors.textFaint,
+                                    color: AppColors.textFaint,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 1.5,
@@ -277,7 +413,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                   _formatTime(seconds),
                                   style: const TextStyle(
                                     color: AppColors.textPrimary,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'monospace',
                                   ),
@@ -292,14 +428,13 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 12),
+                                horizontal: 16, vertical: 10),
                             child: Column(
                               children: [
                                 Text(
                                   l.scoreLabel,
                                   style: TextStyle(
-                                    color:
-                                        AppColors.textFaint,
+                                    color: AppColors.textFaint,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 1.5,
@@ -310,7 +445,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                                   '$score',
                                   style: const TextStyle(
                                     color: AppColors.primary,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -325,7 +460,7 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               ),
             ),
 
-            // Grid
+            // Card grid
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -351,16 +486,14 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                             color: AppColors.surfaceDark,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: AppColors.primary
-                                  .withValues(alpha: 0.22),
+                              color: AppColors.primary.withValues(alpha: 0.22),
                               width: 1.5,
                             ),
                           ),
                           child: Center(
                             child: Icon(
                               Icons.question_mark_rounded,
-                              color:
-                                  AppColors.primary.withValues(alpha: 0.45),
+                              color: AppColors.primary.withValues(alpha: 0.45),
                               size: 26,
                             ),
                           ),
@@ -368,10 +501,14 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                       ),
                       back: Container(
                         decoration: BoxDecoration(
-                          color: cardColors[index],
+                          color: isMatched[index]
+                              ? cardColors[index].withValues(alpha: 0.5)
+                              : cardColors[index],
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: AppColors.textHint,
+                            color: isMatched[index]
+                                ? AppColors.primary.withValues(alpha: 0.6)
+                                : AppColors.textHint,
                             width: 1.5,
                           ),
                           boxShadow: [
@@ -384,7 +521,9 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
                         ),
                         child: Center(
                           child: Icon(
-                            Icons.star_rounded,
+                            isMatched[index]
+                                ? Icons.check_rounded
+                                : Icons.star_rounded,
                             color: AppColors.textStrong,
                             size: 26,
                           ),
@@ -396,6 +535,114 @@ class _FlippingCardScreenState extends State<FlippingCardScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Stat pill ────────────────────────────────────────────────────────────────
+
+class _StatPill extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool highlight;
+
+  const _StatPill({
+    required this.label,
+    required this.value,
+    this.highlight = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceDark,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: highlight
+              ? AppColors.primary.withValues(alpha: 0.4)
+              : AppColors.textGhost,
+          width: 1.2,
+        ),
+      ),
+      child: Column(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: AppColors.textFaint,
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.4,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: TextStyle(
+              color: highlight ? AppColors.primary : AppColors.textPrimary,
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Sheet button ─────────────────────────────────────────────────────────────
+
+class _SheetButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  final bool primary;
+
+  const _SheetButton({
+    required this.label,
+    required this.onTap,
+    this.primary = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        height: 52,
+        decoration: BoxDecoration(
+          color: primary ? AppColors.primaryLight : AppColors.surfaceDark,
+          borderRadius: BorderRadius.circular(26),
+          border: primary
+              ? null
+              : Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                  width: 1.5,
+                ),
+          boxShadow: primary
+              ? [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.25),
+                    blurRadius: 16,
+                    spreadRadius: 1,
+                  ),
+                ]
+              : null,
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: primary ? AppColors.surfaceDeep : AppColors.textSecondary,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.0,
+            ),
+          ),
         ),
       ),
     );

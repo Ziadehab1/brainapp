@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
-import 'package:brainflow/features/home_screen/home_screen.dart';
+import 'package:brainflow/features/onboarding_screen/app_intro_video_screen.dart';
 
 class Interest {
   final String name;
@@ -72,7 +72,7 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
       setState(() => _isLoading = false);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => const AppIntroVideoScreen()),
         (_) => false,
       );
     }

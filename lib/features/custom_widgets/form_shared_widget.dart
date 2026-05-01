@@ -1,6 +1,83 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/constants.dart';
 
+// ─── Unified Select Tile (single-select & multi-select) ──────────────────────
+
+class FormSelectTile extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final bool multiSelect;
+  final VoidCallback onTap;
+
+  const FormSelectTile({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.multiSelect,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        decoration: BoxDecoration(
+          color: selected
+              ? AppColors.primaryDeep.withValues(alpha: 0.35)
+              : AppColors.surfaceDark,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: selected
+                ? AppColors.primary.withValues(alpha: 0.6)
+                : AppColors.divider,
+            width: 1.5,
+          ),
+        ),
+        child: Row(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: multiSelect ? BoxShape.rectangle : BoxShape.circle,
+                borderRadius: multiSelect ? BorderRadius.circular(4) : null,
+                color: selected ? AppColors.primary : Colors.transparent,
+                border: Border.all(
+                  color: selected ? AppColors.primary : AppColors.textDisabled,
+                  width: 1.5,
+                ),
+              ),
+              child: selected
+                  ? Icon(
+                      multiSelect ? Icons.check : Icons.circle,
+                      color: Colors.white,
+                      size: multiSelect ? 13 : 8,
+                    )
+                  : null,
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: selected ? AppColors.textPrimary : AppColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                  height: 1.3,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ─── MCQ Option Tile ──────────────────────────────────────────────────────────
 
 class FormMcqTile extends StatelessWidget {

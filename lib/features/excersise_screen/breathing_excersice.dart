@@ -1,7 +1,10 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+
+enum _BreathPhase { breatheIn, hold, breatheOut }
 
 class BreathingExerciseScreen extends StatefulWidget {
   const BreathingExerciseScreen({super.key});
@@ -20,13 +23,32 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
   bool showReady = true;
   bool started = false;
+  bool sessionRated = false;
 
   int countdown = 60;
   int innerCount = 1;
-  bool isBreathingIn = true;
+  _BreathPhase phase = _BreathPhase.breatheIn;
 
   Timer? mainTimer;
-  Timer? switchTimer;
+
+  static const _durations = {
+    _BreathPhase.breatheIn: 7,
+    _BreathPhase.hold: 4,
+    _BreathPhase.breatheOut: 8,
+  };
+
+  int get _phaseDuration => _durations[phase]!;
+
+  _BreathPhase get _nextPhase {
+    switch (phase) {
+      case _BreathPhase.breatheIn:
+        return _BreathPhase.hold;
+      case _BreathPhase.hold:
+        return _BreathPhase.breatheOut;
+      case _BreathPhase.breatheOut:
+        return _BreathPhase.breatheIn;
+    }
+  }
 
   @override
   void initState() {
@@ -34,7 +56,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 7),
     );
 
     textController = AnimationController(
@@ -55,6 +77,28 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
     });
   }
 
+  void _startPhase(_BreathPhase p) {
+    phase = p;
+    innerCount = 1;
+    textController.reset();
+    textController.forward();
+
+    switch (p) {
+      case _BreathPhase.breatheIn:
+        controller.duration = const Duration(seconds: 7);
+        controller.forward(from: 0.0);
+        break;
+      case _BreathPhase.hold:
+        // Circle stays expanded — visual cue for holding breath
+        controller.stop();
+        break;
+      case _BreathPhase.breatheOut:
+        controller.duration = const Duration(seconds: 8);
+        controller.reverse(from: 1.0);
+        break;
+    }
+  }
+
   void startBreathing() {
     if (started) return;
 
@@ -63,42 +107,39 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
       started = true;
     });
 
-    textController.reset();
-    textController.forward();
-    controller.repeat(reverse: true);
+    _startPhase(_BreathPhase.breatheIn);
 
     mainTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (countdown > 0) {
-        setState(() => countdown--);
-      } else {
+      if (countdown <= 0) {
         timer.cancel();
         controller.stop();
-        switchTimer?.cancel();
         setState(() {});
+        Future.delayed(const Duration(milliseconds: 400), _showRatingSheet);
+        return;
       }
-    });
 
-    switchTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (countdown == 0) return;
-      if (innerCount == 4) {
-        innerCount = 1;
-        isBreathingIn = !isBreathingIn;
-        textController.reset();
-        textController.forward();
+      if (innerCount >= _phaseDuration) {
+        _startPhase(_nextPhase);
       } else {
         innerCount++;
       }
+
+      countdown--;
       setState(() {});
     });
   }
 
   void reset() {
+    mainTimer?.cancel();
+    controller.stop();
+
     setState(() {
       countdown = 60;
       innerCount = 1;
-      isBreathingIn = true;
+      phase = _BreathPhase.breatheIn;
       started = false;
       showReady = true;
+      sessionRated = false;
     });
 
     textController.reset();
@@ -109,13 +150,133 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
     });
   }
 
+  void _showRatingSheet() {
+    if (!mounted) return;
+    final l = context.l10n;
+    double rating = 3;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Container(
+          padding: const EdgeInsets.fromLTRB(28, 28, 28, 40),
+          decoration: const BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Handle
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.textFaint.withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                l.rateSession,
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l.rateSessionSub,
+                style: TextStyle(
+                  color: AppColors.textFaint,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 28),
+              RatingBar.builder(
+                initialRating: rating,
+                minRating: 1,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 8),
+                itemBuilder: (_, _) => Icon(
+                  Icons.star_rounded,
+                  color: AppColors.primary,
+                ),
+                onRatingUpdate: (val) => setSheetState(() => rating = val),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    setState(() => sessionRated = true);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l.thankYou),
+                        backgroundColor: AppColors.primary,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryLight,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          blurRadius: 16,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      l.submitRating,
+                      style: const TextStyle(
+                        color: AppColors.surfaceDeep,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     controller.dispose();
     textController.dispose();
     mainTimer?.cancel();
-    switchTimer?.cancel();
     super.dispose();
+  }
+
+  String _phaseLabel(AppLocalizations l) {
+    if (showReady) return l.breatheReady;
+    if (countdown == 0) return '';
+    switch (phase) {
+      case _BreathPhase.breatheIn:
+        return l.breatheIn;
+      case _BreathPhase.hold:
+        return l.breatheHold;
+      case _BreathPhase.breatheOut:
+        return l.breatheOut;
+    }
   }
 
   @override
@@ -148,23 +309,6 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
               ),
             ),
 
-            // // Screen label
-            // Positioned(
-            //   top: 20,
-            //   left: 0,
-            //   right: 0,
-            //   child: Center(
-            //     child: Text(
-            //       'BREATH RESET',
-            //       style: TextStyle(
-            //         color: AppColors.textFaint,
-            //         fontSize: 11,
-            //         fontWeight: FontWeight.w700,
-            //         letterSpacing: 2.5,
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -215,7 +359,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                         ),
                       ),
 
-                      // Animated lavender inner circle
+                      // Animated lavender inner circle — stops during hold
                       ScaleTransition(
                         scale: controller,
                         child: Container(
@@ -231,9 +375,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(
-                                  alpha: 0.35,
-                                ),
+                                color: AppColors.primary.withValues(alpha: 0.35),
                                 blurRadius: 24,
                                 spreadRadius: 6,
                               ),
@@ -256,19 +398,13 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
                   const SizedBox(height: 36),
 
-                  // Breathe In / Out text
+                  // Phase label
                   FadeTransition(
                     opacity: fadeAnim,
                     child: SlideTransition(
                       position: slideAnim,
                       child: Text(
-                        showReady
-                            ? l.breatheReady
-                            : (countdown == 0
-                                  ? ''
-                                  : (isBreathingIn
-                                        ? l.breatheIn
-                                        : l.breatheOut)),
+                        _phaseLabel(l),
                         style: const TextStyle(
                           fontSize: 24,
                           color: AppColors.textPrimary,
@@ -280,8 +416,8 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
 
                   const SizedBox(height: 52),
 
-                  // Repeat button when session ends
-                  if (countdown == 0)
+                  // Repeat button — only shown after rating is submitted
+                  if (countdown == 0 && sessionRated)
                     FadeTransition(
                       opacity: fadeAnim,
                       child: SlideTransition(
@@ -298,9 +434,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                               borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.3,
-                                  ),
+                                  color: AppColors.primary.withValues(alpha: 0.3),
                                   blurRadius: 20,
                                   spreadRadius: 2,
                                 ),

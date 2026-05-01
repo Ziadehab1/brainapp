@@ -41,6 +41,7 @@ dependencies:
   video_player: ^2.8.6
   country_code_picker: ^3.0.0
   shared_preferences: ^2.3.2
+  flutter_rating_bar: ^4.0.1
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -70,8 +71,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/app_logo.jpg
-
+    - assets/app_logos/app_logo.jpg
+    - assets/tutorials/
+    - assets/tutorials/app_intro/
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -101,4 +104,4 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/app_logo.jpg"
+  image_path: "assets/app_logo/app_logo.jpg"

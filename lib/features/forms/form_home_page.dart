@@ -1,5 +1,7 @@
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+import 'package:brainflow/features/forms/Form_asseesments/I_notice_activity.dart';
+import 'package:brainflow/features/forms/Form_asseesments/meditation_attention_assessment.dart';
 import 'package:brainflow/features/forms/Form_asseesments/Mental_distraction%20_assessment.dart';
 import 'package:brainflow/features/forms/Form_asseesments/assessment_focus.dart';
 import 'package:brainflow/features/forms/Form_asseesments/help_on_focus.dart';
@@ -65,6 +67,26 @@ class FormHomePage extends StatelessWidget {
         gradientEnd: AppColors.formVioletEnd,
         icon: Icons.psychology_outlined,
         destination: const HelpOnFocusScreen(),
+      ),
+      _FormData(
+        title: l.inaFormTitle,
+        tag: l.inaFormTag,
+        description: l.inaFormDesc,
+        thumbHeight: 145,
+        gradientStart: AppColors.formTealStart,
+        gradientEnd: AppColors.formTealEnd,
+        icon: Icons.self_improvement_outlined,
+        destination: const INoticeActivityScreen(),
+      ),
+      _FormData(
+        title: l.maaFormTitle,
+        tag: l.maaFormTag,
+        description: l.maaFormDesc,
+        thumbHeight: 160,
+        gradientStart: AppColors.formIndigoStart,
+        gradientEnd: AppColors.formIndigoEnd,
+        icon: Icons.spa_outlined,
+        destination: const MeditationAttentionAssessmentScreen(),
       ),
     ];
 

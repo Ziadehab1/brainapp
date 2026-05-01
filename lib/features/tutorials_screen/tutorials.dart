@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:brainflow/features/tutorials_screen/video_player.dart';
-import 'package:brainflow/features/tutorials_screen/audio_player.dart';
+import 'package:brainflow/features/custom_widgets/video_player.dart';
+import 'package:brainflow/features/custom_widgets/audio_player.dart';
 import 'package:brainflow/core/constants/constants.dart';
 
 enum _Filter { all, video, audio }

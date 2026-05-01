@@ -257,14 +257,14 @@ class _EmotionsDiaryScreenState extends State<EmotionsDiaryScreen> {
                             color: AppColors.primaryLight,
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(Icons.check_rounded,
                                   color: AppColors.surfaceDeep, size: 18),
                               SizedBox(width: 8),
                               Text(
-                                'Save Entry',
+                                context.l10n.saveEntry,
                                 style: TextStyle(
                                   color: AppColors.surfaceDeep,
                                   fontSize: 14,
