@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:brainflow/features/custom_widgets/video_player.dart';
-import 'package:brainflow/features/custom_widgets/audio_player.dart';
 import 'package:brainflow/core/constants/constants.dart';
+import 'package:brainflow/core/l10n/app_localizations.dart';
 
 enum _Filter { all, video, audio }
 
@@ -18,88 +18,70 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
 
   static const List<_Tutorial> _all = [
     _Tutorial(
-      title: 'Understanding Your Rhythm',
+      title: 'Brain',
+      arabicTitle: 'الدماغ',
       tag: 'COGNITIVE',
       type: _Filter.video,
-      duration: '8:45',
       thumbHeight: 190,
       gradientStart: AppColors.tutorialPurpleStart,
       gradientEnd: AppColors.tutorialPurpleEnd,
-      videoUrl:
-          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+      videoUrl: 'assets/tutorials/brain.mp4',
+      isAsset: true,
     ),
     _Tutorial(
-      title: 'Sleep Hygiene 101',
+      title: 'Purification of Mindfulness',
+      arabicTitle: 'تنقية اليقظة الذهنية',
       tag: 'REST',
-      type: _Filter.audio,
-      duration: '12:20',
-      thumbHeight: 130,
+      type: _Filter.video,
+      thumbHeight: 155,
       gradientStart: AppColors.tutorialGreenStart,
       gradientEnd: AppColors.tutorialGreenEnd,
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+      videoUrl: 'assets/tutorials/Purification_of_mindfulness.mp4',
+      isAsset: true,
     ),
     _Tutorial(
-      title: 'Dopamine & You',
+      title: '5 Senses Exercise',
+      arabicTitle: 'تمرين الحواس الخمس',
       tag: 'FOCUS',
       type: _Filter.video,
-      duration: '6:30',
       thumbHeight: 140,
       gradientStart: AppColors.tutorialRedStart,
       gradientEnd: AppColors.tutorialRedEnd,
-      videoUrl:
-          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+      videoUrl: 'assets/tutorials/5Senses_exercise.mp4',
+      isAsset: true,
     ),
     _Tutorial(
-      title: 'Breathing for Clarity',
+      title: 'Hearing Problems',
+      arabicTitle: 'مشاكل السمع',
       tag: 'REST',
-      type: _Filter.audio,
-      duration: '9:10',
-      thumbHeight: 200,
+      type: _Filter.video,
+      thumbHeight: 170,
       gradientStart: AppColors.tutorialBlueStart,
       gradientEnd: AppColors.tutorialBlueEnd,
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+      videoUrl: 'assets/tutorials/hearing_problems.mp4',
+      isAsset: true,
     ),
     _Tutorial(
-      title: 'Building Better Habits',
+      title: 'Spacing Repetition',
+      arabicTitle: 'التكرار المتباعد',
       tag: 'COGNITIVE',
       type: _Filter.video,
-      duration: '14:05',
-      thumbHeight: 155,
+      thumbHeight: 125,
       gradientStart: AppColors.tutorialVioletStart,
       gradientEnd: AppColors.tutorialVioletEnd,
-      videoUrl:
-          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+      videoUrl: 'assets/tutorials/spacing_repetition.mp4',
+      isAsset: true,
     ),
     _Tutorial(
-      title: 'Evening Wind-Down',
-      tag: 'REST',
-      type: _Filter.audio,
-      duration: '10:00',
-      thumbHeight: 170,
-      gradientStart: AppColors.tutorialNavyStart,
-      gradientEnd: AppColors.tutorialNavyEnd,
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    ),
-    _Tutorial(
-      title: 'Morning Brain Activation',
+      title: 'Mind Maps',
+      arabicTitle: 'خرائط الذهن',
       tag: 'FOCUS',
       type: _Filter.video,
-      duration: '5:15',
-      thumbHeight: 125,
-      gradientStart: AppColors.tutorialLimeStart,
-      gradientEnd: AppColors.tutorialLimeEnd,
-      videoUrl:
-          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    ),
-    _Tutorial(
-      title: 'Deep Focus Soundscape',
-      tag: 'COGNITIVE',
-      type: _Filter.audio,
-      duration: '20:00',
-      thumbHeight: 180,
-      gradientStart: AppColors.tutorialIndigoStart,
-      gradientEnd: AppColors.tutorialIndigoEnd,
-      audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+      thumbHeight: 200,
+      gradientStart: AppColors.tutorialNavyStart,
+      gradientEnd: AppColors.tutorialNavyEnd,
+      videoUrl: 'assets/tutorials/MInd Maps.mp4',
+      isAsset: true,
     ),
   ];
 
@@ -109,18 +91,18 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
             child: Row(
               children: [
-                const Text(
-                  'Latest Tutorials',
-                  style: TextStyle(
+                Text(
+                  l.latestTutorials,
+                  style: const TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
@@ -128,19 +110,19 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
                 ),
                 const Spacer(),
                 _FilterChip(
-                  label: 'ALL',
+                  label: l.filterAll,
                   isActive: _active == _Filter.all,
                   onTap: () => setState(() => _active = _Filter.all),
                 ),
                 const SizedBox(width: 6),
                 _FilterChip(
-                  label: 'VIDEO',
+                  label: l.filterVideo,
                   isActive: _active == _Filter.video,
                   onTap: () => setState(() => _active = _Filter.video),
                 ),
                 const SizedBox(width: 6),
                 _FilterChip(
-                  label: 'AUDIO',
+                  label: l.filterAudio,
                   isActive: _active == _Filter.audio,
                   onTap: () => setState(() => _active = _Filter.audio),
                 ),
@@ -150,7 +132,6 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
 
           const SizedBox(height: 18),
 
-          // Staggered grid
           Expanded(
             child: MasonryGridView.count(
               crossAxisCount: 2,
@@ -170,25 +151,25 @@ class _TutorialsScreenState extends State<TutorialsScreen> {
 
 class _Tutorial {
   final String title;
+  final String arabicTitle;
   final String tag;
   final _Filter type;
-  final String duration;
   final double thumbHeight;
   final Color gradientStart;
   final Color gradientEnd;
   final String? videoUrl;
-  final String? audioUrl;
+  final bool isAsset;
 
   const _Tutorial({
     required this.title,
+    required this.arabicTitle,
     required this.tag,
     required this.type,
-    required this.duration,
     required this.thumbHeight,
     required this.gradientStart,
     required this.gradientEnd,
     this.videoUrl,
-    this.audioUrl,
+    this.isAsset = false,
   });
 }
 
@@ -223,9 +204,7 @@ class _FilterChip extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color: isActive
-                ? AppColors.primary
-                : AppColors.textDim,
+            color: isActive ? AppColors.primary : AppColors.textDim,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.0,
@@ -241,33 +220,35 @@ class _TutorialCard extends StatelessWidget {
 
   const _TutorialCard({required this.tutorial});
 
-  bool get _isVideo => tutorial.type == _Filter.video;
+  String _localizedTag(AppLocalizations l) {
+    switch (tutorial.tag) {
+      case 'COGNITIVE':
+        return l.tagCognitive;
+      case 'REST':
+        return l.tagRest;
+      case 'FOCUS':
+        return l.tagFocus;
+      default:
+        return tutorial.tag;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final displayTitle =
+        isArabic ? tutorial.arabicTitle : tutorial.title;
+
     return GestureDetector(
       onTap: () {
-        if (_isVideo &&
-            tutorial.videoUrl != null &&
-            tutorial.videoUrl!.isNotEmpty) {
+        if (tutorial.videoUrl != null && tutorial.videoUrl!.isNotEmpty) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => VideoScreen(videoUrl: tutorial.videoUrl!),
-            ),
-          );
-        } else if (!_isVideo &&
-            tutorial.audioUrl != null &&
-            tutorial.audioUrl!.isNotEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => AudioScreen(
-                audioUrl: tutorial.audioUrl!,
-                title: tutorial.title,
-                tag: tutorial.tag,
-                gradientStart: tutorial.gradientStart,
-                gradientEnd: tutorial.gradientEnd,
+              builder: (_) => VideoScreen(
+                videoUrl: tutorial.videoUrl!,
+                isAsset: tutorial.isAsset,
               ),
             ),
           );
@@ -282,7 +263,6 @@ class _TutorialCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thumbnail — height varies per card (staggered effect)
             Stack(
               children: [
                 Container(
@@ -322,7 +302,7 @@ class _TutorialCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      tutorial.tag,
+                      _localizedTag(l),
                       style: const TextStyle(
                         color: AppColors.textPrimary,
                         fontSize: 9,
@@ -332,7 +312,7 @@ class _TutorialCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Center play / wave icon
+                // Play icon
                 Positioned.fill(
                   child: Center(
                     child: Container(
@@ -346,37 +326,12 @@ class _TutorialCard extends StatelessWidget {
                           width: 1.5,
                         ),
                       ),
-                      child: Icon(
-                        _isVideo
-                            ? Icons.play_arrow_rounded
-                            : Icons.graphic_eq_rounded,
+                      child: const Icon(
+                        Icons.play_arrow_rounded,
                         color: AppColors.textPrimary,
                         size: 22,
                       ),
                     ),
-                  ),
-                ),
-                // Duration badge
-                Positioned(
-                  bottom: 8,
-                  right: 10,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.access_time_rounded,
-                        size: 11,
-                        color: AppColors.textStrong,
-                      ),
-                      const SizedBox(width: 3),
-                      Text(
-                        tutorial.duration,
-                        style: TextStyle(
-                          color: AppColors.textStrong,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
@@ -386,10 +341,13 @@ class _TutorialCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 14),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: isArabic
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tutorial.title,
+                    displayTitle,
+                    textAlign: isArabic ? TextAlign.right : TextAlign.left,
                     style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 13,
@@ -399,7 +357,7 @@ class _TutorialCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    _isVideo ? 'VIDEO COURSE' : 'AUDIO COURSE',
+                    l.videoCourse,
                     style: TextStyle(
                       color: AppColors.textFaint,
                       fontSize: 10,

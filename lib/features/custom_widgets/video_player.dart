@@ -5,7 +5,8 @@ import 'package:brainflow/core/constants/constants.dart';
 
 class VideoScreen extends StatefulWidget {
   final String videoUrl;
-  const VideoScreen({super.key, required this.videoUrl});
+  final bool isAsset;
+  const VideoScreen({super.key, required this.videoUrl, this.isAsset = false});
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -20,7 +21,9 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
+    _controller = widget.isAsset
+        ? VideoPlayerController.asset(widget.videoUrl)
+        : VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
         setState(() => _initialized = true);
         _controller.play();
