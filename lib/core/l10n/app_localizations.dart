@@ -160,6 +160,20 @@ class AppLocalizations {
       : 'No entries yet — write your first one above.';
   String get saveEntry => _ar ? 'حفظ الإدخال' : 'Save Entry';
 
+  // Emotion names (diary picker)
+  String get emotionHappy => _ar ? 'سعيد' : 'Happy';
+  String get emotionCalm => _ar ? 'هادئ' : 'Calm';
+  String get emotionAnxious => _ar ? 'قلق' : 'Anxious';
+  String get emotionSad => _ar ? 'حزين' : 'Sad';
+  String get emotionAngry => _ar ? 'غاضب' : 'Angry';
+  String get emotionScared => _ar ? 'خائف' : 'Scared';
+  String get emotionBored => _ar ? 'ملول' : 'Bored';
+  String get emotionExcited => _ar ? 'متحمس' : 'Excited';
+  String get emotionOverthinking => _ar ? 'تفكير مفرط' : 'Overthinking';
+  String get emotionTense => _ar ? 'متوتر' : 'Tense';
+  String get emotionOverwhelmed => _ar ? 'مرهق' : 'Overwhelmed';
+  String get emotionGrateful => _ar ? 'ممتن' : 'Grateful';
+
   // ── Games Screen ─────────────────────────────────────────────────────────────
   String get cognitiveGames => _ar ? 'الألعاب المعرفية' : 'Cognitive Games';
   String get gamesSubtitle =>
