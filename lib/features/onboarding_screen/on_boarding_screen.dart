@@ -1,7 +1,9 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:brainflow/features/onboarding_screen/onboarding_Signup_screen/onboarding_Signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:brainflow/features/onboarding_screen/login_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+import 'package:brainflow/core/services/local/storage_keys.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -23,16 +25,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
 
   static const _pageCount = 3;
 
-  void _next() {
+  Future<void> _next() async {
     if (_currentPage < _pageCount - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
     } else {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(StorageKeys.onboardingComplete, true);
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const OnboardingSignupScreen()),
+        MaterialPageRoute(builder: (_) => const AppLoginScreen()),
       );
     }
   }

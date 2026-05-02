@@ -1,9 +1,13 @@
 ﻿import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brainflow/features/onboarding_screen/on_boarding_screen.dart';
+import 'package:brainflow/features/onboarding_screen/login_screen.dart';
+import 'package:brainflow/features/home_screen/home_screen.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+import 'package:brainflow/core/services/local/storage_keys.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -59,14 +63,40 @@ class _SplashScreenState extends State<SplashScreen>
 
     _breathController.forward();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () async {
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const OnBoardingScreen(),
-        ),
-      );
+      final prefs = await SharedPreferences.getInstance();
+      final onboardingShown =
+          prefs.getBool(StorageKeys.onboardingComplete) ?? false;
+
+      if (!mounted) return;
+
+      if (!onboardingShown) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const OnBoardingScreen()),
+        );
+        return;
+      }
+
+      final isLoggedIn = prefs.getBool(StorageKeys.isLoggedIn) ?? false;
+      if (!mounted) return;
+
+      if (isLoggedIn) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                const HomeScreen(showFocusRatingAfterDelay: true),
+          ),
+          (_) => false,
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const AppLoginScreen()),
+        );
+      }
     });
   }
 

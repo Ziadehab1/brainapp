@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
+import 'package:brainflow/core/services/local/storage_keys.dart';
 import 'package:brainflow/features/onboarding_screen/app_intro_video_screen.dart';
 
 class Interest {
@@ -66,7 +68,9 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
 
     setState(() => _isLoading = true);
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(StorageKeys.interestsSelected, true);
+    await prefs.setBool(StorageKeys.isLoggedIn, true);
 
     if (mounted) {
       setState(() => _isLoading = false);

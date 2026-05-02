@@ -201,7 +201,7 @@ class _BreathingExerciseScreenState extends State<BreathingExerciseScreen>
                 minRating: 1,
                 itemCount: 5,
                 itemPadding: const EdgeInsets.symmetric(horizontal: 8),
-                itemBuilder: (_, _) => Icon(
+                itemBuilder: (_, __) => Icon(
                   Icons.star_rounded,
                   color: AppColors.primary,
                 ),

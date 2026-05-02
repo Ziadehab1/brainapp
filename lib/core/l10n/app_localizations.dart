@@ -70,6 +70,17 @@ class AppLocalizations {
       _ar ? 'أعد إدخال كلمة المرور' : 'Confirm your password';
   String get createAccount => _ar ? 'إنشاء حساب' : 'Create Account';
 
+  // ── Login ────────────────────────────────────────────────────────────────────
+  String get welcomeBack => _ar ? 'مرحباً بعودتك' : 'Welcome Back';
+  String get signInToContinue =>
+      _ar ? 'سجّل دخولك لمتابعة رحلتك' : 'Sign in to continue your journey';
+  String get signIn => _ar ? 'تسجيل الدخول' : 'Sign In';
+  String get noAccount => _ar ? 'ليس لديك حساب؟' : "Don't have an account?";
+  String get signUp => _ar ? 'إنشاء حساب' : 'Sign Up';
+  String get forgotPassword => _ar ? 'نسيت كلمة المرور؟' : 'Forgot Password?';
+  String get fillAllFields =>
+      _ar ? 'يرجى ملء جميع الحقول' : 'Please fill in all fields';
+
   // ── Select Interests ─────────────────────────────────────────────────────────
   String get selectInterests => _ar ? 'اختر اهتماماتك' : 'Select Interests';
   String get pickUpTo3 =>

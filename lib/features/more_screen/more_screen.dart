@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:brainflow/config/localization/cubit/l10n_cubit.dart';
 import 'package:brainflow/core/constants/constants.dart';
 import 'package:brainflow/core/l10n/app_localizations.dart';
-import 'package:brainflow/core/l10n/locale_controller.dart';
 import 'package:brainflow/features/forms/form_home_page.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -9,6 +10,8 @@ class MoreScreen extends StatelessWidget {
 
   void _showLanguageSheet(BuildContext context) {
     final l = context.l10n;
+    final cubit = context.read<L10nCubit>();
+    final isArabic = cubit.state.locale.languageCode == 'ar';
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -40,18 +43,18 @@ class MoreScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _LangOption(
               label: 'العربية',
-              isSelected: LocaleController.isArabic,
+              isSelected: isArabic,
               onTap: () {
-                LocaleController.set(const Locale('ar'));
+                cubit.changeLocale(const Locale('ar'));
                 Navigator.pop(context);
               },
             ),
             const SizedBox(height: 10),
             _LangOption(
               label: 'English',
-              isSelected: !LocaleController.isArabic,
+              isSelected: !isArabic,
               onTap: () {
-                LocaleController.set(const Locale('en'));
+                cubit.changeLocale(const Locale('en'));
                 Navigator.pop(context);
               },
             ),
